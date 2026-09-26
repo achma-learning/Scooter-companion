@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Blocks any cleartext (non-HTTPS) traffic. Firebase Auth/Firestore use TLS regardless,
+     so this has no effect on Sync Mode; it simply forecloses plaintext network use if any
+     future dependency ever attempted it. In Private Mode no network call is made at all. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

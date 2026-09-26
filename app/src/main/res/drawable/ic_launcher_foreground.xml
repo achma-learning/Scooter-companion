@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simple scooter silhouette, centered within the safe zone -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,66 C30,60 35,55 41,55 C47,55 52,60 52,66 C52,72 47,77 41,77 C35,77 30,72 30,66 Z M66,66 C66,60 71,55 77,55 C83,55 88,60 88,66 C88,72 83,77 77,77 C71,77 66,72 66,66 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M41,66 L41,58 L58,58 L64,50 L74,50 L74,58 L80,58 L80,66 L74,66 L70,60 L58,60 L52,66 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,46 L70,46 L70,50 L62,50 Z" />
+</vector>

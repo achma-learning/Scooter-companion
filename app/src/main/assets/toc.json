@@ -1,0 +1,251 @@
+{
+  "manual": [
+    {
+      "title": "1. PRECAUTIONS FOR A SAFE RIDING",
+      "page": 7,
+      "children": []
+    },
+    {
+      "title": "2. ASSEMBLY PARTS",
+      "page": 9,
+      "children": []
+    },
+    {
+      "title": "3. OPERATION INSTRUCTIONS",
+      "page": 11,
+      "children": [
+        {
+          "title": "Ignition Switch / Steering & Handlebar Lock",
+          "page": 11,
+          "children": []
+        },
+        {
+          "title": "Electric Starter Button / Headlight Switch",
+          "page": 12,
+          "children": []
+        },
+        {
+          "title": "Headlight Dimmer Switch",
+          "page": 13,
+          "children": []
+        },
+        {
+          "title": "Horn Button / Turn Signal Switch",
+          "page": 13,
+          "children": []
+        },
+        {
+          "title": "Seat Lock / Met-in Box, Helmet Buckle",
+          "page": 14,
+          "children": []
+        },
+        {
+          "title": "Instruments",
+          "page": 15,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "4. PRE-RIDE INSPECTION",
+      "page": 16,
+      "children": [
+        {
+          "title": "Advance Inspection / Engine Oil Level Inspection & Refilling",
+          "page": 16,
+          "children": []
+        },
+        {
+          "title": "Brake Inspection / Tire Inspection",
+          "page": 17,
+          "children": []
+        },
+        {
+          "title": "Fuel Level Inspection / Refilling",
+          "page": 19,
+          "children": []
+        },
+        {
+          "title": "Steering Handlebar / Instrument Lights Inspection",
+          "page": 20,
+          "children": []
+        },
+        {
+          "title": "Brake Lever Free Play Inspection & Adjustment",
+          "page": 21,
+          "children": []
+        },
+        {
+          "title": "Choke Knob",
+          "page": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "5. ENGINE STARTING METHODS",
+      "page": 24,
+      "children": [
+        {
+          "title": "Use the Electric Starter Button",
+          "page": 25,
+          "children": []
+        },
+        {
+          "title": "Start with the Kick Lever",
+          "page": 26,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "6. NORMAL RIDING METHOD",
+      "page": 27,
+      "children": []
+    },
+    {
+      "title": "7. PRECAUTIONS FOR RIDING",
+      "page": 29,
+      "children": []
+    },
+    {
+      "title": "8. HOW TO STOP RIDING",
+      "page": 32,
+      "children": []
+    },
+    {
+      "title": "9. EASY MAINTENANCE",
+      "page": 34,
+      "children": []
+    },
+    {
+      "title": "10. AIR CLEANER INSPECTION AND CLEANING & REPLACEMENT",
+      "page": 34,
+      "children": [
+        {
+          "title": "Battery",
+          "page": 36,
+          "children": []
+        },
+        {
+          "title": "Fuse Change",
+          "page": 37,
+          "children": []
+        },
+        {
+          "title": "Engine Oil Change",
+          "page": 38,
+          "children": []
+        },
+        {
+          "title": "Spark Plug Inspection",
+          "page": 40,
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "11. IMPORTANT NOTICES",
+      "page": 42,
+      "children": []
+    },
+    {
+      "title": "12. EXHAUST EMISSION CONTROL SYSTEM",
+      "page": 43,
+      "children": [
+        {
+          "title": "Periodic Inspection & Maintenance Schedule",
+          "page": 45,
+          "children": []
+        },
+        {
+          "title": "Specifications",
+          "page": 46,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "passport": [
+    {
+      "title": "Passeport — Couverture / Fiche véhicule",
+      "page": 1,
+      "children": []
+    },
+    {
+      "title": "Fiche véhicule (Châssis, Moteur, Immatriculation, Propriétaire)",
+      "page": 2,
+      "children": []
+    },
+    {
+      "title": "Ils nous font confiance (partenaires)",
+      "page": 3,
+      "children": []
+    },
+    {
+      "title": "Notre engagement (FR / AR)",
+      "page": 4,
+      "children": []
+    },
+    {
+      "title": "Conditions de Garantie — Exclusions (1/2)",
+      "page": 5,
+      "children": []
+    },
+    {
+      "title": "Conditions de Garantie — Exclusions (2/2)",
+      "page": 6,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 300 à 3000 km (Interventions 1-2)",
+      "page": 7,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 5000 à 11000 km (Interventions 3-4)",
+      "page": 8,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 13000 à 19000 km (Interventions 5-6)",
+      "page": 9,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 21000 à 27000 km (Interventions 7-8)",
+      "page": 10,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 29000 à 35000 km (Interventions 9-10)",
+      "page": 11,
+      "children": []
+    },
+    {
+      "title": "Programme d'entretien — 37000 à 43000 km (Interventions 11-12)",
+      "page": 12,
+      "children": []
+    },
+    {
+      "title": "Contrôles périodiques (tableau complet)",
+      "page": 13,
+      "children": []
+    },
+    {
+      "title": "Notre réseau de revendeurs KYMCO",
+      "page": 14,
+      "children": []
+    },
+    {
+      "title": "Notre réseau de prestataires KYMCO",
+      "page": 15,
+      "children": []
+    },
+    {
+      "title": "Contact / SAV / Showroom",
+      "page": 16,
+      "children": []
+    }
+  ]
+}
