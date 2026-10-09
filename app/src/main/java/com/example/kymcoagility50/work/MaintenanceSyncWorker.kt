@@ -60,11 +60,22 @@ class MaintenanceSyncWorker(
                 val date = doc.getLong("date") ?: continue
                 val note = doc.getString("note") ?: ""
                 val updatedAt = doc.getLong("updatedAt") ?: 0L
+                // Fields added in v2 of the logbook; older documents simply lack them.
+                val tasks = doc.getString("tasks") ?: ""
+                val milestoneKm = doc.getLong("milestoneKm")?.toInt()
+                val shop = doc.getString("shop") ?: ""
+                val cost = doc.getDouble("cost")
+                val stamped = doc.getBoolean("stamped") ?: false
 
                 val existing = dao.getByRemoteId(doc.id)
                 if (existing != null) {
                     if (updatedAt > existing.updatedAt) {
-                        dao.upsert(existing.copy(km = km, date = date, note = note, updatedAt = updatedAt, dirty = false))
+                        dao.upsert(
+                            existing.copy(
+                                km = km, date = date, note = note, tasks = tasks, milestoneKm = milestoneKm,
+                                shop = shop, cost = cost, stamped = stamped, updatedAt = updatedAt, dirty = false
+                            )
+                        )
                     }
                 } else {
                     dao.upsert(
@@ -73,6 +84,11 @@ class MaintenanceSyncWorker(
                             km = km,
                             date = date,
                             note = note,
+                            tasks = tasks,
+                            milestoneKm = milestoneKm,
+                            shop = shop,
+                            cost = cost,
+                            stamped = stamped,
                             updatedAt = updatedAt,
                             dirty = false,
                             deleted = false
@@ -90,6 +106,11 @@ class MaintenanceSyncWorker(
         "km" to km,
         "date" to date,
         "note" to note,
+        "tasks" to tasks,
+        "milestoneKm" to milestoneKm,
+        "shop" to shop,
+        "cost" to cost,
+        "stamped" to stamped,
         "updatedAt" to updatedAt
     )
 }

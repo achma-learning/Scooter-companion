@@ -11,10 +11,14 @@ import androidx.room.TypeConverters
         OcrPageEntity::class,
         BookmarkEntity::class,
         RecentPageEntity::class,
-        MaintenanceEntryEntity::class
+        MaintenanceEntryEntity::class,
+        BikeProfileEntity::class,
+        OdometerEntity::class,
+        FuelEntity::class,
+        DocumentEntity::class
     ],
-    version = 1,
-    exportSchema = false
+    version = 2,
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class ManualDatabase : RoomDatabase() {
@@ -23,6 +27,7 @@ abstract class ManualDatabase : RoomDatabase() {
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun recentPageDao(): RecentPageDao
     abstract fun maintenanceEntryDao(): MaintenanceEntryDao
+    abstract fun garageDao(): GarageDao
 
     companion object {
         @Volatile private var INSTANCE: ManualDatabase? = null
@@ -33,7 +38,7 @@ abstract class ManualDatabase : RoomDatabase() {
                     context.applicationContext,
                     ManualDatabase::class.java,
                     "kymco_agility50.db"
-                ).build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
             }
         }
     }

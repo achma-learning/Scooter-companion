@@ -1,7 +1,9 @@
 package com.example.kymcoagility50
 
 import android.content.Context
+import com.example.kymcoagility50.data.content.ContentRepository
 import com.example.kymcoagility50.data.db.ManualDatabase
+import com.example.kymcoagility50.data.repository.GarageRepository
 import com.example.kymcoagility50.data.repository.LibraryRepository
 import com.example.kymcoagility50.data.repository.MaintenanceRepository
 import com.example.kymcoagility50.data.repository.OcrRepository
@@ -16,6 +18,8 @@ class AppContainer(context: Context) {
     val libraryRepository = LibraryRepository(db.bookmarkDao(), db.recentPageDao())
     val maintenanceRepository = MaintenanceRepository(db.maintenanceEntryDao())
     val settingsRepository = SettingsRepository(context)
+    val contentRepository = ContentRepository(context)
+    val garageRepository = GarageRepository(context, db) { contentRepository.content }
 
     companion object {
         @Volatile private var INSTANCE: AppContainer? = null

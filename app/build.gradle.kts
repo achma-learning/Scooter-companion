@@ -14,20 +14,46 @@ android {
         applicationId = "com.example.kymcoagility50"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        // CI passes the run number so every GitHub Release carries an upgradable APK.
+        versionCode = (System.getenv("APP_VERSION_CODE") ?: "2").toInt()
+        versionName = System.getenv("APP_VERSION_NAME") ?: "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Release signing: uses the keystore from CI secrets when provided (see README "Releases"),
+    // otherwise falls back to the debug key so the release APK is still installable.
+    val releaseKeystore = System.getenv("RELEASE_KEYSTORE_PATH")?.let { file(it) }?.takeIf { it.exists() }
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = releaseKeystore
+                storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = true
+            // R8 stays off: Room, kotlinx-serialization and Firebase reflection make a
+            // shrunk build risky to ship untested, and the APK is dominated by the PDFs anyway.
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (releaseKeystore != null) signingConfigs.getByName("release") else signingConfigs.getByName("debug")
         }
         debug {
             isMinifyEnabled = false
             applicationIdSuffix = ".debug"
+        }
+    }
+
+    // The PDFs, OCR indexes and the Agility 50 knowledge base live in /shared so the website
+    // ships exactly the same data; they're bundled here as flat assets.
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("src/main/assets", "../shared/docs", "../shared/content")
         }
     }
 
@@ -42,6 +68,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
+        )
     }
 
     buildFeatures {
@@ -51,11 +81,27 @@ android {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
 
+    testOptions {
+        unitTests {
+            // Robolectric renders the Compose screens (with the bundled assets) on the JVM.
+            isIncludeAndroidResources = true
+            all {
+                it.systemProperty("screenshots.dir", project.findProperty("screenshotsDir")?.toString() ?: "")
+                it.maxHeapSize = "2g"
+            }
+        }
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+ksp {
+    // Exported Room schemas (app/schemas) document every migration step.
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -107,6 +153,9 @@ dependencies {
 
     // Testing
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))

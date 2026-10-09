@@ -14,7 +14,7 @@ import com.example.kymcoagility50.AppContainer
  * size while keeping every screen's ViewModel trivially testable (pass a fake AppContainer).
  */
 @Composable
-inline fun <reified VM : ViewModel> appViewModel(crossinline create: (AppContainer) -> VM): VM {
+inline fun <reified VM : ViewModel> appViewModel(crossinline create: @androidx.compose.runtime.DisallowComposableCalls (AppContainer) -> VM): VM {
     val context = LocalContext.current
     val container = AppContainer.getInstance(context)
     val factory = remember(container) {
