@@ -3,14 +3,30 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Simple scooter silhouette, centered within the safe zone -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M30,66 C30,60 35,55 41,55 C47,55 52,60 52,66 C52,72 47,77 41,77 C35,77 30,72 30,66 Z M66,66 C66,60 71,55 77,55 C83,55 88,60 88,66 C88,72 83,77 77,77 C71,77 66,72 66,66 Z" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M41,66 L41,58 L58,58 L64,50 L74,50 L74,58 L80,58 L80,66 L74,66 L70,60 L58,60 L52,66 Z" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M62,46 L70,46 L70,50 L62,50 Z" />
+    <!-- Same scooter as ScooterArt / web/img/icon.svg, scaled into the adaptive-icon safe zone. -->
+    <group
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        android:translateX="18.3"
+        android:translateY="33">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M16,90 C16,72 32,62 54,60 L122,58 L128,72 L124,96 L90,96 C86,84 76,78 61,78 C46,78 36,86 33,96 L20,96 C17,95 16,93 16,90 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M120,96 L123,88 L146,88 C152,70 156,50 158,36 L161,24 L172,22 C175,36 179,52 187,67 C196,77 207,85 208,95 C208,98 206,100 204,98 C200,91 194,88 186,88 C176,87 167,93 164,101 L148,101 L144,96 Z" />
+        <path
+            android:fillAlpha="0.75"
+            android:fillColor="#FFFFFF"
+            android:pathData="M46,60 C48,48 62,43 84,43 L116,45 C125,46 127,55 120,58 L50,61 Z" />
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeLineCap="round"
+            android:strokeWidth="5"
+            android:pathData="M148,24 L178,15 M163,19 L158,7" />
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="10"
+            android:pathData="M42,116 a19,19 0 1,0 38,0 a19,19 0 1,0 -38,0 M167,116 a19,19 0 1,0 38,0 a19,19 0 1,0 -38,0" />
+    </group>
 </vector>

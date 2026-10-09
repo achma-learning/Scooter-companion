@@ -21,10 +21,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // Release signing: uses the keystore from CI secrets when provided (see README "Releases"),
-    // otherwise falls back to the debug key so the release APK is still installable.
+    // Release signing. With CI secrets (see README "Releases") the APK is signed with your
+    // private key. Otherwise it uses the committed *sideload* key below, so every GitHub
+    // Release is signed identically and installs as an update over the previous one (a
+    // per-runner debug key would force an uninstall — and wipe the garage — each release).
+    // The sideload key is public by design: fine for sideloading, not for the Play Store.
     val releaseKeystore = System.getenv("RELEASE_KEYSTORE_PATH")?.let { file(it) }?.takeIf { it.exists() }
     signingConfigs {
+        create("sideload") {
+            storeFile = file("signing/sideload.keystore")
+            storePassword = "agility-sideload"
+            keyAlias = "sideload"
+            keyPassword = "agility-sideload"
+        }
         if (releaseKeystore != null) {
             create("release") {
                 storeFile = releaseKeystore
@@ -41,7 +50,7 @@ android {
             // shrunk build risky to ship untested, and the APK is dominated by the PDFs anyway.
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = if (releaseKeystore != null) signingConfigs.getByName("release") else signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName(if (releaseKeystore != null) "release" else "sideload")
         }
         debug {
             isMinifyEnabled = false
@@ -154,6 +163,7 @@ dependencies {
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("androidx.test:core-ktx:1.6.1")
     testImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     testImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

@@ -8,8 +8,12 @@ points at the code that enforces it so it isn't just a claim.
 - No account. No Google Sign-In button is shown anywhere.
 - No network request of any kind is made — not by this app's code, not by Firebase (which
   is never initialized in this mode at all).
-- Bookmarks, recent pages, settings, and the maintenance logbook are stored only in the
-  local Room database (`kymco_agility50.db`, private app storage).
+- Bookmarks, recent pages, settings, the maintenance logbook and the rest of your garage
+  (bike profile, odometer readings, fuel log, documents wallet) are stored only in the local
+  Room database (`kymco_agility50.db`, private app storage).
+- Service and document-expiry reminders are computed on the device by `ReminderWorker`
+  (WorkManager, once a day) and shown as local notifications. They need no network and run the
+  same in both modes; turn them off in Settings.
 - Android's own cloud backup and device-to-device transfer are disabled for the whole app
   (`android:allowBackup="false"`, `app/src/main/res/xml/data_extraction_rules.xml`) — this
   isn't just an in-app promise, it's an OS-level setting.
@@ -17,11 +21,12 @@ points at the code that enforces it so it isn't just a claim.
 ## Sync Mode (opt-in)
 
 - You sign in with Google (Firebase Authentication).
-- The **only** data that syncs is the maintenance logbook — the date/km/notes entries you
-  add on the Logbook screen — written to
-  `/users/{your-uid}/maintenanceEntries/{entryId}` in Cloud Firestore.
-- Bookmarks, recent pages, and settings stay local-only in Sync Mode too. They are never
-  written to Firestore.
+- The **only** data that syncs is the service logbook: for each service you log, its date,
+  km, task ids, passport milestone, workshop name, cost, dealer-stamp flag and notes. It is
+  written to `/users/{your-uid}/maintenanceEntries/{entryId}` in Cloud Firestore.
+- The bike profile (plate, VIN…), odometer readings, fuel log, documents wallet, bookmarks,
+  recent pages and settings stay local-only in Sync Mode too. They are never written to
+  Firestore.
 - The two bundled PDFs and their OCR search index are static app assets; they're never
   uploaded anywhere in either mode.
 - Sync happens via a WorkManager job (`MaintenanceSyncWorker`) that runs when you add/edit/
@@ -50,6 +55,18 @@ points at the code that enforces it so it isn't just a claim.
 - `app/src/test/java/.../privacy/NetworkGuardTest.kt` — a unit test pinning down that
   `NetworkGuard.guard {}` never executes its block while in Private Mode (the default
   state), and that the attempt is counted rather than silently dropped.
+
+## Backup files
+
+Settings → Export writes your garage to a JSON file **you** choose where to save (Android's
+file picker), and Import reads one back. The app never uploads it. The same file format is
+used by the website, so you can move between the two.
+
+## The website
+
+The website (`web/`) keeps your garage in that browser's `localStorage` only. It has no
+backend, no cookies, no analytics, and nothing is sent anywhere. The only third-party request
+is the PDF viewer (pdf.js from `cdnjs.cloudflare.com`), loaded when you open a manual page.
 
 ## What's never collected, in either mode
 

@@ -1,66 +1,143 @@
-# Kymco Agility 50 — Owner Manual
+# Agility Companion — Kymco Agility 50 4T
 
-Offline-first Android app for the KYMCO Agility 50 scooter, built from two scanned
-documents you provided:
+A digital owner's companion for the **Kymco Agility 50 4T**, in the spirit of the SYM, My Honda+
+and BMW Motorrad apps: your scooter's dashboard, service book, paperwork and manual in one
+place. Every interval is tuned for **Marrakech heat, Saharan dust and stop-and-go traffic**,
+from the [Marrakech maintenance wiki](https://achma-learning.github.io/moto/).
 
-- `app/src/main/assets/owner_manual.pdf` — the English driver's manual (48 pages)
-- `app/src/main/assets/passport.pdf` — the French/Arabic KYMCO passeport & maintenance
-  booklet (16 pages)
+It ships two ways, with the same data and features:
 
-Both PDFs' text was extracted once, offline, with Tesseract OCR (French + Arabic + English
-language packs) at project-generation time and shipped as
-`assets/manual_index.json` / `assets/passport_index.json`, so full-text search works
-immediately on first launch with no on-device OCR delay. `assets/toc.json` mirrors each
-document's actual printed structure.
+| | Android app (`app/`) | Website (`web/`) |
+|---|---|---|
+| Runs | Installed APK, fully offline | Any browser; installable, works offline |
+| Stores your garage | On the phone (Room) | In that browser (localStorage) |
+| Reminders | Daily notification for due services & expiring documents | Shown on the dashboard |
+| Move data | Settings → Export / Import | Settings → Export / Import (same JSON file) |
 
-## Two modes — that's the whole privacy model
+## What's inside
 
-The app has exactly two modes, chosen on first launch and changeable anytime in
-**Settings**:
+- **Garage**: nickname, plate, odometer, a health score, the next services due, documents that
+  are expiring, a tip for the current season, and quick actions.
+- **Service planner**: 25 maintenance tasks with Marrakech and factory intervals side by side,
+  break-in milestones (300 · 1,000 · 2,000 · 3,000 km), and limits by km *or* by time. Due-soon
+  and overdue are tracked per task, and you can log one tap as "done today" or record full
+  details.
+- **Digital passport**: the Kymco booklet's stamp schedule (plus the wiki's 2,000 / 8,000 /
+  10,000 km checks) shown as stamps. Each one is marked stamped by a dealer, done, next, or
+  missed. It also shows the warranty end date and the bike's identity (plate, VIN, dealer).
+- **Fuel log**: full-tank L/100 km, cost per km and total spend.
+- **Documents wallet**: insurance, carte grise, licence and warranty, with an expiry countdown.
+- **Manual**: the scanned Driver's Manual (48 p.) and Maintenance Passport (16 p.), with
+  full-text search over their OCR text (FR/AR/EN), a table of contents and bookmarks.
+- **Owner's guide**:
+  - pre-ride and weekly checklist
+  - troubleshooting decision trees (won't start, power loss, noises, overheating)
+  - known failure modes, ranked
+  - 9 step-by-step how-tos
+  - specs and torque table
+  - oil strategy by season
+  - seasonal and storage advice
+  - parts and prices in MAD, with resale timing
+  - riding gear
+- **SOS**: Moroccan emergency numbers (tap to dial), what to do after an accident (declare it to
+  your insurer within 5 days), your insurance number, and approved dealers in Maps.
 
-- **Private Mode** (default). No account, no network call of any kind, no Firebase
-  initialization. Reading, search, bookmarks, and the maintenance logbook all work, stored
-  only in the local Room database.
-- **Sync Mode**. Sign in with Google. The **only** thing that syncs is the maintenance
-  logbook (date / km / notes entries) — bookmarks, recent pages, and settings are always
-  local-only regardless of mode. See `PRIVACY.md` for the full technical breakdown and
-  where to read the enforcement code.
+## Get it
 
-## Build
+**Android**: open the latest [GitHub Release](../../releases/latest) on your phone and install
+`agility-companion.apk` (allow "install unknown apps" once). Each new release installs over the
+previous one and keeps your data.
+
+**Website**: download `agility-companion-web.zip` from the same release, unzip it, and upload
+the files to any static host (GitHub Pages, Netlify, Cloudflare Pages, your own server). It
+is plain HTML/CSS/JS with no server code. To publish it on this repo's GitHub Pages
+automatically, go to *Settings → Pages* and set *Source = GitHub Actions*, then add the
+repository variable `DEPLOY_PAGES=true`.
+
+## Releases
+
+`.github/workflows/build-and-release.yml` runs on every push to `main` (and on `v*` tags):
+
+1. Regenerates the knowledge base and fails if `shared/content/agility50.json` is stale.
+2. Runs the website tests and the Android unit tests. These cover the planner, app ↔ web
+   backup interop, and a Robolectric pass that renders every screen.
+3. Builds the release APK (`versionCode` = run number) and the website zip.
+4. Publishes a GitHub Release `v2.0.<run>` with both files attached. Pull requests get the
+   same files as workflow artifacts.
+
+**Signing**: without secrets, the APK is signed with the committed *sideload* key
+(`app/signing/sideload.keystore`). That keeps every release updatable in place, but the key is
+public, so don't use it for the Play Store. To sign with your own key, add the repository
+secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and
+`RELEASE_KEY_PASSWORD`. Changing keys later means one uninstall, so export a backup first.
+
+## Project layout
 
 ```
-./gradlew assembleDebug
+shared/
+  content/agility50.json   knowledge base (tasks, milestones, specs, guides, trees…) — GENERATED
+  docs/                    owner_manual.pdf, passport.pdf, OCR indexes, toc.json, covers
+  fixtures/                backup-sample.json — the app ↔ web backup contract, tested on both sides
+scripts/
+  content/build_content.py source of the knowledge base → writes shared/content/agility50.json
+  build-web.sh             assembles the website into dist/web
+app/                       Android app (Kotlin, Jetpack Compose, Room, WorkManager)
+  …/domain/                ServicePlanner, FuelStats, Dates — pure Kotlin, unit-tested
+  …/data/                  Room (garage + logbook), content & backup models, repositories
+  …/ui/screens/            garage, service, guide, home (manual), more, settings, reader…
+  …/work/                  ReminderWorker (local), MaintenanceSyncWorker (Sync Mode only)
+web/                       Website (vanilla ES modules, no build step, no framework)
+  js/planner.js            JavaScript twin of ServicePlanner.kt — keep them in sync
+  js/store.js              localStorage + backup import/export
+  js/views-*.js            screens; js/app.js is the hash router
+  sw.js                    offline cache
 ```
-APK output: `app/build/outputs/apk/debug/app-debug.apk`
 
-### About the Gradle wrapper
+The app bundles `shared/docs` and `shared/content` as assets (`sourceSets` in
+`app/build.gradle.kts`). The website build copies the same files, so both always ship the same
+data.
 
-This project's `gradle-wrapper.jar` is a binary normally downloaded from
-`services.gradle.org`, which wasn't reachable from the environment this project was
-generated in. Before building for the first time, generate it once:
+## Develop
 
+```bash
+# Knowledge base: edit the generator, never the JSON
+python3 scripts/content/build_content.py
+
+# Website: build + serve locally
+scripts/build-web.sh && npx http-server dist/web
+node --test web/tests/*.test.mjs
+
+# Android
+./gradlew assembleDebug            # app/build/outputs/apk/debug/app-debug.apk
+./gradlew testDebugUnitTest        # add -PscreenshotsDir=/tmp/shots to save a PNG per screen
 ```
-gradle wrapper --gradle-version 8.7 --distribution-type bin
-```
 
-(requires *some* local Gradle install — Android Studio ships one, or `brew install gradle` /
-your package manager). `.github/workflows/build-apk.yml` does this automatically in CI, so
-a push to this repo produces a downloadable `app-debug.apk` artifact without you needing
-Gradle installed locally at all.
+To change an interval: edit `tasks` in `build_content.py`, regenerate, and run both test suites.
+The planner logic lives twice (`ServicePlanner.kt` and `web/js/planner.js`), and the two test
+files cover the same scenarios to keep them in agreement.
 
-## Sync Mode / Firebase setup
+## Two modes — the privacy model
 
-Sync Mode is disabled until you plug in your own Firebase project — `app/google-services.json`
-in this repo is a **placeholder** with dummy values (syntactically valid so the build
-succeeds, but sign-in will fail until replaced).
+On first launch the app asks for **Private Mode** (default) or **Sync Mode**:
 
-1. **Create a Firebase project**: [console.firebase.google.com](https://console.firebase.google.com) → *Add project*.
-2. **Register the Android app**: package name `com.example.kymcoagility50`. Download the
-   real `google-services.json` and replace `app/google-services.json` with it.
-3. **Enable Google Sign-In**: *Build → Authentication → Sign-in method → Google → Enable*.
-4. **Enable Cloud Firestore**: *Build → Firestore Database → Create database* (production
-   mode is fine).
-5. **Set Firestore security rules** so each user can only read/write their own logbook:
+- **Private Mode**: no account, no network call of any kind, and Firebase is never
+  initialised. Everything works offline.
+- **Sync Mode**: sign in with Google. Only the service logbook syncs (date, km, tasks,
+  milestone, shop, cost, stamp, notes). The bike profile, fuel log, documents, bookmarks and
+  settings always stay local.
+
+See [PRIVACY.md](PRIVACY.md) for what each mode does and where it's enforced in code.
+
+### Sync Mode / Firebase setup
+
+`app/google-services.json` is a **placeholder** (valid enough to build; sign-in fails until you
+replace it).
+
+1. Create a Firebase project and register the Android app `com.example.kymcoagility50` (add
+   `com.example.kymcoagility50.debug` too for debug builds). Download the real
+   `google-services.json` into `app/`.
+2. Enable **Authentication → Google** and **Firestore**.
+3. Firestore rules, so each user only reaches their own logbook:
    ```
    rules_version = '2';
    service cloud.firestore {
@@ -71,30 +148,13 @@ succeeds, but sign-in will fail until replaced).
      }
    }
    ```
-6. Rebuild. Sync Mode's "Sign in with Google" button will now work, and the maintenance
-   logbook will sync to `/users/{uid}/maintenanceEntries/*`.
 
-Nothing else is ever written to Firestore — no bookmarks, no recent pages, no settings, no
-PDF content.
+Entries sync to `/users/{uid}/maintenanceEntries/*`. Nothing else is ever written.
 
-## What's included vs. trimmed from the original brief
+## Sources
 
-The original spec for this app also asked for a dealer-network directory, a bilingual/RTL
-UI, and a quick-reference spec sheet. Per your later request, scope was narrowed to: PDF
-reader (both documents) + search + bookmarks + the maintenance logbook + the two-mode
-toggle. Those other screens aren't built, but nothing here blocks adding them later — the
-`toc.json`/OCR-index structure already covers the passeport's dealer-network pages (13–16)
-if you want to revisit that.
-
-## Project layout
-
-```
-app/src/main/java/com/example/kymcoagility50/
-  privacy/     PrivacyManager, NetworkGuard, AppMode — the enforcement core
-  auth/        AuthManager (Firebase Auth + Google Sign-In, gated by PrivacyManager)
-  work/        MaintenanceSyncWorker, SyncScheduler (WorkManager, Sync Mode only)
-  data/        Room entities/DAOs, repositories, asset-JSON models
-  pdf/         PdfPageRenderer (android.graphics.pdf.PdfRenderer wrapper)
-  ocr/         (ML Kit fallback OCR lives in data/repository/OcrRepository.kt)
-  ui/          Compose screens, nav graph, theme
-```
+Intervals, prices and procedures come from the
+[Kymco Agility 50 4T Marrakech wiki](https://achma-learning.github.io/moto/)
+([repo](https://github.com/achma-learning/moto)). Factory figures come from the official
+Driver's Manual (KN10EM, p.39–40) and the KN10 workshop manual. Icons on the website are from
+[Lucide](https://lucide.dev) (ISC). This project is not affiliated with KYMCO.
