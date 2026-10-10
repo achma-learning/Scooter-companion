@@ -1,0 +1,16 @@
+.gradle/
+build/
+/app/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+/dist/
+captures/
+.externalNativeBuild/
+.cxx/
+*.keystore
+*.jks
+
+# The sideload signing key is committed on purpose (see app/build.gradle.kts).
+!app/signing/sideload.keystore

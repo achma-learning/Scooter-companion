@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 /**
- * On first run for each PDF, seeds Room from the pre-generated assets/*_index.json (real OCR
+ * On first run for each PDF, seeds Room from the pre-generated assets/<pdf>_index.json (real OCR
  * output produced when this project was built — see README). If a page is ever missing from
  * that seed (e.g. a future replacement PDF with different page count), [ocrMissingPages] runs
  * ML Kit Text Recognition entirely on-device to fill the gap; nothing here ever touches the

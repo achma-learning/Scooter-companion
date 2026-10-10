@@ -1,0 +1,2442 @@
+{
+ "schemaVersion": 1,
+ "updated": "2026-10-09",
+ "bike": {
+  "model": "Kymco Agility 50 4T",
+  "code": "KN10EM",
+  "tagline": "Durability over performance — tuned for Marrakech heat, dust and traffic.",
+  "newPriceMad": 16500,
+  "city": "Marrakech",
+  "wiki": "https://achma-learning.github.io/moto/"
+ },
+ "quickSpecs": [
+  {
+   "label": "Engine",
+   "value": "49.5 cc 4T SOHC air-cooled"
+  },
+  {
+   "label": "Power",
+   "value": "2.6 kW @ 7,500 rpm"
+  },
+  {
+   "label": "Engine oil",
+   "value": "700 ml · every 2,000 km"
+  },
+  {
+   "label": "Gear oil",
+   "value": "80W-90 GL-4 · 120-150 ml"
+  },
+  {
+   "label": "Tyres",
+   "value": "F 1.75 bar · R 2.0 bar"
+  },
+  {
+   "label": "Spark plug",
+   "value": "NGK CR7HSA · 0.6-0.7 mm"
+  },
+  {
+   "label": "Valves",
+   "value": "IN/EX 0.08 mm cold"
+  },
+  {
+   "label": "Fuel",
+   "value": "RON 92+ · 5.0 L tank"
+  }
+ ],
+ "specs": [
+  {
+   "group": "Engine",
+   "rows": [
+    [
+     "Type",
+     "4-stroke, SOHC, 2-valve, air-cooled"
+    ],
+    [
+     "Displacement",
+     "49.5 cc"
+    ],
+    [
+     "Bore × stroke",
+     "39.0 × 41.4 mm"
+    ],
+    [
+     "Compression ratio",
+     "11:1"
+    ],
+    [
+     "Compression pressure",
+     "15 ± 2 kg/cm² (~14.7 bar)"
+    ],
+    [
+     "Max power",
+     "2.6 kW (3.5 HP) @ 7,500 rpm"
+    ],
+    [
+     "Max torque",
+     "3.4 N·m @ 7,000 rpm"
+    ],
+    [
+     "Idle speed",
+     "1,700 rpm"
+    ],
+    [
+     "Ignition timing",
+     "BTDC 12° @ 2,000 rpm"
+    ],
+    [
+     "Throttle free play",
+     "2-6 mm"
+    ],
+    [
+     "Carburettor",
+     "Keihin CVK"
+    ],
+    [
+     "Ignition",
+     "CDI"
+    ],
+    [
+     "ECU",
+     "Dellorto LDC8, 16-bit"
+    ],
+    [
+     "Cooling",
+     "Forced air (fan on flywheel)"
+    ],
+    [
+     "Spark plug",
+     "Champion P-RZ9HC (OEM) · Marrakech: NGK CR7HSA · gap 0.6-0.7 mm"
+    ],
+    [
+     "Starting",
+     "Electric + kick start"
+    ],
+    [
+     "Fuel consumption",
+     "< 2 L/100 km"
+    ],
+    [
+     "Top speed",
+     "~70 km/h (Moroccan market) · cruise 45-55 km/h for engine life"
+    ]
+   ]
+  },
+  {
+   "group": "Valve train",
+   "rows": [
+    [
+     "Configuration",
+     "SOHC, 1 intake + 1 exhaust"
+    ],
+    [
+     "Intake clearance",
+     "0.08 mm (cold)"
+    ],
+    [
+     "Exhaust clearance",
+     "0.08 mm (cold)"
+    ],
+    [
+     "Cam chain",
+     "Roller chain, automatic tensioner"
+    ]
+   ]
+  },
+  {
+   "group": "Transmission",
+   "rows": [
+    [
+     "Type",
+     "CVT, V-belt + variator"
+    ],
+    [
+     "Clutch",
+     "Centrifugal, dry · engages ~3,500-4,000 rpm"
+    ],
+    [
+     "Final drive",
+     "Gear reduction in sealed oil bath (no chain)"
+    ],
+    [
+     "Variator rollers",
+     "6 pcs, ~6-7 g · Ø16 mm new · replace < 15.4 mm"
+    ],
+    [
+     "Belt width",
+     "17.5 mm new · replace < 16.5 mm"
+    ],
+    [
+     "Clutch lining limit",
+     "< 2.0 mm = replace"
+    ]
+   ]
+  },
+  {
+   "group": "Fluids & capacities",
+   "rows": [
+    [
+     "Engine oil (factory)",
+     "SAE 15W-40 API SF · 700 ml change / 800 ml rebuild"
+    ],
+    [
+     "Engine oil (Marrakech)",
+     "10W-40 → 10W-50/60 in summer · JASO MB · semi/full synthetic"
+    ],
+    [
+     "Gear oil",
+     "80W-90 GL-4 · 120-150 ml"
+    ],
+    [
+     "Brake fluid",
+     "DOT 4"
+    ],
+    [
+     "Fuel",
+     "Unleaded RON 92 min. · 5.0 L tank"
+    ],
+    [
+     "Coolant",
+     "None — air-cooled"
+    ]
+   ]
+  },
+  {
+   "group": "Tyres & wheels",
+   "rows": [
+    [
+     "Front tyre",
+     "120/70-12"
+    ],
+    [
+     "Rear tyre",
+     "130/70-12"
+    ],
+    [
+     "Front pressure (cold)",
+     "1.75 bar (25 PSI)"
+    ],
+    [
+     "Rear pressure (cold)",
+     "2.0 bar solo (29 PSI) · 2.25 bar two-up (32 PSI)"
+    ],
+    [
+     "Min. tread depth",
+     "1.0 mm"
+    ]
+   ]
+  },
+  {
+   "group": "Brakes",
+   "rows": [
+    [
+     "Front",
+     "Hydraulic disc Ø180 mm, single-piston caliper"
+    ],
+    [
+     "Front disc min.",
+     "3.0 mm · runout 0.3 mm"
+    ],
+    [
+     "Pad min.",
+     "1.0 mm (or wear groove)"
+    ],
+    [
+     "Rear",
+     "Drum Ø110 mm (limit 111 mm)"
+    ],
+    [
+     "Rear shoe lining",
+     "4.0 mm new · 2.0 mm limit"
+    ],
+    [
+     "Lever free play",
+     "10-20 mm"
+    ]
+   ]
+  },
+  {
+   "group": "Electrical",
+   "rows": [
+    [
+     "Battery",
+     "12 V 4 Ah (YTX4L-BS)"
+    ],
+    [
+     "Main fuse",
+     "7 A"
+    ],
+    [
+     "Charging voltage",
+     "13.0-14.5 V (engine running)"
+    ],
+    [
+     "Headlight",
+     "12 V 35/35 W (HS1 / PH7)"
+    ]
+   ]
+  },
+  {
+   "group": "Dimensions & weight",
+   "rows": [
+    [
+     "L × W × H",
+     "1,830 × 690 × 1,130 mm"
+    ],
+    [
+     "Wheelbase",
+     "1,325 mm"
+    ],
+    [
+     "Ground clearance",
+     "110 mm"
+    ],
+    [
+     "Seat height",
+     "~760 mm"
+    ],
+    [
+     "Dry weight",
+     "92.5 kg"
+    ],
+    [
+     "Max load",
+     "150 kg"
+    ]
+   ]
+  }
+ ],
+ "torque": [
+  [
+   "Engine oil drain bolt",
+   "11-15",
+   "Replace copper washer each time"
+  ],
+  [
+   "Oil filter screen cap",
+   "10-20",
+   "30 mm cap"
+  ],
+  [
+   "Gear oil drain bolt",
+   "8-12",
+   "Replace aluminium washer each time"
+  ],
+  [
+   "Spark plug",
+   "10-14",
+   "Hand-tight + 1/4 turn without wrench"
+  ],
+  [
+   "Cylinder head flange nut",
+   "12-16",
+   "Oil the threads, star pattern"
+  ],
+  [
+   "Cylinder head bolts A/B",
+   "7-11",
+   "M6"
+  ],
+  [
+   "Valve adjuster lock nut",
+   "0.7-0.9",
+   ""
+  ],
+  [
+   "Variator (drive face) nut",
+   "54-64",
+   "Holding tool or impact wrench"
+  ],
+  [
+   "Clutch drive-plate nut",
+   "49-59",
+   "39 mm nut"
+  ],
+  [
+   "Clutch outer nut",
+   "34-44",
+   ""
+  ],
+  [
+   "Front axle nut",
+   "49-69",
+   "U-nut — replace"
+  ],
+  [
+   "Rear axle nut",
+   "108-127",
+   "U-nut — replace"
+  ],
+  [
+   "Steering stem lock nut",
+   "78-118",
+   "U-nut"
+  ],
+  [
+   "Brake pad pin bolt",
+   "15-20",
+   ""
+  ],
+  [
+   "Brake caliper bracket bolts",
+   "24-29",
+   "M8 flange"
+  ]
+ ],
+ "categories": [
+  {
+   "id": "oil",
+   "name": "Oils",
+   "icon": "oil"
+  },
+  {
+   "id": "air",
+   "name": "Air & fuel",
+   "icon": "air"
+  },
+  {
+   "id": "cvt",
+   "name": "CVT & drivetrain",
+   "icon": "cvt"
+  },
+  {
+   "id": "engine",
+   "name": "Engine",
+   "icon": "engine"
+  },
+  {
+   "id": "brakes",
+   "name": "Brakes",
+   "icon": "brake"
+  },
+  {
+   "id": "tyres",
+   "name": "Tyres",
+   "icon": "tyre"
+  },
+  {
+   "id": "electrical",
+   "name": "Electrical",
+   "icon": "battery"
+  },
+  {
+   "id": "chassis",
+   "name": "Chassis",
+   "icon": "chassis"
+  }
+ ],
+ "tasks": [
+  {
+   "id": "engine-oil",
+   "cat": "oil",
+   "name": "Engine oil change",
+   "fr": "Vidange huile moteur",
+   "intervalKm": 2000,
+   "intervalMonths": 6,
+   "breakInKm": [
+    300,
+    1000,
+    2000,
+    3000
+   ],
+   "label": "300 · 1,000 · 2,000 · 3,000 km, then every 2,000 km",
+   "factory": "Every 2,000 km",
+   "severity": "critical",
+   "cost": "~100-200 MAD",
+   "guide": "engine-oil",
+   "notes": "700 ml, JASO MB (dry clutch — never MA/MA2). Ipone R4000 SCOOT until 5,000 km, then KATANA SCOOT full synthetic. Summer: 10W-50/10W-60. The one item never to economise on."
+  },
+  {
+   "id": "oil-screen",
+   "cat": "oil",
+   "name": "Oil screen clean",
+   "fr": "Nettoyage crépine d'huile",
+   "intervalKm": 4000,
+   "breakInKm": [
+    300
+   ],
+   "label": "Ideally each oil change · never over 4,000 km",
+   "factory": "Every 4,000 km",
+   "severity": "high",
+   "cost": "Free with oil change",
+   "guide": "engine-oil",
+   "notes": "Centrifugal metal screen. Clean every oil change in summer; absolute max 4,000 km (two oil changes). Replace if torn or deformed."
+  },
+  {
+   "id": "gear-oil",
+   "cat": "oil",
+   "name": "Gear oil change",
+   "fr": "Vidange huile de pont",
+   "intervalKm": 4000,
+   "breakInKm": [
+    300,
+    1000
+   ],
+   "label": "300 · 1,000 km, then every 4,000 km",
+   "factory": "5,000 km (KN10EM) · 4,000 km (KN10EE)",
+   "severity": "high",
+   "cost": "40-60 MAD",
+   "guide": "gear-oil",
+   "notes": "80W-90 GL-4, 120-150 ml. Every other engine oil change. Missed one break-in change? Do it now — the cheapest insurance on the final drive."
+  },
+  {
+   "id": "air-filter-clean",
+   "cat": "air",
+   "name": "Air filter clean",
+   "fr": "Nettoyage filtre à air",
+   "intervalKm": 1000,
+   "intervalMonths": 1,
+   "label": "Every 1,000 km or monthly",
+   "factory": "Every 1,000 km",
+   "severity": "high",
+   "cost": "5 MAD air at the station",
+   "guide": "air-filter",
+   "notes": "Viscous paper element — never liquid. Tap, then blow compressed air from inside out. Re-check idle afterwards. Summer: every 500-750 km and after every dust storm."
+  },
+  {
+   "id": "air-filter-replace",
+   "cat": "air",
+   "name": "Air filter replace",
+   "fr": "Remplacement filtre à air",
+   "intervalKm": 4000,
+   "label": "Every 3,000-5,000 km",
+   "factory": "Every 2,000 km",
+   "severity": "high",
+   "cost": "50-100 MAD",
+   "guide": "air-filter",
+   "notes": "HifloFiltro recommended. Inspect the airbox foam seal every time — a cracked seal bypasses the filter completely. Re-adjust idle after fitting."
+  },
+  {
+   "id": "cvt-foam",
+   "cat": "cvt",
+   "name": "CVT intake foam filter",
+   "fr": "Mousse d'admission CVT",
+   "intervalKm": 1000,
+   "label": "Every 1,000 km",
+   "factory": "—",
+   "severity": "normal",
+   "cost": "Free",
+   "notes": "Small foam on the CVT cover air intake (not the engine filter). A blocked one overheats the belt."
+  },
+  {
+   "id": "pilot-jet",
+   "cat": "air",
+   "name": "Carburettor pilot jet clean",
+   "fr": "Nettoyage gicleur de ralenti",
+   "intervalKm": 6000,
+   "label": "Every 6,000 km or at first symptom",
+   "factory": "Inspect every 4,000 km",
+   "severity": "normal",
+   "cost": "30-50 MAD spray · ~1 h",
+   "guide": "pilot-jet",
+   "notes": "Symptoms: rough idle, stalling at lights, hard cold starts. Never poke jets with wire."
+  },
+  {
+   "id": "fuel-filter",
+   "cat": "air",
+   "name": "Fuel filter replace",
+   "fr": "Filtre à essence",
+   "intervalKm": 6000,
+   "label": "Every 6,000 km",
+   "factory": "Every 8,000 km",
+   "severity": "normal",
+   "cost": "10-20 MAD",
+   "notes": "Inline filter. Look at it every oil change — dark brown means change it now."
+  },
+  {
+   "id": "plug-clean",
+   "cat": "engine",
+   "name": "Spark plug read & clean",
+   "fr": "Bougie — nettoyage",
+   "intervalKm": 2000,
+   "label": "Every 2,000 km",
+   "factory": "Every 2,000 km",
+   "severity": "normal",
+   "cost": "Free",
+   "guide": "plug-reading",
+   "notes": "Brush off carbon, set gap 0.6-0.7 mm. Read the colour — it is a free diagnostic."
+  },
+  {
+   "id": "plug-replace",
+   "cat": "engine",
+   "name": "Spark plug replace",
+   "fr": "Bougie — remplacement",
+   "intervalKm": 5000,
+   "label": "Every 5,000 km",
+   "factory": "Every 5,000 km",
+   "severity": "normal",
+   "cost": "30-50 MAD",
+   "notes": "NGK CR7HSA (one step colder than OEM, for the heat). Gap 0.6-0.7 mm, 10-14 N·m."
+  },
+  {
+   "id": "valves",
+   "cat": "engine",
+   "name": "Valve clearance check",
+   "fr": "Jeu aux soupapes",
+   "intervalKm": 4000,
+   "label": "Every 4,000 km",
+   "factory": "Every 4,000 km",
+   "severity": "high",
+   "cost": "Workshop ~30 min",
+   "notes": "IN 0.08 mm / EX 0.08 mm, engine cold. Clearance drifting fast after adjustment = worn valve guides."
+  },
+  {
+   "id": "cvt-inspect",
+   "cat": "cvt",
+   "name": "CVT belt & roller inspection",
+   "fr": "Inspection courroie et galets",
+   "intervalKm": 5000,
+   "label": "Every 5,000 km",
+   "factory": "Every 8,000 km",
+   "severity": "high",
+   "cost": "Free while open",
+   "guide": "cvt",
+   "notes": "Measure belt width (replace < 16.5 mm), roll each roller on a flat surface, blow out the dust. Rollers are the #1 failure on this bike in heat."
+  },
+  {
+   "id": "rollers",
+   "cat": "cvt",
+   "name": "Variator rollers replace",
+   "fr": "Galets du variateur",
+   "intervalKm": 10000,
+   "label": "Every 10,000 km or first flat spot",
+   "factory": "Every 15,000 km",
+   "severity": "high",
+   "cost": "80-150 MAD (set of 6)",
+   "guide": "cvt",
+   "notes": "Always replace all 6 as a matched set. Stock 6-7 g or slightly heavier for durability."
+  },
+  {
+   "id": "belt",
+   "cat": "cvt",
+   "name": "Drive belt replace",
+   "fr": "Courroie de transmission",
+   "intervalKm": 8000,
+   "label": "Every 8,000 km or < 16.5 mm",
+   "factory": "Every 8,000 km",
+   "severity": "high",
+   "cost": "~180 MAD (OEM)",
+   "guide": "cvt",
+   "notes": "New width 17.5 mm. Measuring is free — replacing at 5,000 km wastes ~40% of belt life."
+  },
+  {
+   "id": "clutch",
+   "cat": "cvt",
+   "name": "Centrifugal clutch inspection",
+   "fr": "Embrayage centrifuge",
+   "intervalKm": 10000,
+   "label": "Every 10,000 km",
+   "factory": "Every 15,000 km",
+   "severity": "normal",
+   "cost": "Workshop",
+   "notes": "Spring tension and lining thickness (< 2.0 mm = replace). Bike creeping at idle = tired springs."
+  },
+  {
+   "id": "throttle-cable",
+   "cat": "chassis",
+   "name": "Throttle cable lubrication",
+   "fr": "Graissage câble d'accélérateur",
+   "intervalKm": 5000,
+   "label": "Every 5,000 km",
+   "factory": "—",
+   "severity": "normal",
+   "cost": "Cable lube ~40 MAD",
+   "guide": "throttle-cable",
+   "notes": "Then verify 2-6 mm free play — the throttle must snap shut."
+  },
+  {
+   "id": "brake-pads",
+   "cat": "brakes",
+   "name": "Brake pads inspection",
+   "fr": "Plaquettes de frein",
+   "intervalKm": 3000,
+   "label": "Every 3,000 km",
+   "factory": "Every 4,000 km",
+   "severity": "critical",
+   "cost": "Pads 80-120 MAD",
+   "notes": "Replace at ≤ 1 mm lining. Scraping noise = metal on metal, stop riding."
+  },
+  {
+   "id": "brake-fluid",
+   "cat": "brakes",
+   "name": "Brake fluid replace",
+   "fr": "Liquide de frein",
+   "intervalKm": 8000,
+   "intervalMonths": 12,
+   "label": "Every 12 months or 8,000 km",
+   "factory": "16,000 km / 4 years",
+   "severity": "critical",
+   "cost": "30-50 MAD",
+   "notes": "DOT 4 from a sealed bottle. Hygroscopic: Marrakech heat drops its boiling point long before the factory interval."
+  },
+  {
+   "id": "caliper",
+   "cat": "brakes",
+   "name": "Brake caliper clean & lube",
+   "fr": "Étrier — nettoyage pistons",
+   "intervalKm": 6000,
+   "label": "Every 6,000 km",
+   "factory": "As needed",
+   "severity": "normal",
+   "cost": "Silicone grease",
+   "guide": "caliper",
+   "notes": "Dust + heat seize the piston. Push back, clean, thin coat of silicone grease."
+  },
+  {
+   "id": "brake-system",
+   "cat": "brakes",
+   "name": "Full brake system inspection",
+   "fr": "Système de freinage",
+   "intervalKm": 10000,
+   "label": "Every 10,000 km",
+   "factory": "—",
+   "severity": "high",
+   "cost": "Workshop",
+   "notes": "Cables, hoses, fluid level/condition, pads and rear shoes."
+  },
+  {
+   "id": "tyre-pressure",
+   "cat": "tyres",
+   "name": "Tyre pressure check",
+   "fr": "Pression des pneus",
+   "intervalDays": 7,
+   "label": "Weekly",
+   "factory": "Monthly",
+   "severity": "high",
+   "cost": "Free",
+   "guide": "tyre-pressure",
+   "notes": "Cold: front 1.75 bar, rear 2.0 bar solo / 2.25 bar two-up. Expect +3-5 PSI when hot."
+  },
+  {
+   "id": "tyre-condition",
+   "cat": "tyres",
+   "name": "Tyre condition check",
+   "fr": "État des pneus",
+   "intervalDays": 7,
+   "label": "Weekly",
+   "factory": "Monthly",
+   "severity": "normal",
+   "cost": "Free",
+   "notes": "Tread ≥ 1 mm, sidewall cracks, embedded debris. Best tyre: Michelin City Grip 2; value: City Extra."
+  },
+  {
+   "id": "battery",
+   "cat": "electrical",
+   "name": "Battery check",
+   "fr": "Batterie",
+   "intervalKm": 2000,
+   "label": "Every 2,000 km",
+   "factory": "Every 2,000 km",
+   "severity": "normal",
+   "cost": "Multimeter",
+   "notes": "> 12.4 V at rest, > 13 V running. Batteries last 2-3 years in Marrakech."
+  },
+  {
+   "id": "starter-brushes",
+   "cat": "electrical",
+   "name": "Starter motor brushes",
+   "fr": "Balais du démarreur",
+   "intervalKm": 15000,
+   "label": "Every 15,000 km",
+   "factory": "Every 20,000 km",
+   "severity": "normal",
+   "cost": "Workshop",
+   "notes": "Slow cranking on a good battery = worn brushes. Kick-start now and then to spare the starter."
+  },
+  {
+   "id": "bolts",
+   "cat": "chassis",
+   "name": "Bolts & fasteners torque check",
+   "fr": "Boulonnerie",
+   "intervalKm": 8000,
+   "label": "Every 8,000 km",
+   "factory": "Every 8,000 km",
+   "severity": "normal",
+   "cost": "Torque wrench",
+   "notes": "Axles, engine mounts, handlebar clamps, caliper bolts. See torque table."
+  }
+ ],
+ "milestones": [
+  {
+   "km": 300,
+   "source": "passport",
+   "title": "Break-in service",
+   "tasks": [
+    "engine-oil",
+    "gear-oil",
+    "oil-screen",
+    "brake-pads",
+    "tyre-pressure",
+    "bolts"
+   ],
+   "actions": "Engine oil + gear oil, oil screen, brakes, throttle play, tyre pressure, general re-tightening."
+  },
+  {
+   "km": 1000,
+   "source": "passport",
+   "title": "2nd break-in service",
+   "tasks": [
+    "engine-oil",
+    "gear-oil",
+    "air-filter-clean"
+   ],
+   "actions": "Engine oil + 2nd gear oil change, air filter clean, fluid checks."
+  },
+  {
+   "km": 2000,
+   "source": "wiki",
+   "title": "End of break-in (wiki addition)",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "air-filter-replace",
+    "battery"
+   ],
+   "actions": "Extra oil change to flush the last break-in particles. Plug read, air filter, battery."
+  },
+  {
+   "km": 3000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "oil-screen",
+    "pilot-jet",
+    "brake-pads"
+   ],
+   "actions": "Engine oil, oil screen, carburettor inspection, brakes."
+  },
+  {
+   "km": 5000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "gear-oil",
+    "plug-replace",
+    "valves",
+    "cvt-inspect",
+    "throttle-cable"
+   ],
+   "actions": "Engine oil + gear oil, new plug, valves, first belt/roller check. Switch to full synthetic."
+  },
+  {
+   "km": 7000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "oil-screen",
+    "pilot-jet",
+    "brake-pads",
+    "fuel-filter"
+   ],
+   "actions": "Engine oil, oil screen, carburettor, brakes, fuel filter."
+  },
+  {
+   "km": 8000,
+   "source": "wiki",
+   "title": "Wear milestone",
+   "tasks": [
+    "belt",
+    "cvt-inspect",
+    "bolts",
+    "brake-fluid"
+   ],
+   "actions": "Belt replacement + roller check, fasteners, brake fluid."
+  },
+  {
+   "km": 9000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "valves",
+    "plug-clean",
+    "air-filter-replace",
+    "gear-oil"
+   ],
+   "actions": "Engine oil, valves, plug, air filter, gear oil."
+  },
+  {
+   "km": 10000,
+   "source": "wiki",
+   "title": "Wear milestone",
+   "tasks": [
+    "rollers",
+    "clutch",
+    "brake-system"
+   ],
+   "actions": "Variator rollers, centrifugal clutch inspection, full brake inspection."
+  },
+  {
+   "km": 11000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "oil-screen",
+    "pilot-jet",
+    "brake-pads"
+   ],
+   "actions": "Engine oil, oil screen, carburettor, brakes."
+  },
+  {
+   "km": 13000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "gear-oil",
+    "air-filter-replace",
+    "plug-replace",
+    "valves"
+   ],
+   "actions": "Engine oil, gear oil, air filter, plug, valves."
+  },
+  {
+   "km": 15000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 17000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil",
+    "belt",
+    "bolts"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 19000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 21000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 23000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 25000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil",
+    "belt",
+    "bolts"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 27000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 29000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 31000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 33000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil",
+    "belt",
+    "bolts"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 35000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 37000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 39000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  },
+  {
+   "km": 41000,
+   "source": "passport",
+   "title": "Service",
+   "tasks": [
+    "engine-oil",
+    "plug-clean",
+    "battery",
+    "oil-screen",
+    "valves",
+    "gear-oil",
+    "belt",
+    "bolts"
+   ],
+   "actions": "Engine oil every 2,000 km; screen, valves and gear oil every 4,000 km; belt every 8,000 km."
+  }
+ ],
+ "checklist": [
+  {
+   "id": "oil-level",
+   "group": "ride",
+   "title": "Engine oil level",
+   "detail": "Dipstick, bike upright on centre stand — between the two marks."
+  },
+  {
+   "id": "tyres-visual",
+   "group": "ride",
+   "title": "Tyres look right",
+   "detail": "Not flat, not bulging. Gauge check weekly."
+  },
+  {
+   "id": "front-brake",
+   "group": "ride",
+   "title": "Front brake lever",
+   "detail": "Firm, no sponge, bites within the first third of travel."
+  },
+  {
+   "id": "rear-brake",
+   "group": "ride",
+   "title": "Rear brake",
+   "detail": "10-20 mm free play before it engages."
+  },
+  {
+   "id": "lights",
+   "group": "ride",
+   "title": "Lights & signals",
+   "detail": "Low/high beam, tail, brake light on both levers, indicators."
+  },
+  {
+   "id": "fuel",
+   "group": "ride",
+   "title": "Fuel level",
+   "detail": "Don't ride on fumes — sediment gets sucked into the carb."
+  },
+  {
+   "id": "throttle",
+   "group": "ride",
+   "title": "Throttle",
+   "detail": "2-6 mm slack, snaps closed when released."
+  },
+  {
+   "id": "mirrors",
+   "group": "ride",
+   "title": "Mirrors",
+   "detail": "Adjusted and tight — vibration loosens them."
+  },
+  {
+   "id": "stand",
+   "group": "ride",
+   "title": "Stands",
+   "detail": "Centre/side stand retract fully and stay up."
+  },
+  {
+   "id": "pressure-gauge",
+   "group": "weekly",
+   "title": "Tyre pressure with gauge",
+   "detail": "Cold: F 1.75 bar · R 2.0 bar (2.25 two-up)."
+  },
+  {
+   "id": "tread",
+   "group": "weekly",
+   "title": "Tyre condition",
+   "detail": "Tread ≥ 1 mm, no sidewall cracks, no embedded debris."
+  },
+  {
+   "id": "fins",
+   "group": "weekly",
+   "title": "Cooling fins clean",
+   "detail": "Brush dust off cylinder & head fins — #1 overheating cause."
+  },
+  {
+   "id": "battery-v",
+   "group": "weekly",
+   "title": "Battery voltage",
+   "detail": "> 12.4 V at rest (engine off)."
+  },
+  {
+   "id": "under-seat",
+   "group": "weekly",
+   "title": "Under-seat area",
+   "detail": "Water ingress, loose items, rodent damage to wiring."
+  },
+  {
+   "id": "cvt-noise",
+   "group": "weekly",
+   "title": "Listen to the CVT",
+   "detail": "Short test ride: no squeal, no grinding from the rear."
+  }
+ ],
+ "localTips": [
+  {
+   "title": "Summer (May-Sep)",
+   "text": "Check cooling fins more often — dust builds up fast at 40 °C+."
+  },
+  {
+   "title": "After a dust storm",
+   "text": "Inspect the air filter immediately; one day can clog it."
+  },
+  {
+   "title": "Parked > 2 weeks",
+   "text": "Drain the carburettor float bowl before restarting — stale fuel varnishes the pilot jet."
+  },
+  {
+   "title": "Rainy season (Oct-Mar)",
+   "text": "Pump the brakes a few times to dry the disc; check for rust."
+  }
+ ],
+ "troubleshooting": [
+  {
+   "id": "wont-start",
+   "title": "Engine won't start",
+   "icon": "key",
+   "start": "kill",
+   "nodes": {
+    "kill": {
+     "q": "Is the kill switch in RUN?",
+     "options": [
+      [
+       "No",
+       "r-kill"
+      ],
+      [
+       "Yes",
+       "battery"
+      ]
+     ]
+    },
+    "battery": {
+     "q": "Battery voltage above 12.4 V (engine off)?",
+     "options": [
+      [
+       "No / not sure it holds",
+       "r-battery"
+      ],
+      [
+       "Yes",
+       "crank"
+      ]
+     ]
+    },
+    "crank": {
+     "q": "Key ON, press start (brake held): does the starter crank?",
+     "options": [
+      [
+       "No — nothing or just a click",
+       "r-nocrank"
+      ],
+      [
+       "Yes, cranks normally",
+       "fire"
+      ]
+     ]
+    },
+    "fire": {
+     "q": "Does the engine fire briefly then die?",
+     "options": [
+      [
+       "Yes, fires but won't stay running",
+       "r-fuel"
+      ],
+      [
+       "No, never fires",
+       "r-spark"
+      ]
+     ]
+    },
+    "r-kill": {
+     "result": "Flip the kill switch to RUN",
+     "text": "Then try again. It happens to everyone.",
+     "level": "ok"
+    },
+    "r-battery": {
+     "result": "Weak or dead battery",
+     "text": "Charge it. If it won't hold a charge, replace (YTX4L-BS, 12 V 4 Ah). Check charging when running: > 13 V. Use the kick-start meanwhile.",
+     "level": "warn"
+    },
+    "r-nocrank": {
+     "result": "Starter circuit",
+     "text": "Check the 7 A fuse, starter relay, connections, side-stand switch (must be up) and that a brake lever is held. All OK → worn starter brushes or seized motor.",
+     "level": "warn"
+    },
+    "r-fuel": {
+     "result": "Fuel delivery — likely the pilot jet",
+     "text": "Check fuel level. Disconnect the line at the carb: fuel should drip. If fuel reaches the carb, the pilot jet is clogged — clean it. Bike sat > 2 weeks in summer? Drain the float bowl first.",
+     "level": "warn",
+     "guide": "pilot-jet"
+    },
+    "r-spark": {
+     "result": "Ignition — check for spark",
+     "text": "Remove the plug, ground it on the head, crank. No spark → CDI, coil, kill-switch wiring. Spark but no fire → fuel not reaching the cylinder (clogged jet, stuck float, empty tank).",
+     "level": "danger",
+     "guide": "plug-reading"
+    }
+   }
+  },
+  {
+   "id": "power",
+   "title": "Poor acceleration",
+   "icon": "speed",
+   "start": "when",
+   "nodes": {
+    "when": {
+     "q": "When does it happen?",
+     "options": [
+      [
+       "At all speeds",
+       "r-all"
+      ],
+      [
+       "Only at low speed / idle",
+       "r-low"
+      ],
+      [
+       "Only at high speed / full throttle",
+       "r-high"
+      ]
+     ]
+    },
+    "r-all": {
+     "result": "General power loss",
+     "text": "Check in order: 1) air filter (clogged = rich), 2) spark plug (fouled/worn), 3) exhaust carbon, 4) valve clearance — tight valves kill compression (IN/EX 0.08 mm cold).",
+     "level": "warn",
+     "guide": "air-filter"
+    },
+    "r-low": {
+     "result": "Low-speed fuel circuit",
+     "text": "Pilot jet clogged (most likely in Marrakech). Also check for a cracked intake rubber (vacuum leak) and the idle air screw.",
+     "level": "warn",
+     "guide": "pilot-jet"
+    },
+    "r-high": {
+     "result": "CVT or main jet",
+     "text": "1) Flat-spotted rollers: revs rise but speed doesn't. 2) Worn belt slips (replace < 16.5 mm). 3) Partly clogged main jet.",
+     "level": "warn",
+     "guide": "cvt"
+    }
+   }
+  },
+  {
+   "id": "noise",
+   "title": "Unusual noise",
+   "icon": "noise",
+   "start": "where",
+   "nodes": {
+    "where": {
+     "q": "What kind of noise?",
+     "options": [
+      [
+       "Ticking from the top of the engine",
+       "tick"
+      ],
+      [
+       "Grinding / whining from the rear",
+       "r-rear"
+      ],
+      [
+       "Squeal on acceleration",
+       "r-squeal"
+      ],
+      [
+       "Scraping when braking",
+       "r-scrape"
+      ]
+     ]
+    },
+    "tick": {
+     "q": "Does the ticking speed up with RPM?",
+     "options": [
+      [
+       "Yes",
+       "r-valves"
+      ],
+      [
+       "No, constant",
+       "r-loose"
+      ]
+     ]
+    },
+    "r-valves": {
+     "result": "Valve clearance out of spec",
+     "text": "Adjust IN/EX 0.08 mm cold. If it drifts again quickly, the valve guides are worn (cylinder head job).",
+     "level": "warn"
+    },
+    "r-loose": {
+     "result": "Probably not the valves",
+     "text": "Look for loose heat shields, exhaust mount bolts or fan shroud contact.",
+     "level": "ok"
+    },
+    "r-rear": {
+     "result": "Final drive",
+     "text": "Check gear oil level first (level with the check-bolt hole, bike upright); top up 80W-90 GL-4. Still noisy → drain and look for metal particles; workshop.",
+     "level": "warn",
+     "guide": "gear-oil"
+    },
+    "r-squeal": {
+     "result": "CVT belt",
+     "text": "Belt worn, glazed or oily. Inspect; replace if < 16.5 mm or shiny. Belt OK → clean variator/clutch drum with brake cleaner. Never oil inside the CVT.",
+     "level": "warn",
+     "guide": "cvt"
+    },
+    "r-scrape": {
+     "result": "Pads worn to metal — stop riding",
+     "text": "Replace the front pads now (min 1 mm lining). Check the disc for deep grooves (min 3.0 mm thickness).",
+     "level": "danger"
+    }
+   }
+  },
+  {
+   "id": "overheat",
+   "title": "Overheating",
+   "icon": "heat",
+   "start": "now",
+   "nodes": {
+    "now": {
+     "q": "Loss of power, pinging, hot or burnt-oil smell?",
+     "options": [
+      [
+       "Yes, right now",
+       "r-now"
+      ],
+      [
+       "It keeps happening",
+       "r-cause"
+      ]
+     ]
+    },
+    "r-now": {
+     "result": "Cool it down",
+     "text": "Lower RPM, avoid full throttle, keep moving at moderate speed for airflow. If pinging/knocking: stop and let it cool 10-15 minutes.",
+     "level": "danger"
+    },
+    "r-cause": {
+     "result": "Find the root cause",
+     "text": "1) Blocked cooling fins (#1 cause here) — brush them. 2) Oil low or old — top up / change. 3) Fan blades or shroud broken. 4) Long idling in traffic on 45 °C days. Still hot → lean mixture, wrong plug, internal damage: workshop. DTC P0217 (> 165 °C) = change the oil now.",
+     "level": "warn",
+     "guide": "engine-oil"
+    }
+   }
+  }
+ ],
+ "failureModes": [
+  {
+   "rank": 1,
+   "name": "CVT variator rollers",
+   "risk": 90,
+   "level": "Highest",
+   "how": "Heat softens the rollers; they flat-spot instead of rolling. Hesitation, RPM hunting, extra belt wear, eventually a snapped belt.",
+   "detect": "Hesitation on acceleration; open the CVT — rollers must be perfectly round, not discoloured.",
+   "prevent": "Inspect every 5,000 km, replace every 10,000 km or at the first flat spot. All 6 together."
+  },
+  {
+   "rank": 2,
+   "name": "Centrifugal clutch springs",
+   "risk": 65,
+   "level": "Medium-high",
+   "how": "Heat weakens spring temper: clutch drags at idle, shoes wear, mushy take-off.",
+   "detect": "Bike creeps at idle with brakes released; engagement below ~3,500 rpm.",
+   "prevent": "Inspect every 10,000 km. Avoid long idling in traffic."
+  },
+  {
+   "rank": 3,
+   "name": "Valve guides",
+   "risk": 55,
+   "level": "Medium",
+   "how": "Air-cooled head in 45 °C heat: guides wear oval. Oil consumption, blue smoke, ticking.",
+   "detect": "Valve clearance drifting quickly after adjustment; rising oil use.",
+   "prevent": "Quality oil every 2,000 km, avoid > 6,500 rpm in heat, keep fins clean."
+  },
+  {
+   "rank": 4,
+   "name": "Carburettor pilot jet",
+   "risk": 55,
+   "level": "Medium",
+   "how": "Fine dust + fuel sediment block the tiny orifice. Rough idle, stalling, hard starts.",
+   "detect": "Hold the jet to the light — the hole must be perfectly clear.",
+   "prevent": "Air filter discipline, inline fuel filter, fresh fuel (< 2-3 weeks)."
+  },
+  {
+   "rank": 5,
+   "name": "Brake caliper piston",
+   "risk": 40,
+   "level": "Medium-low",
+   "how": "Dust and heat cycles corrode the piston; brake drags, pads wear unevenly.",
+   "detect": "Wheel doesn't spin freely, disc very hot after riding.",
+   "prevent": "Clean & grease every 6,000 km; brake fluid every 12 months."
+  },
+  {
+   "rank": 6,
+   "name": "Starter motor brushes",
+   "risk": 25,
+   "level": "Lower",
+   "how": "Stop-and-go traffic means many starts; brushes wear down.",
+   "detect": "Slow cranking with a healthy battery (> 12.4 V).",
+   "prevent": "Inspect at 15,000 km; use the kick-start sometimes."
+  },
+  {
+   "rank": 7,
+   "name": "Air filter housing seal",
+   "risk": 25,
+   "level": "Lower",
+   "how": "Heat hardens the foam seal; unfiltered dust goes straight into the engine.",
+   "detect": "At each filter service: the seal must be soft and springy, no dust tracks.",
+   "prevent": "Treat the 10-20 MAD seal as a consumable; thin silicone grease."
+  }
+ ],
+ "guides": [
+  {
+   "id": "engine-oil",
+   "title": "Engine oil change",
+   "interval": "Every 2,000 km",
+   "time": "15 min",
+   "difficulty": "Easy",
+   "need": [
+    "700-800 ml 10W-40 JASO MB 4T oil",
+    "17 mm socket",
+    "New M12 copper crush washer",
+    "Drain pan, funnel, rags"
+   ],
+   "steps": [
+    [
+     "Warm the engine",
+     "2-3 minutes. Warm oil drains faster and carries more dirt out."
+    ],
+    [
+     "Position the bike",
+     "Centre stand on flat ground, drain pan under the engine."
+    ],
+    [
+     "Open the dipstick/fill cap",
+     "Lets air in so it drains faster."
+    ],
+    [
+     "Remove the drain plug",
+     "17 mm bolt, bottom-right of the crankcase. Drain 3-5 minutes."
+    ],
+    [
+     "Clean the oil screen",
+     "30 mm cap — clean the metal screen, replace if torn (10-20 N·m)."
+    ],
+    [
+     "Refit the drain plug",
+     "New copper washer, 11-15 N·m. Aluminium case — do not over-tighten."
+    ],
+    [
+     "Fill ~700 ml",
+     "Through the dipstick hole. Check by resting the dipstick, not screwing it in."
+    ],
+    [
+     "Run 30 s and recheck",
+     "Idle, stop, wait 1 minute, top up between the marks."
+    ],
+    [
+     "Check for leaks",
+     "Wipe the plug and look again after a short ride."
+    ]
+   ],
+   "tips": [
+    [
+     "warn",
+     "Don't confuse the plugs",
+     "Engine drain: right side, 17 mm. Gear oil drain: left rear, 12 mm."
+    ]
+   ]
+  },
+  {
+   "id": "gear-oil",
+   "title": "Gear oil change",
+   "interval": "300 · 1,000 km, then every 4,000 km",
+   "time": "10 min",
+   "difficulty": "Easy",
+   "need": [
+    "~150 ml 80W-90 GL-4",
+    "12 mm socket",
+    "New aluminium washer",
+    "Syringe or squeeze bottle"
+   ],
+   "steps": [
+    [
+     "Centre stand, level ground",
+     "Pan under the left rear of the engine."
+    ],
+    [
+     "Remove the fill/check bolt first",
+     "Upper bolt on the left gear case — proves you can refill before you drain."
+    ],
+    [
+     "Remove the drain plug",
+     "Lower 12 mm bolt. Drains in ~2 minutes."
+    ],
+    [
+     "Inspect the old oil",
+     "Dark amber is normal. Grey, milky or glittering → have the gears checked."
+    ],
+    [
+     "Refit the drain plug",
+     "New washer, 8-12 N·m."
+    ],
+    [
+     "Fill through the check hole",
+     "Until oil just seeps out with the bike upright — that is the level."
+    ],
+    [
+     "Refit the check bolt",
+     "New washer, snug."
+    ]
+   ],
+   "tips": []
+  },
+  {
+   "id": "air-filter",
+   "title": "Air filter service",
+   "interval": "Clean 1,000 km · replace 3,000-5,000 km",
+   "time": "10 min",
+   "difficulty": "Easy",
+   "need": [
+    "Screwdriver",
+    "Compressed air (5 MAD at the station)",
+    "New element when due (HifloFiltro)"
+   ],
+   "steps": [
+    [
+     "Remove the cover",
+     "Left side, under the body panel."
+    ],
+    [
+     "Pull the element",
+     "It is viscous paper, not foam."
+    ],
+    [
+     "Inspect",
+     "Torn, crumbling or caked → replace."
+    ],
+    [
+     "Clean",
+     "Tap out dust, blow air from the inside out only. Never water, soap or oil."
+    ],
+    [
+     "Check the housing seal",
+     "Soft and springy. Hard or cracked → replace (10-20 MAD)."
+    ],
+    [
+     "Wipe the airbox and refit",
+     "No gaps — any unfiltered air is dust in the cylinder."
+    ],
+    [
+     "Re-check idle",
+     "A clean filter changes the mixture; adjust the idle screw if needed."
+    ]
+   ],
+   "tips": [
+    [
+     "tip",
+     "Dust storms",
+     "After a storm or construction zone, check it the same day."
+    ]
+   ]
+  },
+  {
+   "id": "tyre-pressure",
+   "title": "Tyre pressure check",
+   "interval": "Weekly",
+   "time": "2 min",
+   "difficulty": "Trivial",
+   "need": [
+    "Digital gauge (30-50 MAD)"
+   ],
+   "steps": [
+    [
+     "Check cold",
+     "Before riding or 30+ min after. Heat adds 2-4 PSI."
+    ],
+    [
+     "Front",
+     "1.75 bar (25 PSI)."
+    ],
+    [
+     "Rear",
+     "2.0 bar (29 PSI) solo · 2.25 bar (32 PSI) two-up."
+    ],
+    [
+     "Valve caps",
+     "On, and no cracks at the valve base."
+    ],
+    [
+     "Look while you're there",
+     "Tread ≥ 1 mm, sidewalls, nails, uneven wear."
+    ]
+   ],
+   "tips": []
+  },
+  {
+   "id": "pilot-jet",
+   "title": "Pilot jet cleaning",
+   "interval": "Every 6,000 km or at first symptom",
+   "time": "30-45 min",
+   "difficulty": "Medium",
+   "need": [
+    "Carb cleaner spray",
+    "Compressed air",
+    "Small flat + Phillips screwdrivers",
+    "Tray for small parts"
+   ],
+   "steps": [
+    [
+     "Fuel off",
+     "Close the petcock or clamp the line."
+    ],
+    [
+     "Remove the carburettor",
+     "Loosen manifold and airbox clamps, unhook choke and throttle cables."
+    ],
+    [
+     "Remove the float bowl",
+     "4 screws underneath — catch the fuel."
+    ],
+    [
+     "Remove the pilot jet",
+     "Small brass jet near the centre."
+    ],
+    [
+     "Clean it",
+     "Spray both directions, hold to light: clean round hole. Soak 15 min if blocked."
+    ],
+    [
+     "Clean the main jet too",
+     "Same method."
+    ],
+    [
+     "Spray every passage",
+     "Then compressed air."
+    ],
+    [
+     "Clean the bowl",
+     "Remove varnish; check the float needle and seat."
+    ],
+    [
+     "Reassemble",
+     "Jets snug only (brass strips). Bowl screws evenly."
+    ],
+    [
+     "Refit and idle 2 minutes",
+     "Reconnect, open fuel, let it stabilise."
+    ]
+   ],
+   "tips": [
+    [
+     "warn",
+     "Never poke jets with wire",
+     "It enlarges the orifice and permanently changes the mixture."
+    ]
+   ]
+  },
+  {
+   "id": "cvt",
+   "title": "CVT belt & roller inspection",
+   "interval": "Every 5,000 km",
+   "time": "30 min",
+   "difficulty": "Medium",
+   "need": [
+    "Socket set",
+    "Variator holding tool or impact wrench",
+    "Caliper",
+    "Compressed air, rags"
+   ],
+   "steps": [
+    [
+     "Remove the CVT cover",
+     "Left side; note bolt lengths."
+    ],
+    [
+     "Inspect the belt",
+     "Cracks, fraying, glazing. Width: 17.5 mm new, replace < 16.5 mm."
+    ],
+    [
+     "Blow out the dust",
+     "Belt dust and grit act as abrasive."
+    ],
+    [
+     "Remove the variator face",
+     "Holding tool; nut is 54-64 N·m on refit."
+    ],
+    [
+     "Inspect the 6 rollers",
+     "Roll each on a flat surface: smooth, round, same size (Ø16 mm new, < 15.4 mm = replace)."
+    ],
+    [
+     "Check the ramp plate",
+     "Smooth, no scoring."
+    ],
+    [
+     "Reassemble",
+     "Any flat spot → replace all 6. Tighten the cover in a star pattern."
+    ]
+   ],
+   "tips": [
+    [
+     "tip",
+     "Roller weight",
+     "Stock 6-7 g. Slightly heavier = lower cruising RPM = longer engine life."
+    ]
+   ]
+  },
+  {
+   "id": "caliper",
+   "title": "Brake caliper piston service",
+   "interval": "Every 6,000 km",
+   "time": "20 min",
+   "difficulty": "Medium",
+   "need": [
+    "Brake cleaner",
+    "Brake silicone grease",
+    "C-clamp"
+   ],
+   "steps": [
+    [
+     "Remove the caliper",
+     "Two bolts; don't let it hang on the hose."
+    ],
+    [
+     "Remove the pads",
+     "Note their orientation."
+    ],
+    [
+     "Push the piston out ~5 mm",
+     "Gently with the lever — not all the way."
+    ],
+    [
+     "Clean the piston",
+     "Brake cleaner + clean rag."
+    ],
+    [
+     "Thin coat of silicone grease",
+     "Brake-specific only — never petroleum grease near seals."
+    ],
+    [
+     "Push it back evenly",
+     "C-clamp, slowly."
+    ],
+    [
+     "Clean pins and guides",
+     "Fresh grease."
+    ],
+    [
+     "Refit and pump the lever",
+     "Before riding!"
+    ]
+   ],
+   "tips": []
+  },
+  {
+   "id": "throttle-cable",
+   "title": "Throttle cable lubrication",
+   "interval": "Every 5,000 km",
+   "time": "15 min",
+   "difficulty": "Easy",
+   "need": [
+    "Cable lubricant",
+    "Cable luber tool (optional)",
+    "Rags"
+   ],
+   "steps": [
+    [
+     "Unhook at the carburettor",
+     "Loosen the adjuster lock nut."
+    ],
+    [
+     "Hold the cable vertical",
+     "Carb end up."
+    ],
+    [
+     "Lubricate",
+     "Luber tool or drip light oil into the sheath."
+    ],
+    [
+     "Work the cable",
+     "Pull in and out to spread it."
+    ],
+    [
+     "Reconnect and set free play",
+     "2-6 mm at the grip; throttle snaps shut."
+    ],
+    [
+     "Steering test",
+     "Full lock left and right: RPM must not change."
+    ]
+   ],
+   "tips": [
+    [
+     "warn",
+     "Free play matters",
+     "Too little free play = throttle may not close fully."
+    ]
+   ]
+  },
+  {
+   "id": "plug-reading",
+   "title": "Spark plug reading",
+   "interval": "At every plug check",
+   "time": "5 min",
+   "difficulty": "Easy",
+   "need": [
+    "Plug socket",
+    "Feeler gauge"
+   ],
+   "steps": [
+    [
+     "Light tan / light brown",
+     "Ideal. Nothing to do."
+    ],
+    [
+     "White / light grey / blistered",
+     "Lean: vacuum leak, fuel filter, missing air filter. Mild lean is normal at 460 m."
+    ],
+    [
+     "Dark / sooty and dry",
+     "Rich: clogged air filter or choke stuck."
+    ],
+    [
+     "Black and wet / oily",
+     "Oil fouling: guides or rings. Check oil use (> 100 ml/1,000 km = wear)."
+    ],
+    [
+     "Heavy crusty deposits",
+     "Too much idling / running rich — clean or replace."
+    ],
+    [
+     "Rounded electrode",
+     "End of life — replace, gap 0.6-0.7 mm."
+    ]
+   ],
+   "tips": []
+  }
+ ],
+ "seasons": [
+  {
+   "id": "summer",
+   "name": "Summer",
+   "months": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "range": "May-Sep · 35-48 °C",
+   "headline": "The hardest season on an air-cooled engine.",
+   "rows": [
+    [
+     "Engine oil",
+     "Check twice a week. 1,500 km in Jul-Aug or switch to 10W-50/10W-60."
+    ],
+    [
+     "Tyre pressure",
+     "Check cold, early morning (+3-5 PSI when hot)."
+    ],
+    [
+     "Riding",
+     "Avoid sustained high RPM 12:00-16:00."
+    ],
+    [
+     "Cooling fins",
+     "Brush them weekly."
+    ],
+    [
+     "Air filter",
+     "Clean every 500-750 km and after every dust storm."
+    ],
+    [
+     "Parking",
+     "Shade or a cover: UV kills plastics, seals and tyres."
+    ],
+    [
+     "CVT belt",
+     "Watch for glazing."
+    ]
+   ]
+  },
+  {
+   "id": "winter",
+   "name": "Winter",
+   "months": [
+    11,
+    12,
+    1,
+    2
+   ],
+   "range": "Nov-Feb · 5-15 °C mornings",
+   "headline": "Cold starts and condensation.",
+   "rows": [
+    [
+     "Cold start",
+     "Warm up 30-60 s before riding."
+    ],
+    [
+     "Tyre pressure",
+     "Drops ~1 PSI per 5 °C — check more often."
+    ],
+    [
+     "Fuel",
+     "Keep the tank full, use fuel within 2-3 weeks."
+    ],
+    [
+     "Brakes",
+     "First stops are weaker; 3-4 applications to warm up."
+    ],
+    [
+     "Battery",
+     "Charge if below 12.2 V; capacity drops 20-30%."
+    ],
+    [
+     "Rain",
+     "Dry the brakes with light applications afterwards."
+    ]
+   ]
+  },
+  {
+   "id": "transition",
+   "name": "Spring & autumn",
+   "months": [
+    3,
+    4,
+    10
+   ],
+   "range": "Mar-Apr · Sep-Oct · 20-30 °C",
+   "headline": "Best time for the big services.",
+   "rows": [
+    [
+     "CVT",
+     "Belt & rollers before summer."
+    ],
+    [
+     "Brakes",
+     "Clean calipers, new fluid."
+    ],
+    [
+     "Valves",
+     "Comfortable garage temperature for the check."
+    ],
+    [
+     "Fluids",
+     "Fresh oil going into summer."
+    ],
+    [
+     "Air filter",
+     "New element before the dusty season."
+    ],
+    [
+     "Cables",
+     "Lubricate throttle and brake cables."
+    ]
+   ]
+  }
+ ],
+ "storage": [
+  "Drain the carburettor float bowl — stale fuel varnishes the pilot jet in 2-3 weeks.",
+  "Fill the tank to limit condensation.",
+  "Battery maintainer, or disconnect the negative terminal.",
+  "Breathable cover against dust, UV and rain.",
+  "Before restarting: oil, tyres, brakes, battery; idle 2-3 minutes."
+ ],
+ "oilStrategy": [
+  {
+   "period": "0 → 5,000 km (break-in)",
+   "oil": "Ipone R4000 SCOOT 10W-40 semi-synthetic",
+   "price": "~120 MAD/L",
+   "interval": "2,000 km"
+  },
+  {
+   "period": "After 5,000 km",
+   "oil": "Ipone KATANA SCOOT full synthetic",
+   "price": "~150 MAD/L",
+   "interval": "2,500-3,000 km"
+  },
+  {
+   "period": "Nov-Apr",
+   "oil": "10W-40 full synthetic (e.g. Motul 7100)",
+   "price": "~120 MAD/L",
+   "interval": "2,000 km"
+  },
+  {
+   "period": "May-Oct",
+   "oil": "10W-50 / 15W-50 full synthetic",
+   "price": "~130-140 MAD/L",
+   "interval": "2,000 km"
+  },
+  {
+   "period": "Jul-Aug heatwaves",
+   "oil": "10W-60 full synthetic (Motul 7100)",
+   "price": "~140-150 MAD/L",
+   "interval": "1,500-2,000 km"
+  },
+  {
+   "period": "High-mileage engine",
+   "oil": "20W-50 / 20W-60",
+   "price": "~70-140 MAD/L",
+   "interval": "1,500 km"
+  }
+ ],
+ "warnings": [
+  {
+   "title": "Never mix the two oils",
+   "text": "Engine 10W-40 (right, 17 mm drain) vs gear 80W-90 (left rear, 12 mm drain). Label your bottles ENGINE and GEARS."
+  },
+  {
+   "title": "JASO MB, not MA",
+   "text": "Dry centrifugal clutch: the oil must be JASO MB scooter-rated."
+  },
+  {
+   "title": "CVT rollers fail first",
+   "text": "Inspect every 5,000 km; replace at the first flat spot."
+  },
+  {
+   "title": "Keep the passport stamped",
+   "text": "Dealer stamps preserve the warranty and are the #1 resale argument."
+  }
+ ],
+ "parts": [
+  [
+   "Engine oil Motul 5100 1 L",
+   "10W-40 semi-synthetic 4T",
+   "~90",
+   "Marjane, Total, moto shops"
+  ],
+  [
+   "Engine oil Motul 7100 1 L",
+   "10W-40 full synthetic 4T",
+   "~120",
+   "Marjane, Total"
+  ],
+  [
+   "Ipone R4000 / KATANA SCOOT 1 L",
+   "Scooter 4T, JASO MB",
+   "120-150",
+   "Mob Shop Marrakech"
+  ],
+  [
+   "Gear oil",
+   "80W-90 GL-4",
+   "40-60",
+   "Marjane, auto parts"
+  ],
+  [
+   "Air filter element",
+   "Viscous paper (HifloFiltro)",
+   "50-100",
+   "la-becanerie.com, AliExpress"
+  ],
+  [
+   "Spark plug",
+   "NGK CR7HSA",
+   "30-50",
+   "Moto shops, Jumia"
+  ],
+  [
+   "Variator rollers ×6",
+   "~6-7 g",
+   "80-150",
+   "la-becanerie.com, AliExpress"
+  ],
+  [
+   "Drive belt",
+   "OEM in QR-code bag",
+   "150-250",
+   "Dealer, la-becanerie.com"
+  ],
+  [
+   "Front brake pads",
+   "Disc pads",
+   "80-120",
+   "la-becanerie.com, local"
+  ],
+  [
+   "Brake fluid",
+   "DOT 4 sealed",
+   "30-50",
+   "Marjane, auto parts"
+  ],
+  [
+   "Drain plug washer",
+   "M12 copper",
+   "5-10",
+   "Hardware / moto shop"
+  ],
+  [
+   "Inline fuel filter",
+   "Universal 6 mm",
+   "10-20",
+   "Auto parts, AliExpress"
+  ],
+  [
+   "Tyre (single, fitted)",
+   "120/70-12 or 130/70-12",
+   "~390",
+   "Dealer"
+  ],
+  [
+   "Michelin City Grip 2 pair",
+   "Best all-round",
+   "1,400-1,800",
+   "Tyre shops"
+  ],
+  [
+   "Michelin City Extra pair",
+   "Best value / longevity",
+   "1,000-1,400",
+   "Tyre shops"
+  ]
+ ],
+ "fixedCosts": [
+  [
+   "Insurance Assur'Auto (Sanlam)",
+   "~1,490 MAD / year",
+   "Mandatory third-party. Renew before expiry to keep the 2-year loyalty discount."
+  ],
+  [
+   "Puncture spray",
+   "45-85 MAD",
+   "Single use, keep under the seat."
+  ],
+  [
+   "Consumables (Marrakech schedule)",
+   "800-1,200 MAD / year",
+   "Oil ×8, filters, plugs, rollers, pads at ~10,000 km/yr."
+  ]
+ ],
+ "shops": [
+  {
+   "name": "Mob Shop Marrakech",
+   "role": "Approved dealer · Ipone oils · Givi",
+   "note": "Buy your Ipone oil here.",
+   "maps": "https://maps.app.goo.gl/8FxCpBamqrrCg8E58"
+  },
+  {
+   "name": "YOUKA Moto",
+   "role": "Approved dealer · parts & service",
+   "note": "Best value labour — default for routine services (warranty kept).",
+   "maps": "https://maps.app.goo.gl/bPLLqb4zcaG59mLZ8"
+  }
+ ],
+ "emergency": [
+  {
+   "label": "Police",
+   "number": "19",
+   "note": "In town"
+  },
+  {
+   "label": "Gendarmerie Royale",
+   "number": "177",
+   "note": "Outside town / highways"
+  },
+  {
+   "label": "Fire & ambulance (Protection Civile)",
+   "number": "15",
+   "note": ""
+  },
+  {
+   "label": "SAMU (medical emergency)",
+   "number": "141",
+   "note": ""
+  },
+  {
+   "label": "Emergency from any mobile",
+   "number": "112",
+   "note": ""
+  }
+ ],
+ "accidentSteps": [
+  "Get safe: hazard position, off the road, check injuries — call 15 / 19 / 177.",
+  "Photograph everything: positions, damage, plates, the road.",
+  "Take the other party's plate, insurance certificate and licence details; note a witness.",
+  "Fill a constat amiable if both agree; never sign what you don't understand.",
+  "Declare to your insurer within 5 days (in writing or against a receipt) — later = loss of cover.",
+  "Do not repair before the insurer's expert has seen the damage."
+ ],
+ "documentTypes": [
+  {
+   "id": "insurance",
+   "label": "Insurance certificate",
+   "fr": "Attestation d'assurance",
+   "remindDays": 15,
+   "hint": "Renew before expiry — one uncovered day resets the loyalty discount."
+  },
+  {
+   "id": "registration",
+   "label": "Registration (carte grise)",
+   "fr": "Carte grise",
+   "remindDays": 30,
+   "hint": "Keep it under the seat with the insurance certificate."
+  },
+  {
+   "id": "licence",
+   "label": "Driving licence",
+   "fr": "Permis de conduire",
+   "remindDays": 60,
+   "hint": "An expired licence voids insurance cover."
+  },
+  {
+   "id": "warranty",
+   "label": "Warranty",
+   "fr": "Garantie constructeur",
+   "remindDays": 30,
+   "hint": "Keep services stamped by an approved dealer."
+  },
+  {
+   "id": "id",
+   "label": "National ID (CIN)",
+   "fr": "CIN",
+   "remindDays": 60,
+   "hint": ""
+  },
+  {
+   "id": "other",
+   "label": "Other",
+   "fr": "Autre",
+   "remindDays": 15,
+   "hint": ""
+  }
+ ],
+ "gear": [
+  {
+   "tier": "Essentials",
+   "items": [
+    [
+     "Jet helmet ECE 22.06, white, dual visor",
+     "Mandatory standard; white is cooler and more visible."
+    ],
+    [
+     "Riding jacket with shoulder/elbow armour",
+     "~300 MAD used/import; get a vented one for summer."
+    ],
+    [
+     "Gloves",
+     "Vented in summer, windproof long gloves Nov-Feb."
+    ],
+    [
+     "U-lock / disc lock with alarm",
+     "Anchor to a fixed point + steering lock every time."
+    ]
+   ]
+  },
+  {
+   "tier": "Visibility (< 200 MAD total)",
+   "items": [
+    [
+     "Hi-vis vest",
+     "~30-60 MAD — essential at night."
+    ],
+    [
+     "Reflective strips / LED bar",
+     "~30-80 MAD."
+    ],
+    [
+     "Sunglasses",
+     "Low evening sun is a real accident factor."
+    ]
+   ]
+  },
+  {
+   "tier": "Comfort",
+   "items": [
+    [
+     "Givi B29 Monolock top case 29 L",
+     "~650 MAD at Mob Shop. Max 3 kg! Add the E176 backrest for passengers."
+    ],
+    [
+     "Mirror-mount phone holder",
+     "Less vibration than handlebar mounts — protects your camera's OIS."
+    ],
+    [
+     "Breathable cover",
+     "Protects plastics and resale value."
+    ]
+   ]
+  }
+ ],
+ "docs": [
+  {
+   "id": "MANUAL",
+   "title": "Driver's Manual",
+   "subtitle": "Official Kymco owner's handbook · English · 48 pages",
+   "file": "owner_manual.pdf",
+   "index": "manual_index.json",
+   "cover": "cover_manual.jpg",
+   "pages": 48,
+   "highlights": [
+    {
+     "label": "Maintenance chart",
+     "page": 39
+    },
+    {
+     "label": "Specifications",
+     "page": 40
+    },
+    {
+     "label": "Pre-ride inspection",
+     "page": 16
+    }
+   ]
+  },
+  {
+   "id": "PASSPORT",
+   "title": "Maintenance Passport",
+   "subtitle": "Passeport d'entretien · Français / العربية · 16 pages",
+   "file": "passport.pdf",
+   "index": "passport_index.json",
+   "cover": "cover_passport.jpg",
+   "pages": 16,
+   "highlights": [
+    {
+     "label": "Warranty conditions",
+     "page": 3
+    },
+    {
+     "label": "Service stamps",
+     "page": 7
+    },
+    {
+     "label": "Dealer network",
+     "page": 13
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "title": "Marrakech maintenance wiki",
+   "url": "https://achma-learning.github.io/moto/"
+  },
+  {
+   "title": "Workshop manual (KN10EM)",
+   "url": "https://web.archive.org/web/20260310223918/https://www.azmotors.fr/eclates/MANUEL/PIECES_KYMCO/AGILITY-50-4T-E5-KN10EM-manuel-atelier.pdf"
+  },
+  {
+   "title": "Parts catalogue (exploded views)",
+   "url": "https://www.bike-parts-kymco.uk/kymco-motorcycle/50-SCOOTER/AGILITY"
+  },
+  {
+   "title": "Ipone 4T scooter oils",
+   "url": "https://www.ipone.com/en/motor-oil-ranges/4-stroke-scooters"
+  },
+  {
+   "title": "Kymco Maroc (Instagram)",
+   "url": "https://www.instagram.com/kymco.maroc/"
+  },
+  {
+   "title": "Mhido Motors repair videos",
+   "url": "https://www.youtube.com/@Mhidomotorskymco"
+  },
+  {
+   "title": "Avito — Agility listings",
+   "url": "https://www.avito.ma/fr/maroc/motos/kymco__agility_--%C3%A0_vendre"
+  }
+ ],
+ "resale": {
+  "headline": "Sell around 4-5 years or 40,000 km, whichever first.",
+  "text": "Before ~40,000 km you pay only consumables; after, guides, clutch, shocks and starter arrive together. Used Agility 50s trade at 5,500-14,500 MAD on Avito — a documented, stamped service history is the #1 price argument.",
+  "targetKm": 40000,
+  "targetYears": 5
+ }
+}

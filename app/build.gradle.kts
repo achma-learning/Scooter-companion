@@ -14,20 +14,55 @@ android {
         applicationId = "com.example.kymcoagility50"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        // CI passes the run number so every GitHub Release carries an upgradable APK.
+        versionCode = (System.getenv("APP_VERSION_CODE") ?: "2").toInt()
+        versionName = System.getenv("APP_VERSION_NAME") ?: "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Release signing. With CI secrets (see README "Releases") the APK is signed with your
+    // private key. Otherwise it uses the committed *sideload* key below, so every GitHub
+    // Release is signed identically and installs as an update over the previous one (a
+    // per-runner debug key would force an uninstall — and wipe the garage — each release).
+    // The sideload key is public by design: fine for sideloading, not for the Play Store.
+    val releaseKeystore = System.getenv("RELEASE_KEYSTORE_PATH")?.let { file(it) }?.takeIf { it.exists() }
+    signingConfigs {
+        create("sideload") {
+            storeFile = file("signing/sideload.keystore")
+            storePassword = "agility-sideload"
+            keyAlias = "sideload"
+            keyPassword = "agility-sideload"
+        }
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = releaseKeystore
+                storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = true
+            // R8 stays off: Room, kotlinx-serialization and Firebase reflection make a
+            // shrunk build risky to ship untested, and the APK is dominated by the PDFs anyway.
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName(if (releaseKeystore != null) "release" else "sideload")
         }
         debug {
             isMinifyEnabled = false
             applicationIdSuffix = ".debug"
+        }
+    }
+
+    // The PDFs, OCR indexes and the Agility 50 knowledge base live in /shared so the website
+    // ships exactly the same data; they're bundled here as flat assets.
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("src/main/assets", "../shared/docs", "../shared/content")
         }
     }
 
@@ -42,6 +77,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
+        )
     }
 
     buildFeatures {
@@ -51,11 +90,27 @@ android {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
 
+    testOptions {
+        unitTests {
+            // Robolectric renders the Compose screens (with the bundled assets) on the JVM.
+            isIncludeAndroidResources = true
+            all {
+                it.systemProperty("screenshots.dir", project.findProperty("screenshotsDir")?.toString() ?: "")
+                it.maxHeapSize = "2g"
+            }
+        }
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+ksp {
+    // Exported Room schemas (app/schemas) document every migration step.
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -107,6 +162,10 @@ dependencies {
 
     // Testing
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("androidx.test:core-ktx:1.6.1")
+    testImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))

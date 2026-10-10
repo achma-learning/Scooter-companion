@@ -1,0 +1,29 @@
+{
+  "format": "agility-companion",
+  "version": 1,
+  "exportedAt": "2026-10-09T20:00:00Z",
+  "bike": {
+    "nickname": "Zitoun",
+    "plate": "12345-A-40",
+    "vin": "RFBKN10EM0000001",
+    "engineNo": "",
+    "color": "Red",
+    "purchaseDate": "2025-11-09",
+    "purchaseKm": 0,
+    "dealer": "YOUKA Moto",
+    "warrantyMonths": 24
+  },
+  "odometer": [{ "date": "2026-10-09", "km": 2890 }],
+  "services": [
+    { "date": "2026-05-09", "km": 2040, "tasks": ["engine-oil", "plug-clean"], "milestone": 2000, "shop": "DIY", "cost": 180, "stamped": false, "notes": "" },
+    { "date": "2025-12-09", "km": 310, "tasks": ["engine-oil", "gear-oil", "oil-screen"], "milestone": 300, "shop": "YOUKA Moto", "cost": 150.5, "stamped": true, "notes": "First service" }
+  ],
+  "fuel": [
+    { "date": "2026-09-19", "km": 2600, "liters": 4.1, "cost": 55, "full": true },
+    { "date": "2026-09-30", "km": 2790, "liters": 3.6, "cost": null, "full": true }
+  ],
+  "documents": [
+    { "type": "insurance", "title": "Assur'Auto — Sanlam", "number": "AU-2025-8841", "expiry": "2026-10-18", "notes": "" }
+  ],
+  "preRide": { "last": "2026-10-08" }
+}
