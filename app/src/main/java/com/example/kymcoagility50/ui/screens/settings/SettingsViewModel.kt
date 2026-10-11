@@ -7,6 +7,9 @@ import com.example.kymcoagility50.AppContainer
 import com.example.kymcoagility50.auth.AuthManager
 import com.example.kymcoagility50.data.model.PdfSource
 import com.example.kymcoagility50.data.repository.AppSettings
+import com.example.kymcoagility50.data.update.ApkUpdater
+import com.example.kymcoagility50.data.update.AppUpdate
+import com.example.kymcoagility50.data.update.UpdateChecker
 import com.example.kymcoagility50.privacy.AppMode
 import com.example.kymcoagility50.privacy.PrivacyManager
 import com.example.kymcoagility50.work.ReminderWorker
@@ -22,6 +25,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
+/** Settings → "App updates": every step starts from a tap, nothing runs in the background. */
+sealed interface UpdateState {
+    data object Idle : UpdateState
+    data object Checking : UpdateState
+    data class UpToDate(val latest: AppUpdate) : UpdateState
+    data class Available(val update: AppUpdate) : UpdateState
+    data class Downloading(val update: AppUpdate, val fraction: Float?) : UpdateState
+    data class ReadyToInstall(val update: AppUpdate, val needsPermission: Boolean = false) : UpdateState
+    data class Failed(val message: String, val update: AppUpdate? = null) : UpdateState
+}
 
 data class SettingsUiState(
     val mode: AppMode = AppMode.PRIVATE,
@@ -138,6 +152,55 @@ class SettingsViewModel(
             container.garageRepository.wipeGarage()
             container.maintenanceRepository.replaceAll(emptyList())
             SyncScheduler.scheduleSyncNow(context)
+        }
+    }
+
+    // ---------------------------------------------------------------- app updates
+
+    private val updater = ApkUpdater(context)
+    val installedVersion: String = updater.installedVersionName()
+    val isDebugBuild: Boolean = updater.isDebugBuild
+
+    private val _update = MutableStateFlow<UpdateState>(UpdateState.Idle)
+    val update = _update.asStateFlow()
+
+    fun checkForUpdate() {
+        _update.value = UpdateState.Checking
+        viewModelScope.launch {
+            _update.value = UpdateChecker.latest().fold(
+                onSuccess = { latest ->
+                    when {
+                        latest.versionCode <= updater.installedVersionCode() -> UpdateState.UpToDate(latest)
+                        updater.isDownloaded(latest) -> UpdateState.ReadyToInstall(latest)
+                        else -> UpdateState.Available(latest)
+                    }
+                },
+                onFailure = { UpdateState.Failed(it.message ?: "No connection") }
+            )
+        }
+    }
+
+    fun downloadUpdate(update: AppUpdate) {
+        _update.value = UpdateState.Downloading(update, null)
+        viewModelScope.launch {
+            runCatching {
+                updater.download(update) { p ->
+                    _update.value = when (p) {
+                        is ApkUpdater.Progress.Running -> UpdateState.Downloading(update, p.fraction)
+                        ApkUpdater.Progress.Done -> UpdateState.ReadyToInstall(update)
+                        is ApkUpdater.Progress.Failed -> UpdateState.Failed(p.reason, update)
+                    }
+                }
+            }.onFailure { _update.value = UpdateState.Failed(it.message ?: "Download failed", update) }
+        }
+    }
+
+    fun installUpdate(update: AppUpdate) {
+        _update.value = when (updater.install(update)) {
+            // Stays on "Install" so the owner can tap it again once Android has allowed it.
+            ApkUpdater.InstallResult.NEEDS_PERMISSION -> UpdateState.ReadyToInstall(update, needsPermission = true)
+            ApkUpdater.InstallResult.STARTED -> UpdateState.ReadyToInstall(update)
+            ApkUpdater.InstallResult.FAILED -> UpdateState.Failed("Couldn't open the installer", update)
         }
     }
 

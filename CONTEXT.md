@@ -1,5 +1,5 @@
 # Agility Companion (kymco-agility-moto) — AI Context File
-_Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-ay0rzy`)_
+_Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-ay0rzy`)_
 
 ## 1. What This Is (Plain English)
 - **In one sentence:** A phone app and a matching website that act as the "owner's
@@ -117,6 +117,10 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
   parsed with `ignoreUnknownKeys`.
 - `privacy/NetworkGuard.kt`, `auth/AuthManager.kt`, `work/SyncScheduler.kt` and
   `work/MaintenanceSyncWorker.kt` — the Sync Mode path, gated at every layer.
+- `data/update/UpdateChecker.kt` + `ApkUpdater.kt` — Settings → App updates. They read
+  `api.github.com/.../releases/latest`, download the APK with DownloadManager into
+  `getExternalFilesDir(Downloads)/updates/`, and install it through the FileProvider
+  `${applicationId}.updates` (`res/xml/update_paths.xml`). Everything is tap-only.
 - `data/fuel/FuelPriceClient.kt` — tap-only download of `fuel-price.json` (plain
   `HttpURLConnection`, no new dependency).
 - `ui/screens/garage/OwnerScreens.kt` → `FuelScreen` + `FuelDialog` — the fuel log and the
@@ -167,7 +171,8 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
   Never call `FirebaseApp.initializeApp` or Firestore outside `AuthManager` and the sync
   worker. See `PRIVACY.md`, which documents exactly where this is enforced. Keep it true.
 - **The only exception is `NetworkGuard.userRequested {}`.** It's for public downloads the
-  owner starts with a tap (today's fuel price). The owner chose "on tap only" over a
+  owner starts with a tap: today's fuel price, and "Check for updates" / "Download &
+  install". The owner chose "on tap only" over a
   setting or a Sync-only feature. Never call it from a worker, app start or a
   `LaunchedEffect`, and never send user data through it.
 - **Sync Mode uploads only maintenance-log entries.** Never sync the bike profile, fuel,
@@ -212,6 +217,11 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
   30 MAD @ 15.18 → 1.98 L → reads back as 15.15 MAD/L, and the remembered price drifts down
   with every fill. On the web, the litres input therefore needs `step="any"`, or the browser
   silently blocks Save.
+- **The updater compares `versionCode`s.** It reads the code from
+  `<!-- versionCode: N -->` in the release body, which `build-and-release.yml` writes. If
+  that line is missing, it falls back to the tag `v2.0.N`. Keep that body line, and keep the
+  asset name `agility-companion.apk`. A release built with another signing key won't
+  install as an update; Android refuses it.
 - New fill-ups default to **not** full. That's on purpose for a top-up rider: a 30 MAD
   partial logged as "full" would wreck the L/100 km figure.
 
@@ -238,8 +248,9 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
 **Skip on cleanup passes**
 - The duplicated planner code (`ServicePlanner.kt` and `planner.js`). It's intentional.
 - `shared/docs/*_index.json` are the real OCR output used to seed search, not junk.
-- The `INTERNET` permission in the manifest is used by Sync Mode and the tap-only fuel
-  price.
+- The `INTERNET` permission in the manifest is used by Sync Mode, the tap-only fuel price
+  and the updater. `REQUEST_INSTALL_PACKAGES` and the `.updates` FileProvider are used by
+  the updater.
 - `NetworkGuard.attemptsWhilePrivate`, a counter that "should always be 0", is the privacy
   proof. It is pinned by `NetworkGuardTest`.
 - Both `app/schemas/.../2.json` and `Migrations.kt` must stay.
@@ -249,9 +260,10 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
 **Docs vs code conflicts**
 - Backup import on Android marks every imported logbook row `dirty = true`, so in Sync Mode
   an import pushes the whole logbook to Firestore. That's intentional, but worth knowing.
-- `wipeGarage()` (Android) clears the profile, odometer, fuel, documents and pre-ride. It
-  does **not** clear the maintenance log (`GarageRepository.kt:186`). The web `wipe()`
-  clears everything. _Not yet figured out_ whether this difference is intentional.
+- `GarageRepository.wipeGarage()` doesn't touch the logbook by itself. The Settings action
+  (`SettingsViewModel.wipeGarage`) also calls `maintenanceRepository.replaceAll(emptyList())`.
+  So "Erase garage data" clears everything on both platforms. Call the ViewModel path, not
+  the repository one.
 
 ## 7. Current State
 - **Last shipped (2026-10-09/10, PR achma-learning/kymco-agility-moto#1):**
@@ -260,11 +272,12 @@ _Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-
   - The PWA website was added with backup interop.
   - The CI release pipeline now publishes the APK and the web zip.
   - The Room v1→v2 migration shipped.
-- **Working on now:** making the fuel log the star. It has an amount-first fill-up form
-  (20/30/50/100 MAD chips), a tap-to-fetch national price per litre, MAD/L stats, and a
-  hint to log a full tank now and then.
+- **Last shipped (PR achma-learning/kymco-agility-moto#2):** the fuel log built around
+  the amount paid. It has 20/30/50/100 MAD chips, a tap-to-fetch national price per litre,
+  MAD/L stats, and the weekly `fuel-price.yml`.
+- **Working on now:** the in-app updater (Settings → App updates).
 - **Next up:**
-  - Run the *Fuel price* workflow once so the `data` branch exists.
+  - Run the *Fuel price* workflow once so the `data` branch exists (still 404 at this sync).
   - Maybe a price-per-litre trend chart, and the fuel stats on the Garage dashboard.
   - Wire in a real Firebase project and turn on `DEPLOY_PAGES` (both still optional).
 

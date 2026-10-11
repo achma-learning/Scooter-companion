@@ -116,6 +116,9 @@ jobs:
             **Website** — unzip `agility-companion-web.zip` and upload the files to any static host (GitHub Pages, Netlify…).
 
             Move your garage between the two with Settings → Export / Import.
+            Already installed? Settings → App updates → Check for updates.
+
+            <!-- versionCode: ${{ github.run_number }} -->
 
   # Optional: publish the website on GitHub Pages too. Enable Pages with source
   # "GitHub Actions" (Settings → Pages), then set the repository variable DEPLOY_PAGES=true.

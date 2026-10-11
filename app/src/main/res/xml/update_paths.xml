@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only the downloaded update APK is shared, and only with the system installer
+     (data/update/ApkUpdater.kt). The folder name must match ApkUpdater.UPDATE_DIR. -->
+<paths>
+    <external-files-path name="updates" path="Download/updates/" />
+</paths>

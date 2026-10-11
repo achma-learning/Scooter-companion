@@ -49,7 +49,9 @@ It ships two ways, with the same data and features:
 
 **Android**: open the latest [GitHub Release](../../releases/latest) on your phone and install
 `agility-companion.apk` (allow "install unknown apps" once). Each new release installs over the
-previous one and keeps your data.
+previous one and keeps your data. Once installed, update from inside the app: **Settings →
+App updates → Check for updates** downloads the newest release and opens the installer.
+The first time, Android asks you to allow installs from Agility Companion.
 
 **Website**: download `agility-companion-web.zip` from the same release, unzip it, and upload
 the files to any static host (GitHub Pages, Netlify, Cloudflare Pages, your own server). It
@@ -132,7 +134,7 @@ On first launch the app asks for **Private Mode** (default) or **Sync Mode**:
 
 - **Private Mode**: no account, Firebase is never initialised, and the app never goes online
   by itself. Everything works offline. The only network use is a download you start by
-  tapping *Today's price* in the fuel form.
+  tapping *Today's price* in the fuel form, or *Check for updates* in Settings.
 - **Sync Mode**: sign in with Google. Only the service logbook syncs (date, km, tasks,
   milestone, shop, cost, stamp, notes). The bike profile, fuel log, documents, bookmarks and
   settings always stay local.
