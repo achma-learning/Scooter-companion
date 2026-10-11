@@ -83,6 +83,27 @@ test('fuel: full-to-full consumption', () => {
   assert.equal(s.distance, 200);
 });
 
+test('fuel: 30 MAD top-ups between full tanks, price per litre', () => {
+  const s = P.fuelSummary([
+    { date: day0, km: 1000, liters: 3, cost: 45, full: true },
+    { date: day0, km: 1050, liters: 2, cost: 30, full: false },
+    { date: day0, km: 1300, liters: 2, cost: 30.36, full: true },
+  ]);
+  assert.ok(Math.abs(s.litersPer100 - 4 / 3) < 1e-9); // 4 L over 300 km
+  assert.ok(Math.abs(s.avgPricePerLiter - 105.36 / 7) < 1e-9);
+  assert.ok(Math.abs(s.lastPricePerLiter - 15.18) < 1e-9);
+});
+
+test('fuel: partial fills only — price stats work, consumption waits for two full tanks', () => {
+  const s = P.fuelSummary([
+    { date: day0, km: 1000, liters: 2, cost: 30, full: false },
+    { date: day0, km: 1100, liters: 2, cost: null, full: false },
+  ]);
+  assert.equal(s.litersPer100, null);
+  assert.equal(s.avgPricePerLiter, 15);
+  assert.equal(s.lastPricePerLiter, 15);
+});
+
 test('addMonths clamps like java.util.Calendar', () => {
   assert.equal(P.addMonths('2026-01-31', 1), '2026-02-28');
   assert.equal(P.addMonths('2025-11-09', 12), '2026-11-09');

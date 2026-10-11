@@ -18,7 +18,23 @@ object NetworkGuard {
     /** Should always read 0. Surfaced on the Privacy Dashboard as a visible guarantee. */
     val attemptsWhilePrivate: StateFlow<Int> = _attemptsWhilePrivate
 
+    private val _userRequests = MutableStateFlow(0)
+    /** Downloads the owner started with a tap (see [userRequested]), in either mode. */
+    val userRequests: StateFlow<Int> = _userRequests
+
     fun isNetworkAllowed(): Boolean = !PrivacyManager.isPrivate()
+
+    /**
+     * The one exception to "no network in Private Mode": a download of a public file that the
+     * owner explicitly asks for with a tap (today's fuel price). Nothing about the owner is
+     * sent, and it runs the same in both modes. Call it ONLY from a click handler — never
+     * from a worker, app start or a LaunchedEffect — so the app still never goes online by
+     * itself. Counted in [userRequests], not [attemptsWhilePrivate].
+     */
+    suspend fun <T> userRequested(block: suspend () -> T): T {
+        _userRequests.value += 1
+        return block()
+    }
 
     /**
      * Wrap any network-capable suspend call with this. Returns null and does nothing if

@@ -1,5 +1,5 @@
 # Agility Companion (kymco-agility-moto) — AI Context File
-_Last synced: 2026-10-11 @ 584265c_
+_Last synced: 2026-10-11 @ 1356a73 (+ fuel-price work on `claude/exciting-sagan-ay0rzy`)_
 
 ## 1. What This Is (Plain English)
 - **In one sentence:** A phone app and a matching website that act as the "owner's
@@ -10,6 +10,9 @@ _Last synced: 2026-10-11 @ 584265c_
   Marrakech, with heat, dust and stop-and-go traffic. The intervals come from the owner's own
   Marrakech maintenance wiki (https://achma-learning.github.io/moto/), which is stricter than
   the factory figures. The app turns that wiki into reminders.
+- **The owner's favourite part:** the fuel log. The owner mostly tops up a fixed amount
+  ("30 dh"), only sometimes fills the tank, so the fill-up form starts from the money paid.
+  Litres are worked out from the price per litre, which can be fetched with a tap.
 - **Who uses it:** The owner, plus anyone who installs the APK from GitHub Releases or uses
   the website. The repo is public and releases are public. Treat it as a small public tool:
   people's garage data lives on their device, so never break backups or migrations.
@@ -30,7 +33,8 @@ _Last synced: 2026-10-11 @ 584265c_
     `app/build/outputs/apk/debug/app-debug.apk`. The debug build installs as
     `com.example.kymcoagility50.debug`, next to the release one.
 - **Tests:**
-  - `node --test web/tests/*.test.mjs` runs 14 tests and passes as of this sync.
+  - `node --test web/tests/*.test.mjs` runs 16 tests and passes as of this sync.
+  - `python3 -m unittest discover -s scripts/fuel` tests the fuel-price parser.
   - `./gradlew testDebugUnitTest` runs the Robolectric tests. Add
     `-PscreenshotsDir=/tmp/shots` to save a PNG of every screen.
 - **Change the knowledge base:** edit `scripts/content/build_content.py`, then run
@@ -46,6 +50,8 @@ _Last synced: 2026-10-11 @ 584265c_
     `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD` (repo secrets). The workflow decodes the
     first into `RELEASE_KEYSTORE_PATH`.
   - Repo variable: `DEPLOY_PAGES`.
+- **Fuel price:** run the *Fuel price* workflow once from the Actions tab after merging. It
+  creates the `data` branch with `fuel-price.json`, then refreshes it every Tuesday.
 
 ## 3. Tech Stack
 - **Language + runtime:** Kotlin 1.9.24 on JVM 17 (Android minSdk 24, target/compile 35).
@@ -73,6 +79,9 @@ _Last synced: 2026-10-11 @ 584265c_
     `/users/{uid}/maintenanceEntries/*`.
   - cdnjs, for pdf.js on the web.
   - GitHub Releases and Pages, for distribution.
+  - GlobalPetrolPrices.com, read weekly by CI only (CC BY-NC-ND 3.0, credited in the JSON).
+  - `raw.githubusercontent.com/.../data/fuel-price.json`, fetched by the app and site only
+    when the owner taps *Today's price*.
   - Nothing else. There are no analytics.
 
 ## 4. Code Map (The Important Files Only)
@@ -96,7 +105,8 @@ _Last synced: 2026-10-11 @ 584265c_
   Hilt.
 - `domain/ServicePlanner.kt` — the brain. It answers "what's due, overdue, soon", the health
   score and the passport stamp states. It is pure Kotlin.
-- `domain/FuelStats.kt` — full-tank L/100 km calculations.
+- `domain/FuelStats.kt` — L/100 km (full-to-full; partial top-ups count inside a segment),
+  MAD/km, average and last MAD/L.
 - `domain/Dates.kt` — all dates are UTC-midnight epoch millis.
 - `data/repository/GarageRepository.kt` — combines Room, the planner and the content into a
   `GarageSnapshot`. It also does JSON backup export/import.
@@ -107,6 +117,10 @@ _Last synced: 2026-10-11 @ 584265c_
   parsed with `ignoreUnknownKeys`.
 - `privacy/NetworkGuard.kt`, `auth/AuthManager.kt`, `work/SyncScheduler.kt` and
   `work/MaintenanceSyncWorker.kt` — the Sync Mode path, gated at every layer.
+- `data/fuel/FuelPriceClient.kt` — tap-only download of `fuel-price.json` (plain
+  `HttpURLConnection`, no new dependency).
+- `ui/screens/garage/OwnerScreens.kt` → `FuelScreen` + `FuelDialog` — the fuel log and the
+  amount-first form (amount chips, price/L, litres derived).
 - `work/ReminderWorker.kt` — daily local notification for overdue services and expiring
   documents. It never touches the network.
 - `pdf/PdfPageRenderer.kt` + `data/repository/OcrRepository.kt` — the PDF reader and the
@@ -122,12 +136,17 @@ _Last synced: 2026-10-11 @ 584265c_
 - `js/views-garage.js` (biggest, 470 lines), `views-guide.js` and `views-manual.js` — the
   screens.
 - `js/ui.js` — HTML helpers, including `esc()` for escaping.
-- `js/config.js` — `APK_URL` for the "get the app" links.
+- `js/config.js` — `APK_URL` for the "get the app" links and `FUEL_PRICE_URL`.
+- `js/fuelprice.js` — web twin of `FuelPriceClient.kt`. `fuelDialog` in `views-garage.js` is
+  the web twin of `FuelDialog`.
 - `sw.js` — offline cache. `__BUILD__` gets stamped by `scripts/build-web.sh`.
 
 **Pipeline**
 - `.github/workflows/build-and-release.yml` — in order: content-staleness check → web tests
   → Android tests → release APK → web zip → Release (and optionally Pages).
+- `.github/workflows/fuel-price.yml` + `scripts/fuel/fetch_price.py` — weekly scrape →
+  commits `fuel-price.json` to the orphan `data` branch. It never touches `main`, so it
+  never triggers a release.
 - `scripts/build-web.sh` — copies `web/`, the content JSON and the docs into `dist/web`,
   strips the tests, and stamps the SW version.
 
@@ -147,6 +166,10 @@ _Last synced: 2026-10-11 @ 584265c_
 - **Every network-capable call goes through `NetworkGuard` / `PrivacyManager.isPrivate()`.**
   Never call `FirebaseApp.initializeApp` or Firestore outside `AuthManager` and the sync
   worker. See `PRIVACY.md`, which documents exactly where this is enforced. Keep it true.
+- **The only exception is `NetworkGuard.userRequested {}`.** It's for public downloads the
+  owner starts with a tap (today's fuel price). The owner chose "on tap only" over a
+  setting or a Sync-only feature. Never call it from a worker, app start or a
+  `LaunchedEffect`, and never send user data through it.
 - **Sync Mode uploads only maintenance-log entries.** Never sync the bike profile, fuel,
   documents, bookmarks or settings.
 - **Dates:** on Android, use UTC-midnight millis via `Dates`. On the web, use ISO
@@ -157,6 +180,11 @@ _Last synced: 2026-10-11 @ 584265c_
 - **Escape user text with `esc()`** before putting it into view HTML. Every view builds
   HTML with template strings and `innerHTML`.
 - **New web files must be added to `PRECACHE` in `sw.js`**, or they won't work offline.
+- **The fuel form is twinned too.** It has the same amounts (20/30/50/100), the same
+  "any two of paid / price / litres give the third" rules, and the same 5–40 MAD/L
+  plausibility band in `fetch_price.py`, `fuelprice.js` and `FuelPriceClient.kt`.
+  Price per litre is never stored. It's always `cost ÷ liters`, so backups and Room are
+  unchanged.
 - **Task, guide and tree-node ids are referenced across content, logbook entries and
   routes.** Renaming an id orphans every logged service that used it.
 
@@ -175,6 +203,17 @@ _Last synced: 2026-10-11 @ 584265c_
     (`web/js/planner.js:16-24`).
 - On Android, `MaintenanceEntryEntity.tasks` is stored as a comma-separated
   string, read through the `taskIds` extension. Never store ids with commas.
+- Fuel text fields use `decimalText()` (BigDecimal, dot separator), not `"%.2f".format`. A
+  French-locale phone prints `15,18`, which `toDoubleOrNull()` can't read back.
+- `fetch_price.py` parses one English sentence on the GlobalPetrolPrices page. If they
+  reword it, the weekly workflow fails loudly and the last good `fuel-price.json` stays
+  published. Fix the regex; the apps need no change.
+- Computed litres keep **4 decimals** (`round4` / `decimalText(scale = 4)`). At 2 decimals,
+  30 MAD @ 15.18 → 1.98 L → reads back as 15.15 MAD/L, and the remembered price drifts down
+  with every fill. On the web, the litres input therefore needs `step="any"`, or the browser
+  silently blocks Save.
+- New fill-ups default to **not** full. That's on purpose for a top-up rider: a 30 MAD
+  partial logged as "full" would wreck the L/100 km figure.
 
 **Hard-won fixes**
 - **Committed sideload signing key** (`app/signing/sideload.keystore`, with the passwords in
@@ -199,7 +238,8 @@ _Last synced: 2026-10-11 @ 584265c_
 **Skip on cleanup passes**
 - The duplicated planner code (`ServicePlanner.kt` and `planner.js`). It's intentional.
 - `shared/docs/*_index.json` are the real OCR output used to seed search, not junk.
-- The `INTERNET` permission in the manifest is used only by Sync Mode.
+- The `INTERNET` permission in the manifest is used by Sync Mode and the tap-only fuel
+  price.
 - `NetworkGuard.attemptsWhilePrivate`, a counter that "should always be 0", is the privacy
   proof. It is pinned by `NetworkGuardTest`.
 - Both `app/schemas/.../2.json` and `Migrations.kt` must stay.
@@ -207,10 +247,6 @@ _Last synced: 2026-10-11 @ 584265c_
   manual-reader. It's harmless; renaming it is optional.
 
 **Docs vs code conflicts**
-- The KDoc on `privacy/AppMode.kt` says Sync Mode uploads "date/km/notes entries only".
-  The code (`work/MaintenanceSyncWorker.kt`) also syncs `tasks`, `milestoneKm`, `shop`,
-  `cost` and `stamped`, which is what `PRIVACY.md` and the README say. The code and
-  `PRIVACY.md` are right; that KDoc is stale.
 - Backup import on Android marks every imported logbook row `dirty = true`, so in Sync Mode
   an import pushes the whole logbook to Firestore. That's intentional, but worth knowing.
 - `wipeGarage()` (Android) clears the profile, odometer, fuel, documents and pre-ride. It
@@ -224,13 +260,13 @@ _Last synced: 2026-10-11 @ 584265c_
   - The PWA website was added with backup interop.
   - The CI release pipeline now publishes the APK and the web zip.
   - The Room v1→v2 migration shipped.
-- **Working on now:** _Not yet figured out_. There's no open branch work beyond this
-  context file.
-- **Next up:** _Not yet figured out_. Candidates visible in the code (not confirmed by the
-  owner):
-  - Wire in a real Firebase project.
-  - Turn on `DEPLOY_PAGES`.
-  - Fix the stale `AppMode.kt` KDoc.
+- **Working on now:** making the fuel log the star. It has an amount-first fill-up form
+  (20/30/50/100 MAD chips), a tap-to-fetch national price per litre, MAD/L stats, and a
+  hint to log a full tank now and then.
+- **Next up:**
+  - Run the *Fuel price* workflow once so the `data` branch exists.
+  - Maybe a price-per-litre trend chart, and the fuel stats on the Garage dashboard.
+  - Wire in a real Firebase project and turn on `DEPLOY_PAGES` (both still optional).
 
 **Missing repo hygiene:** no `LICENSE` file and no `dependabot.yml`. There are no other AI
 memory files (`CLAUDE.md`, `AGENTS.md`, etc.).

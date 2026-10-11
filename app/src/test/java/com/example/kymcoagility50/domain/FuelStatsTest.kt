@@ -27,4 +27,24 @@ class FuelStatsTest {
         assertNull(s.litersPer100)
         assertNull(s.costPerKm)
     }
+
+    @Test fun topUpsBetweenFullTanksAndPricePerLiter() {
+        val s = FuelStats.summarize(
+            listOf(
+                FuelFill(d, 1000, 3.0, 45.0, true),
+                FuelFill(d, 1050, 2.0, 30.0, false),
+                FuelFill(d, 1300, 2.0, 30.36, true)
+            )
+        )
+        assertEquals(4.0 / 3, s.litersPer100!!, 1e-9) // 4 L over 300 km
+        assertEquals(105.36 / 7, s.avgPricePerLiter!!, 1e-9)
+        assertEquals(15.18, s.lastPricePerLiter!!, 1e-9)
+    }
+
+    @Test fun partialFillsOnlyStillGivePriceStats() {
+        val s = FuelStats.summarize(listOf(FuelFill(d, 1000, 2.0, 30.0, false), FuelFill(d, 1100, 2.0, null, false)))
+        assertNull(s.litersPer100)
+        assertEquals(15.0, s.avgPricePerLiter!!, 1e-9)
+        assertEquals(15.0, s.lastPricePerLiter!!, 1e-9)
+    }
 }

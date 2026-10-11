@@ -7,7 +7,7 @@ const RUNTIME = 'runtime-v1';
 const PRECACHE = [
   './', 'index.html', 'css/app.css', 'manifest.webmanifest', 'data/agility50.json',
   'js/app.js', 'js/store.js', 'js/planner.js', 'js/ui.js', 'js/icons.js', 'js/config.js',
-  'js/views-garage.js', 'js/views-guide.js', 'js/views-manual.js',
+  'js/views-garage.js', 'js/views-guide.js', 'js/views-manual.js', 'js/fuelprice.js',
   'img/icon.svg', 'img/icon-192.png', 'img/icon-512.png',
   'docs/toc.json', 'docs/manual_index.json', 'docs/passport_index.json', 'docs/cover_manual.jpg', 'docs/cover_passport.jpg',
 ];

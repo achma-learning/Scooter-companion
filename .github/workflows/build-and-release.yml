@@ -45,6 +45,9 @@ jobs:
           python3 scripts/content/build_content.py
           git diff --exit-code shared/content/agility50.json
 
+      - name: Fuel-price parser tests
+        run: python3 -m unittest discover -s scripts/fuel
+
       - name: Website tests (planner + backup interop)
         run: node --test web/tests/*.test.mjs
 

@@ -25,7 +25,10 @@ It ships two ways, with the same data and features:
 - **Digital passport**: the Kymco booklet's stamp schedule (plus the wiki's 2,000 / 8,000 /
   10,000 km checks) shown as stamps. Each one is marked stamped by a dealer, done, next, or
   missed. It also shows the warranty end date and the bike's identity (plate, VIN, dealer).
-- **Fuel log**: full-tank L/100 km, cost per km and total spend.
+- **Fuel log**: built for the "30 dh" top-up. Pick the amount (20 / 30 / 50 / 100 MAD), and
+  the litres are worked out from the price per litre. The price is your last one, or Morocco's
+  national average fetched when you tap **Today's price**. Tracks L/100 km measured between
+  full tanks, MAD/km, MAD/L and total spend.
 - **Documents wallet**: insurance, carte grise, licence and warranty, with an expiry countdown.
 - **Manual**: the scanned Driver's Manual (48 p.) and Maintenance Passport (16 p.), with
   full-text search over their OCR text (FR/AR/EN), a table of contents and bookmarks.
@@ -71,6 +74,12 @@ public, so don't use it for the Play Store. To sign with your own key, add the r
 secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and
 `RELEASE_KEY_PASSWORD`. Changing keys later means one uninstall, so export a backup first.
 
+**Fuel price**: `.github/workflows/fuel-price.yml` runs weekly (and on demand from the Actions
+tab). It reads the national average gasoline price from GlobalPetrolPrices.com
+(`scripts/fuel/fetch_price.py`) and commits `fuel-price.json` to the `data` branch. The app
+and the website download that file only when the owner taps *Today's price*. Until the
+workflow has run once, the button says "No price published yet".
+
 ## Project layout
 
 ```
@@ -81,6 +90,7 @@ shared/
 scripts/
   content/build_content.py source of the knowledge base → writes shared/content/agility50.json
   build-web.sh             assembles the website into dist/web
+  fuel/fetch_price.py      weekly fuel-price scraper (+ test_fetch_price.py)
 app/                       Android app (Kotlin, Jetpack Compose, Room, WorkManager)
   …/domain/                ServicePlanner, FuelStats, Dates — pure Kotlin, unit-tested
   …/data/                  Room (garage + logbook), content & backup models, repositories
@@ -120,8 +130,9 @@ files cover the same scenarios to keep them in agreement.
 
 On first launch the app asks for **Private Mode** (default) or **Sync Mode**:
 
-- **Private Mode**: no account, no network call of any kind, and Firebase is never
-  initialised. Everything works offline.
+- **Private Mode**: no account, Firebase is never initialised, and the app never goes online
+  by itself. Everything works offline. The only network use is a download you start by
+  tapping *Today's price* in the fuel form.
 - **Sync Mode**: sign in with Google. Only the service logbook syncs (date, km, tasks,
   milestone, shop, cost, stamp, notes). The bike profile, fuel log, documents, bookmarks and
   settings always stay local.

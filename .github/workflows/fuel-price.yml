@@ -1,0 +1,51 @@
+name: Fuel price
+
+# Once a week, reads Morocco's national average gasoline price and publishes it as
+# fuel-price.json on the `data` branch. The app and the website fetch that file only when the
+# owner taps "Today's price" in the fill-up form:
+#   https://raw.githubusercontent.com/<owner>/<repo>/data/fuel-price.json
+# The `data` branch holds nothing else, so these commits never touch main or trigger a release.
+
+on:
+  schedule:
+    # GlobalPetrolPrices updates its Morocco series on Mondays; read it Tuesday morning.
+    - cron: '17 6 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fuel-price
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parser tests
+        run: python3 -m unittest discover -s scripts/fuel
+
+      - name: Fetch price
+        run: python3 scripts/fuel/fetch_price.py "$RUNNER_TEMP/fuel-price.json"
+
+      - name: Publish on the data branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch --depth=1 origin data; then
+            git checkout -B data FETCH_HEAD
+          else
+            git checkout --orphan data
+            git rm -rqf .
+          fi
+          cp "$RUNNER_TEMP/fuel-price.json" fuel-price.json
+          git add fuel-price.json
+          if git diff --cached --quiet; then
+            echo "Price unchanged."
+          else
+            git commit -qm "Fuel price $(python3 -c 'import json;d=json.load(open("fuel-price.json"));print(d["pricePerLiter"],"MAD/L as of",d["asOf"])')"
+            git push origin data
+          fi
