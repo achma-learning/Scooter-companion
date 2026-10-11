@@ -11,6 +11,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ListItem
+import com.example.kymcoagility50.ui.components.openUrl
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
@@ -76,6 +78,11 @@ fun SettingsScreen(onBack: () -> Unit) {
 
     Scaffold(topBar = { BackTopBar("Settings & backup", onBack) }) { padding ->
     LazyColumn(Modifier.fillMaxWidth().padding(padding).padding(horizontal = 16.dp)) {
+        item {
+            AppUpdatesSection(vm)
+            Divider(Modifier.padding(vertical = 12.dp))
+        }
+
         item {
             Text("Reminders", style = MaterialTheme.typography.titleMedium)
             ListItem(
@@ -213,6 +220,59 @@ fun SettingsScreen(onBack: () -> Unit) {
                 }) { Text("Confirm") }
             },
             dismissButton = { TextButton(onClick = { showModeConfirm = null }) { Text("Cancel") } }
+        )
+    }
+}
+
+/** Check GitHub Releases, download the APK and hand it to the system installer — all on tap. */
+@Composable
+private fun AppUpdatesSection(vm: SettingsViewModel) {
+    val context = LocalContext.current
+    val update by vm.update.collectAsState()
+    val mb = { bytes: Long -> if (bytes > 0) " (%.0f MB)".format(bytes / 1_000_000.0) else "" }
+
+    Text("App updates", style = MaterialTheme.typography.titleMedium)
+    ListItem(
+        headlineContent = { Text("Agility Companion ${vm.installedVersion}") },
+        supportingContent = {
+            Text(
+                when (val u = update) {
+                    UpdateState.Idle -> "Updates come from this app's GitHub Releases. Checked only when you tap."
+                    UpdateState.Checking -> "Checking GitHub…"
+                    is UpdateState.UpToDate -> "You're up to date (latest is ${u.latest.versionName})."
+                    is UpdateState.Available -> "Version ${u.update.versionName} is available" +
+                        (u.update.publishedOn?.let { " · ${Dates.fromIso(it)?.let(Dates::display) ?: it}" } ?: "") + "."
+                    is UpdateState.Downloading -> "Downloading ${u.update.versionName}…" + (u.fraction?.let { " ${(it * 100).toInt()}%" } ?: "")
+                    is UpdateState.ReadyToInstall ->
+                        if (u.needsPermission) "Allow \"Install unknown apps\" for Agility Companion, come back, then tap Install."
+                        else "Version ${u.update.versionName} is downloaded. It installs over this app and keeps your data."
+                    is UpdateState.Failed -> u.message
+                }
+            )
+        }
+    )
+    when (val u = update) {
+        is UpdateState.Downloading ->
+            if (u.fraction != null) LinearProgressIndicator(progress = { u.fraction ?: 0f }, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
+            else LinearProgressIndicator(Modifier.fillMaxWidth().padding(vertical = 8.dp))
+        is UpdateState.Available ->
+            Button(onClick = { vm.downloadUpdate(u.update) }) { Text("Download & install" + mb(u.update.apkBytes)) }
+        is UpdateState.ReadyToInstall ->
+            Button(onClick = { vm.installUpdate(u.update) }) { Text("Install ${u.update.versionName}") }
+        is UpdateState.Failed -> Row {
+            OutlinedButton(onClick = { vm.checkForUpdate() }) { Text("Try again") }
+            // Fallback: the browser can always fetch the APK from the release page.
+            u.update?.let { failed ->
+                Text(" ")
+                TextButton(onClick = { context.openUrl(failed.pageUrl) }) { Text("Open release page") }
+            }
+        }
+        else -> OutlinedButton(enabled = update != UpdateState.Checking, onClick = { vm.checkForUpdate() }) { Text("Check for updates") }
+    }
+    if (vm.isDebugBuild) {
+        Text(
+            "This is a debug build: a release APK installs as a separate app beside it.",
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

@@ -7,8 +7,8 @@ points at the code that enforces it so it isn't just a claim.
 
 - No account. No Google Sign-In button is shown anywhere.
 - The app never goes online by itself — not this app's code, not Firebase (which is never
-  initialized in this mode at all). The one exception is a download **you** start: see
-  "Today's fuel price" below.
+  initialized in this mode at all). The only exceptions are downloads **you** start with a
+  tap: "Today's fuel price" and "Check for updates", both described below.
 - Bookmarks, recent pages, settings, the maintenance logbook and the rest of your garage
   (bike profile, odometer readings, fuel log, documents wallet) are stored only in the local
   Room database (`kymco_agility50.db`, private app storage).
@@ -88,6 +88,20 @@ GitHub sees your IP address, as any website would.
 - Website: `web/js/fuelprice.js`, called only from the button's click handler.
 
 Don't want it? Just don't tap it. You can always type the price on the pump.
+
+## Check for updates (both modes, only when you tap)
+
+Settings → App updates → **Check for updates** asks `api.github.com` which release of this
+repository is the latest. If it's newer, **Download & install** fetches `agility-companion.apk`
+from that GitHub release (with Android's DownloadManager), and **Install** hands it to the
+system installer. Nothing about you is sent. GitHub sees your IP address and a generic
+`agility-companion-android` user agent.
+
+- It never checks by itself: there's no automatic or background update check.
+- `data/update/UpdateChecker.kt` and `ApkUpdater.kt` go through `NetworkGuard.userRequested {}`,
+  like the fuel price. They only download from this repository's own release files.
+- Android itself only accepts the update if it's signed with the same key as the installed
+  app, and installing over the app keeps all your local data.
 
 ## What's never collected, in either mode
 
