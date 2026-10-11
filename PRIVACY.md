@@ -6,8 +6,9 @@ points at the code that enforces it so it isn't just a claim.
 ## Private Mode (default)
 
 - No account. No Google Sign-In button is shown anywhere.
-- No network request of any kind is made — not by this app's code, not by Firebase (which
-  is never initialized in this mode at all).
+- The app never goes online by itself — not this app's code, not Firebase (which is never
+  initialized in this mode at all). The one exception is a download **you** start: see
+  "Today's fuel price" below.
 - Bookmarks, recent pages, settings, the maintenance logbook and the rest of your garage
   (bike profile, odometer readings, fuel log, documents wallet) are stored only in the local
   Room database (`kymco_agility50.db`, private app storage).
@@ -65,8 +66,28 @@ used by the website, so you can move between the two.
 ## The website
 
 The website (`web/`) keeps your garage in that browser's `localStorage` only. It has no
-backend, no cookies, no analytics, and nothing is sent anywhere. The only third-party request
-is the PDF viewer (pdf.js from `cdnjs.cloudflare.com`), loaded when you open a manual page.
+backend, no cookies, no analytics, and nothing is sent anywhere. It makes only two kinds of
+third-party request, both triggered by you: the PDF viewer (pdf.js from
+`cdnjs.cloudflare.com`), loaded when you open a manual page, and today's fuel price (see
+above), fetched when you tap the button.
+
+## Today's fuel price (both modes, only when you tap)
+
+The fill-up form has a **Today's price** button. Tapping it downloads one small public file,
+`fuel-price.json`, from `raw.githubusercontent.com` (this repository's `data` branch). The
+file holds Morocco's national average gasoline price; a weekly GitHub Action
+(`.github/workflows/fuel-price.yml`) copies it from GlobalPetrolPrices.com. Nothing about you
+or your bike is sent: it's a plain GET with no account, no cookies and no identifiers, though
+GitHub sees your IP address, as any website would.
+
+- It only happens on a tap. No worker, timer or app start ever calls it.
+- Android: `data/fuel/FuelPriceClient.kt` goes through `NetworkGuard.userRequested {}`, the
+  single documented exception to the Private-Mode gate. It is counted in
+  `NetworkGuard.userRequests`, apart from `attemptsWhilePrivate`, which still has to read 0.
+  `NetworkGuardTest` pins both.
+- Website: `web/js/fuelprice.js`, called only from the button's click handler.
+
+Don't want it? Just don't tap it. You can always type the price on the pump.
 
 ## What's never collected, in either mode
 

@@ -148,6 +148,9 @@ export function fuelSummary(fills) {
   const totalCost = sorted.reduce((s, f) => s + (f.cost || 0), 0);
   const distance = sorted.length >= 2 ? sorted[sorted.length - 1].km - sorted[0].km : 0;
   const costAfterFirst = sorted.slice(1).reduce((s, f) => s + (f.cost || 0), 0);
+  const priced = sorted.filter((f) => f.cost != null && f.liters > 0);
+  const pricedLiters = priced.reduce((s, f) => s + f.liters, 0);
+  const lastPriced = priced[priced.length - 1];
   return {
     litersPer100: segDistance > 0 ? (segLiters * 100) / segDistance : null,
     lastLitersPer100: lastSegment,
@@ -155,6 +158,8 @@ export function fuelSummary(fills) {
     totalCost,
     totalLiters: sorted.reduce((s, f) => s + f.liters, 0),
     distance,
+    avgPricePerLiter: pricedLiters > 0 ? priced.reduce((s, f) => s + f.cost, 0) / pricedLiters : null,
+    lastPricePerLiter: lastPriced ? lastPriced.cost / lastPriced.liters : null,
   };
 }
 

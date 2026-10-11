@@ -49,5 +49,15 @@ class NetworkGuardTest {
         assertEquals(before + 1, after)
     }
 
+    @Test
+    fun `a tap-started download runs in Private Mode and is not counted as a leak`() = runBlocking {
+        val leaksBefore = NetworkGuard.attemptsWhilePrivate.value
+        val tapsBefore = NetworkGuard.userRequests.value
+        val result = NetworkGuard.userRequested { "price" }
+        assertEquals("price", result)
+        assertEquals(leaksBefore, NetworkGuard.attemptsWhilePrivate.value)
+        assertEquals(tapsBefore + 1, NetworkGuard.userRequests.value)
+    }
+
     private fun assertTrue(condition: Boolean) = org.junit.Assert.assertTrue(condition)
 }

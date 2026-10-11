@@ -6,6 +6,7 @@ import {
   callout, stat, empty, ring, toast, dialog, confirmDialog, SCOOTER_SVG,
 } from './ui.js';
 import { APK_URL } from './config.js';
+import { fetchFuelPrice } from './fuelprice.js';
 
 const docType = (c, id) => c.documentTypes.find((t) => t.id === id) || c.documentTypes[c.documentTypes.length - 1];
 
@@ -254,15 +255,58 @@ export function passport({ content: c, state, snap }) {
 
 // ------------------------------------------------------------------ Fuel
 
-async function fuelDialog(entry) {
+// Most fill-ups are a fixed amount ("30 dh") rather than a full tank, so the form starts from
+// what the pump shows: amount paid × price per litre → litres. Any two give the third.
+const AMOUNTS = [20, 30, 50, 100];
+const round2 = (v) => Math.round(v * 100) / 100;
+// Computed litres keep 4 decimals so cost ÷ litres gives back the exact price next time; at
+// 2 decimals 30 MAD @ 15.18 → 1.98 L → 15.15, and the remembered price would drift down.
+const round4 = (v) => Math.round(v * 10000) / 10000;
+
+async function fuelDialog(entry, defaultPrice) {
+  const price = entry.liters > 0 && entry.cost != null ? round2(entry.cost / entry.liters) : defaultPrice != null ? round2(defaultPrice) : '';
   const { value, form } = await dialog(`<h2>${entry.id ? 'Edit fill-up' : 'New fill-up'}</h2>
     <div class="grid2"><label class="field"><span>Date</span><input type="date" name="date" value="${entry.date}" required></label>
     <label class="field"><span>Odometer (km)</span><input type="number" name="km" inputmode="numeric" value="${entry.km}" required></label></div>
-    <div class="grid2"><label class="field"><span>Litres</span><input type="number" name="liters" step="0.01" min="0.01" inputmode="decimal" value="${entry.liters || ''}" required></label>
-    <label class="field"><span>Paid (MAD)</span><input type="number" name="cost" step="0.01" min="0" inputmode="decimal" value="${entry.cost ?? ''}"></label></div>
-    <label class="switch"><input type="checkbox" name="full" ${entry.full ? 'checked' : ''}><span>Filled the tank</span></label>
+    <div class="chips" style="margin-top:6px">${AMOUNTS.map((a) => `<button type="button" class="chip" data-amount="${a}" aria-pressed="${entry.cost === a}">${a} MAD</button>`).join('')}</div>
+    <div class="grid2"><label class="field"><span>Paid (MAD)</span><input type="number" name="cost" step="0.01" min="0" inputmode="decimal" value="${entry.cost ?? ''}"></label>
+    <label class="field"><span>Price (MAD / L)</span><input type="number" name="price" step="any" min="0" inputmode="decimal" value="${price}"></label></div>
+    <button type="button" class="btn tonal" id="todayPrice" style="width:100%">${icon('download')} Today's price</button>
+    <p class="small muted" id="priceSource" style="margin:6px 0 0"></p>
+    <label class="field"><span>Litres</span><input type="number" name="liters" step="any" min="0.001" inputmode="decimal" value="${entry.liters || ''}" required></label>
+    <label class="switch"><input type="checkbox" name="full" ${entry.full ? 'checked' : ''}><span>Full tank (pump clicked off)</span></label>
+    <p class="small muted" style="margin:0">Consumption is measured between two full tanks; top-ups in between are counted.</p>
     <div class="btnrow" style="margin-top:12px">${entry.id ? '<button class="btn danger" value="delete" formnovalidate>Delete</button>' : ''}
-    <button class="btn tonal" value="cancel" formnovalidate>Cancel</button><button class="btn" value="ok">Save</button></div>`);
+    <button class="btn tonal" value="cancel" formnovalidate>Cancel</button><button class="btn" value="ok">Save</button></div>`, (d) => {
+    const f = d.querySelector('form');
+    const num = (el) => (el.value === '' ? null : +el.value);
+    const set = (el, v, round = round2) => (el.value = v == null || !isFinite(v) ? '' : round(v));
+    const litersFromCost = () => { const c = num(f.cost), p = num(f.price); if (c > 0 && p > 0) set(f.liters, c / p, round4); };
+    const pressChips = () => d.querySelectorAll('[data-amount]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.amount === num(f.cost))));
+    f.cost.addEventListener('input', () => { litersFromCost(); pressChips(); });
+    f.price.addEventListener('input', () => {
+      if (num(f.cost) > 0) litersFromCost();
+      else if (num(f.liters) > 0 && num(f.price) > 0) set(f.cost, num(f.liters) * num(f.price));
+    });
+    f.liters.addEventListener('input', () => { if (num(f.price) > 0 && num(f.liters) > 0) { set(f.cost, num(f.liters) * num(f.price)); pressChips(); } });
+    d.querySelectorAll('[data-amount]').forEach((b) => (b.onclick = () => { f.cost.value = b.dataset.amount; litersFromCost(); pressChips(); }));
+    const btn = d.querySelector('#todayPrice');
+    const src = d.querySelector('#priceSource');
+    btn.onclick = async () => {
+      btn.disabled = true;
+      src.textContent = 'Looking up…';
+      try {
+        const p = await fetchFuelPrice();
+        f.price.value = p.pricePerLiter;
+        f.price.dispatchEvent(new Event('input'));
+        src.textContent = `National average ${p.pricePerLiter} MAD/L · ${fmtDate(p.asOf)} · ${p.source}. Your station may differ.`;
+      } catch (e) {
+        src.textContent = navigator.onLine === false ? 'You are offline — type the pump price.' : `${e.message} — type the pump price.`;
+      } finally {
+        btn.disabled = false;
+      }
+    };
+  });
   if (value === 'delete') S.deleteFuel(entry.id);
   if (value === 'ok') {
     S.saveFuel({ ...entry, date: form.date.value, km: +form.km.value, liters: +form.liters.value, cost: form.cost.value === '' ? null : +form.cost.value, full: form.full.checked });
@@ -271,17 +315,23 @@ async function fuelDialog(entry) {
 
 export function fuel({ state, snap }) {
   const f = snap.fuel;
+  const perLiter = (e) => (e.cost != null && e.liters > 0 ? ` · ${(e.cost / e.liters).toFixed(2)} MAD/L` : '');
+  const fullTanks = state.fuel.filter((e) => e.full).length;
   const html = `
     ${topbar('Fuel log')}
     <div class="grid2">${stat(f.litersPer100 != null ? f.litersPer100.toFixed(2) : '—', 'L/100 km avg')}${stat(f.costPerKm != null ? f.costPerKm.toFixed(2) : '—', 'MAD / km')}
-    ${stat(fmtMad(f.totalCost), 'total spent')}${stat(fmtKm(f.distance), 'logged')}</div>
-    <p class="small muted" style="margin:10px 0">Factory figure: &lt; 2 L/100 km. Log full tanks for accurate averages — a sudden rise often means a dirty air filter or a dragging brake.</p>
+    ${stat(fmtMad(f.totalCost), 'total spent')}${stat(f.avgPricePerLiter != null ? f.avgPricePerLiter.toFixed(2) : '—', 'MAD / L avg')}</div>
+    ${state.fuel.length && f.litersPer100 == null
+      ? callout(fullTanks ? 'One more full tank' : 'Fill up to full once in a while',
+        `Consumption needs two full tanks to measure between (${fullTanks} logged so far). Your 20-30 MAD top-ups in between still count.`)
+      : ''}
+    <p class="small muted" style="margin:10px 0">${f.distance ? `${fmtKm(f.distance)} logged. ` : ''}Factory figure: &lt; 2 L/100 km. A sudden rise often means a dirty air filter or a dragging brake.</p>
     ${state.fuel.length ? `<div class="list">${state.fuel.map((e) => `<button class="card navrow" data-id="${e.id}">${badge('fuel')}
-      <div class="grow"><h3>${e.liters.toFixed(2)} L${e.cost != null ? ` · ${fmtMad(e.cost)}` : ''}</h3><p class="small muted">${fmtKm(e.km)} · ${fmtDate(e.date)}${e.full ? '' : ' · partial'}</p></div></button>`).join('')}</div>`
-      : empty('fuel', 'No fill-ups yet', 'Add each fill-up with the odometer reading.')}
+      <div class="grow"><h3>${e.cost != null ? `${fmtMad(e.cost)} · ` : ''}${e.liters.toFixed(2)} L</h3><p class="small muted">${fmtKm(e.km)} · ${fmtDate(e.date)}${perLiter(e)}${e.full ? ' · full' : ''}</p></div></button>`).join('')}</div>`
+      : empty('fuel', 'No fill-ups yet', 'Tap Fill-up at the pump: pick the amount, and the litres are worked out for you.')}
     <button class="btn fab" id="add">${icon('plus')} Fill-up</button>`;
   const mount = (root) => {
-    root.querySelector('#add').onclick = () => fuelDialog({ date: todayIso(), km: snap.km, liters: 0, cost: null, full: true });
+    root.querySelector('#add').onclick = () => fuelDialog({ date: todayIso(), km: snap.km, liters: 0, cost: null, full: false }, f.lastPricePerLiter);
     root.querySelectorAll('[data-id]').forEach((b) => (b.onclick = () => fuelDialog(state.fuel.find((x) => x.id === b.dataset.id))));
   };
   return { html, mount };

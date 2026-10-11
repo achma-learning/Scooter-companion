@@ -116,7 +116,7 @@ fun SettingsScreen(onBack: () -> Unit) {
             Text("Mode", style = MaterialTheme.typography.titleMedium)
             ListItem(
                 headlineContent = { Text("Private Mode") },
-                supportingContent = { Text("No account, no network, everything stays on this device.") },
+                supportingContent = { Text("No account, never online by itself, everything stays on this device.") },
                 trailingContent = {
                     Switch(
                         checked = state.mode == AppMode.PRIVATE,

@@ -9,7 +9,11 @@ data class FuelSummary(
     val costPerKm: Double?,
     val totalCost: Double,
     val totalLiters: Double,
-    val distance: Int
+    val distance: Int,
+    /** MAD per litre over every fill-up with a price (total paid ÷ litres). */
+    val avgPricePerLiter: Double? = null,
+    /** MAD per litre of the most recent priced fill-up — the form's default price. */
+    val lastPricePerLiter: Double? = null
 )
 
 object FuelStats {
@@ -46,13 +50,17 @@ object FuelStats {
         val distance = if (sorted.size >= 2) sorted.last().km - sorted.first().km else 0
         // Cost of the first fill bought fuel used *before* the log started, so exclude it.
         val costAfterFirst = sorted.drop(1).sumOf { it.cost ?: 0.0 }
+        val priced = sorted.filter { it.cost != null && it.liters > 0 }
+        val pricedLiters = priced.sumOf { it.liters }
         return FuelSummary(
             litersPer100 = if (segDistance > 0) segLiters * 100 / segDistance else null,
             lastLitersPer100 = lastSegment,
             costPerKm = if (distance > 0 && costAfterFirst > 0) costAfterFirst / distance else null,
             totalCost = totalCost,
             totalLiters = sorted.sumOf { it.liters },
-            distance = distance
+            distance = distance,
+            avgPricePerLiter = if (pricedLiters > 0) priced.sumOf { it.cost!! } / pricedLiters else null,
+            lastPricePerLiter = priced.lastOrNull()?.let { it.cost!! / it.liters }
         )
     }
 }

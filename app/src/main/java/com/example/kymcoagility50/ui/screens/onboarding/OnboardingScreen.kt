@@ -48,8 +48,8 @@ fun OnboardingScreen(onChoose: (AppMode) -> Unit) {
                 Spacer(Modifier.height(8.dp))
                 Text("Private Mode (recommended)", style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Nothing ever leaves this device. No account, no network requests, " +
-                        "your maintenance log stays local only.",
+                    "Nothing about you ever leaves this device. No account, and the app only goes online " +
+                        "if you tap \"Today's price\" when logging fuel.",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(Modifier.height(12.dp))
