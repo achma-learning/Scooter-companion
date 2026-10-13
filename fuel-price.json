@@ -1,0 +1,13 @@
+{
+ "format": "agility-fuel-price",
+ "version": 1,
+ "country": "MA",
+ "fuel": "gasoline-95",
+ "currency": "MAD",
+ "pricePerLiter": 15.18,
+ "asOf": "2026-10-05",
+ "source": "GlobalPetrolPrices.com",
+ "sourceUrl": "https://www.globalpetrolprices.com/Morocco/gasoline_prices/",
+ "license": "CC BY-NC-ND 3.0",
+ "note": "National weekly average; your station's price may differ."
+}
