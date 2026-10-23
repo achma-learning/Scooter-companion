@@ -309,7 +309,19 @@ fun VSpace(h: Dp) = Spacer(Modifier.height(h))
 
 fun formatKm(km: Int): String = "%,d".format(km).replace(',', ' ') + " km"
 
-fun formatMad(v: Double): String = if (v >= 100) "%,.0f MAD".format(v).replace(',', ' ') else "%.2f MAD".format(v)
+/**
+ * The currency symbol of the owner's region pack ("DH" for Morocco). GarageRepository sets it
+ * whenever the profile loads, so plain formatting functions can use it.
+ */
+object Money {
+    @Volatile var symbol: String = "DH"
+}
+
+/** "1 250 DH" above 100, "15.50 DH" below; Western digits whatever the language. */
+fun formatMoney(v: Double): String {
+    val number = if (v >= 100 || v == Math.floor(v)) "%,.0f".format(java.util.Locale.US, v).replace(',', ' ') else "%.2f".format(java.util.Locale.US, v)
+    return if (Money.symbol.isBlank()) number else "$number ${Money.symbol}"
+}
 
 fun Context.openUrl(url: String) = runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 

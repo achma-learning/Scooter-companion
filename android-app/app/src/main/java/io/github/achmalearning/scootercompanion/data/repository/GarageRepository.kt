@@ -24,6 +24,8 @@ import io.github.achmalearning.scootercompanion.data.db.MaintenanceEntryEntity
 import io.github.achmalearning.scootercompanion.data.db.ManualDatabase
 import io.github.achmalearning.scootercompanion.data.db.OdometerEntity
 import io.github.achmalearning.scootercompanion.data.db.taskIds
+import io.github.achmalearning.scootercompanion.data.region.RegionPack
+import io.github.achmalearning.scootercompanion.ui.components.Money
 import io.github.achmalearning.scootercompanion.domain.Coverage
 import io.github.achmalearning.scootercompanion.domain.Dates
 import io.github.achmalearning.scootercompanion.domain.ExpenseLedger
@@ -72,7 +74,8 @@ data class GarageSnapshot(
     /** Every payment from every module, oldest first. */
     val spends: List<Spend>,
     val ledger: LedgerStats,
-    val coverage: Coverage
+    val coverage: Coverage,
+    val region: RegionPack = RegionPack.GENERIC
 ) {
     val warrantyEnd: Long? get() = profile.purchaseDate?.let { Dates.addMonths(it, profile.warrantyMonths) }
     val spec: VehicleSpec get() = VehicleSpec.parse(profile.powertrain, profile.engineCc, profile.fuelSystem, profile.cooling)
@@ -85,6 +88,7 @@ data class GarageSnapshot(
 class GarageRepository(
     private val context: Context,
     private val db: ManualDatabase,
+    private val regionProvider: (String) -> RegionPack = { RegionPack.GENERIC },
     private val contentProvider: () -> Content
 ) {
     private val dao = db.garageDao()
@@ -115,6 +119,9 @@ class GarageRepository(
     ): GarageSnapshot {
         val content = contentProvider()
         val profile = profileOrNull ?: BikeProfileEntity()
+        val region = regionProvider(profile.region)
+        // Plain money formatting (formatMoney) reads the symbol from here.
+        Money.symbol = region.currencySymbol
         val today = Dates.today()
         val records = entries.map { it.toRecord() }
         val currentKm = ServicePlanner.currentKm(
@@ -145,7 +152,8 @@ class GarageRepository(
             ledger = ExpenseLedger.stats(
                 spends, today, ownedSince, profile.monthlyBudget, kmDriven = currentKm - profile.purchaseKm
             ),
-            coverage = Insurance.coverage(insurance.map { it.toPolicy() }, today)
+            coverage = Insurance.coverage(insurance.map { it.toPolicy() }, today),
+            region = region
         )
     }
 

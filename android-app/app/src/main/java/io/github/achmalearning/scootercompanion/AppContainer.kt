@@ -21,7 +21,7 @@ class AppContainer(context: Context) {
     val settingsRepository = SettingsRepository(context)
     val contentRepository = ContentRepository(context)
     val regionRepository = RegionRepository(context)
-    val garageRepository = GarageRepository(context, db) { contentRepository.content }
+    val garageRepository = GarageRepository(context, db, regionRepository::pack) { contentRepository.content }
 
     companion object {
         @Volatile private var INSTANCE: AppContainer? = null

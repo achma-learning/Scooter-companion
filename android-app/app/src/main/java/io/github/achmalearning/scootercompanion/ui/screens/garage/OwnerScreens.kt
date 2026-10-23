@@ -19,13 +19,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Badge
-import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -41,7 +38,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,8 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
-import io.github.achmalearning.scootercompanion.data.db.FuelEntity
-import io.github.achmalearning.scootercompanion.data.fuel.FuelPriceClient
 import io.github.achmalearning.scootercompanion.domain.Dates
 import io.github.achmalearning.scootercompanion.domain.MilestoneStatus
 import io.github.achmalearning.scootercompanion.domain.StampState
@@ -73,11 +67,8 @@ import io.github.achmalearning.scootercompanion.ui.components.StatTile
 import io.github.achmalearning.scootercompanion.ui.components.StatusPill
 import io.github.achmalearning.scootercompanion.ui.components.VSpace
 import io.github.achmalearning.scootercompanion.ui.components.formatKm
-import io.github.achmalearning.scootercompanion.ui.components.formatMad
+import io.github.achmalearning.scootercompanion.ui.components.formatMoney
 import io.github.achmalearning.scootercompanion.ui.theme.LocalStatusColors
-import java.math.BigDecimal
-import java.math.RoundingMode
-import kotlinx.coroutines.launch
 
 // ------------------------------------------------------------------------------ Passport
 
@@ -186,173 +177,6 @@ private fun Stamp(m: MilestoneStatus, modifier: Modifier, onClick: () -> Unit) {
     }
 }
 
-// ------------------------------------------------------------------------------ Fuel
-
-@Composable
-fun FuelScreen(onBack: () -> Unit) {
-    val context = LocalContext.current
-    val vm = appViewModel { GarageViewModel(context, it) }
-    val s = vm.state.collectAsStateWithLifecycle().value ?: return
-    var editing by remember { mutableStateOf<FuelEntity?>(null) }
-    val f = s.fuelSummary
-    val fullTanks = s.fuel.count { it.full }
-
-    Scaffold(
-        topBar = { BackTopBar("Fuel log", onBack) },
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = { editing = FuelEntity(date = Dates.today(), km = s.currentKm, liters = 0.0, full = false) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Fill-up") }
-            )
-        }
-    ) { padding ->
-        LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
-            item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    StatTile(f.litersPer100?.let { "%.2f".format(it) } ?: "—", "L/100 km avg", Modifier.weight(1f))
-                    StatTile(f.costPerKm?.let { "%.2f".format(it) } ?: "—", "MAD / km", Modifier.weight(1f))
-                }
-                VSpace(8.dp)
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    StatTile(formatMad(f.totalCost), "total spent", Modifier.weight(1f))
-                    StatTile(f.avgPricePerLiter?.let { "%.2f".format(it) } ?: "—", "MAD / L avg", Modifier.weight(1f))
-                }
-                if (s.fuel.isNotEmpty() && f.litersPer100 == null) {
-                    VSpace(8.dp)
-                    Callout(
-                        if (fullTanks > 0) "One more full tank" else "Fill up to full once in a while",
-                        "Consumption needs two full tanks to measure between ($fullTanks logged so far). Your 20-30 MAD top-ups in between still count."
-                    )
-                }
-                Text(
-                    (if (f.distance > 0) "${formatKm(f.distance)} logged. " else "") +
-                        "Factory figure: < 2 L/100 km. A sudden rise often means a dirty air filter or a dragging brake.",
-                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 10.dp)
-                )
-            }
-            if (s.fuel.isEmpty()) item { EmptyState(Icons.Filled.LocalGasStation, "No fill-ups yet", "Tap Fill-up at the pump: pick the amount, and the litres are worked out for you.") }
-            items(s.fuel, key = { it.id }) { e ->
-                Panel(onClick = { editing = e }, modifier = Modifier.padding(vertical = 4.dp)) {
-                    Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                        IconBadge(Icons.Filled.LocalGasStation, MaterialTheme.colorScheme.primary)
-                        Column(Modifier.weight(1f).padding(start = 12.dp)) {
-                            Text((e.cost?.let { formatMad(it) + " · " } ?: "") + "%.2f L".format(e.liters), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                            val perLiter = e.cost?.takeIf { e.liters > 0 }?.let { " · %.2f MAD/L".format(it / e.liters) } ?: ""
-                            Text("${formatKm(e.km)} · ${Dates.display(e.date)}$perLiter" + if (e.full) " · full" else "", style = MaterialTheme.typography.bodySmall)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    editing?.let { e -> FuelDialog(e, f.lastPricePerLiter, onSave = { vm.saveFuel(it); editing = null }, onDelete = { vm.deleteFuel(e); editing = null }, onDismiss = { editing = null }) }
-}
-
-private val FILL_AMOUNTS = listOf(20, 30, 50, 100)
-
-/** Locale-independent "15.18" / "2" for text fields (a French locale would print "15,18"). */
-private fun decimalText(v: Double, scale: Int = 2): String = BigDecimal(v).setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
-
-/**
- * Most fill-ups are a fixed amount ("30 dh") rather than a full tank, so the form starts from
- * what the pump shows: amount paid × price per litre → litres. Any two give the third. Mirrors
- * fuelDialog in web/js/views-garage.js.
- */
-@Composable
-private fun FuelDialog(e: FuelEntity, defaultPrice: Double?, onSave: (FuelEntity) -> Unit, onDelete: () -> Unit, onDismiss: () -> Unit) {
-    val scope = rememberCoroutineScope()
-    var date by remember(e) { mutableStateOf<Long?>(e.date) }
-    var km by remember(e) { mutableStateOf(e.km.toString()) }
-    var liters by remember(e) { mutableStateOf(if (e.liters > 0) decimalText(e.liters, scale = 4) else "") }
-    var cost by remember(e) { mutableStateOf(e.cost?.let(::decimalText) ?: "") }
-    var price by remember(e) {
-        val p = if (e.liters > 0 && e.cost != null) e.cost / e.liters else defaultPrice
-        mutableStateOf(p?.let(::decimalText) ?: "")
-    }
-    var full by remember(e) { mutableStateOf(e.full) }
-    var lookingUp by remember { mutableStateOf(false) }
-    var priceNote by remember { mutableStateOf<String?>(null) }
-
-    fun litersFromCost() {
-        val c = cost.toDoubleOrNull() ?: return
-        val p = price.toDoubleOrNull() ?: return
-        // 4 decimals so cost ÷ litres gives back the exact price next time; at 2 decimals
-        // 30 MAD @ 15.18 → 1.98 L → 15.15, and the remembered price would drift down.
-        if (c > 0 && p > 0) liters = decimalText(c / p, scale = 4)
-    }
-    fun costFromLiters() {
-        val l = liters.toDoubleOrNull() ?: return
-        val p = price.toDoubleOrNull() ?: return
-        if (l > 0 && p > 0) cost = decimalText(l * p)
-    }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(if (e.id == 0L) "New fill-up" else "Edit fill-up") },
-        text = {
-            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                DateField(date, { date = it }, "Date")
-                NumberField(km, { km = it }, "Odometer", suffix = "km")
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    FILL_AMOUNTS.forEach { a ->
-                        FilterChip(
-                            selected = cost.toDoubleOrNull() == a.toDouble(),
-                            onClick = { cost = a.toString(); litersFromCost() },
-                            label = { Text("$a MAD") }
-                        )
-                    }
-                }
-                NumberField(cost, { cost = it; litersFromCost() }, "Paid", decimal = true, suffix = "MAD")
-                NumberField(price, {
-                    price = it
-                    if ((cost.toDoubleOrNull() ?: 0.0) > 0) litersFromCost() else costFromLiters()
-                }, "Price per litre", decimal = true, suffix = "MAD/L")
-                OutlinedButton(
-                    enabled = !lookingUp,
-                    onClick = {
-                        lookingUp = true
-                        priceNote = "Looking up…"
-                        scope.launch {
-                            FuelPriceClient.fetch()
-                                .onSuccess { p ->
-                                    price = decimalText(p.pricePerLiter)
-                                    if ((cost.toDoubleOrNull() ?: 0.0) > 0) litersFromCost() else costFromLiters()
-                                    priceNote = "National average ${decimalText(p.pricePerLiter)} MAD/L · ${Dates.fromIso(p.asOf)?.let(Dates::display) ?: p.asOf} · ${p.source}. Your station may differ."
-                                }
-                                .onFailure { priceNote = "${it.message ?: "No connection"} — type the pump price." }
-                            lookingUp = false
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(Icons.Filled.CloudDownload, null)
-                    Text("Today's price", Modifier.padding(start = 8.dp))
-                }
-                priceNote?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                NumberField(liters, { liters = it; costFromLiters() }, "Litres", decimal = true, suffix = "L")
-                Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(full, { full = it }); Text("Full tank (pump clicked off)") }
-                Text(
-                    "Consumption is measured between two full tanks; top-ups in between are counted.",
-                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        },
-        confirmButton = {
-            Button(
-                enabled = km.toIntOrNull() != null && (liters.toDoubleOrNull() ?: 0.0) > 0 && date != null,
-                onClick = { onSave(e.copy(date = date!!, km = km.toInt(), liters = liters.toDouble(), cost = cost.toDoubleOrNull(), full = full)) }
-            ) { Text("Save") }
-        },
-        dismissButton = {
-            Row {
-                if (e.id != 0L) TextButton(onClick = onDelete) { Text("Delete", color = LocalStatusColors.current.due) }
-                TextButton(onClick = onDismiss) { Text("Cancel") }
-            }
-        }
-    )
-}
-
 // ------------------------------------------------------------------------------ Wallet
 
 @Composable
@@ -446,6 +270,3 @@ fun WalletScreen(onBack: () -> Unit) {
         )
     }
 }
-
-// ------------------------------------------------------------------------------ Profile
-

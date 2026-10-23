@@ -66,7 +66,8 @@ import io.github.achmalearning.scootercompanion.ui.components.StatusPill
 import io.github.achmalearning.scootercompanion.ui.components.VSpace
 import io.github.achmalearning.scootercompanion.ui.components.dueText
 import io.github.achmalearning.scootercompanion.ui.components.formatKm
-import io.github.achmalearning.scootercompanion.ui.components.formatMad
+import io.github.achmalearning.scootercompanion.ui.components.Money
+import io.github.achmalearning.scootercompanion.ui.components.formatMoney
 import io.github.achmalearning.scootercompanion.ui.components.statusColor
 import io.github.achmalearning.scootercompanion.ui.components.statusLabel
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageViewModel
@@ -137,7 +138,7 @@ private fun ServiceHistoryRow(entry: MaintenanceEntryEntity, vm: GarageViewModel
             val meta = listOfNotNull(
                 entry.milestoneKm?.let { "Passport ${formatKm(it)}" },
                 entry.shop.takeIf { it.isNotBlank() },
-                entry.cost?.let(::formatMad)
+                entry.cost?.let(::formatMoney)
             )
             if (meta.isNotEmpty()) Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (entry.note.isNotBlank()) Text(entry.note, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
@@ -291,7 +292,7 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
                     }
                 }
                 VSpace(8.dp)
-                NumberField(cost, { cost = it }, "Cost", decimal = true, suffix = "MAD")
+                NumberField(cost, { cost = it }, "Cost", decimal = true, suffix = Money.symbol)
                 Row(Modifier.fillMaxWidth().padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text("Stamped in the paper passport", style = MaterialTheme.typography.bodyLarge)
