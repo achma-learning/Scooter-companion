@@ -36,9 +36,11 @@ _Last synced: 2026-10-23 @ e0efb07 (Phase 2 on `claude/happy-sagan-x0wx57`)_
 - **Release:** every push to `main` runs `.github/workflows/build-and-release.yml`. With the
   signing secrets it publishes GitHub Release `v3.0.<run>` with `scooter-companion.apk`;
   without them it builds a debug APK artifact and publishes nothing.
-- **Secrets:** `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`,
-  `RELEASE_KEY_PASSWORD` (README "Releases" has the keytool command). Build-time env:
-  `APP_VERSION_CODE`, `APP_VERSION_NAME`.
+- **Release key:** the owner adds one secret, `RELEASE_KEYSTORE_PASSWORD`, then runs the
+  *Create release key* workflow once. It commits `android-app/app/signing/release.jks.gpg`
+  (the keystore, AES-256 encrypted with that password) and starts a release. Advanced
+  alternative: `RELEASE_KEYSTORE_BASE64` (+ `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD`).
+  Build-time env: `APP_VERSION_CODE`, `APP_VERSION_NAME`.
 - **Fuel price:** `.github/workflows/fuel-price.yml` refreshes `fuel-price.json` on the
   orphan `data` branch every Tuesday.
 
@@ -127,9 +129,12 @@ Android tests → signed release or debug artifact → Release), `fuel-price.yml
 
 ## 6. Fragile Bits & Landmines
 **Works, but subtle**
-- **Signing.** Releases are signed only with the private key from secrets; the old public
-  sideload key was deleted. Every release must use the same key or updates fail to install.
-  Losing the key means every user reinstalls (export first).
+- **Signing.** Releases are signed with the private key in `signing/release.jks.gpg`
+  (encrypted, decrypted in CI with the `RELEASE_KEYSTORE_PASSWORD` secret; alias `scooter`,
+  key password = keystore password). Every release must use the same key or updates fail to
+  install, so *Create release key* refuses to run once the file exists. Never delete or
+  replace that file; losing the password means every user reinstalls. The old public
+  sideload key was deleted on purpose.
 - **The updater compares `versionCode`s** read from `<!-- versionCode: N -->` in the release
   body (fallback: the tag's last number). Keep that line and the asset name
   `scooter-companion.apk`. GitHub may spell the repo `Scooter-companion`; the URL check
@@ -187,8 +192,8 @@ Android tests → signed release or debug artifact → Release), `fuel-price.yml
 - **Then:** Phase 4 statistics (matplotlib-style charts in Compose Canvas, monthly target,
   insights, 1st-of-month report notification); Phase 5 `.txt` export for AI analysis
   (with VIN/plate masking), sharing, release.
-- **Owner to do:** create the release key and the 4 secrets (no release is published
-  without them).
+- **Owner to do:** add the `RELEASE_KEYSTORE_PASSWORD` secret and run *Create release key*
+  once (no release is published until then).
 
 ## 8. Update Protocol (Verbatim)
 > **For the AI Assistant:** When asked to "Update CONTEXT.md":

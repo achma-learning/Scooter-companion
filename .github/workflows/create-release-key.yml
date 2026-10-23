@@ -1,0 +1,65 @@
+name: Create release key
+
+# Run ONCE from the Actions tab, after adding the repository secret RELEASE_KEYSTORE_PASSWORD
+# (a password you invent, at least 20 characters). It creates the app's signing key on
+# GitHub's server, stores it in the repo encrypted with that password
+# (android-app/app/signing/release.jks.gpg), then starts the first release.
+# It refuses to run again: Android only accepts updates signed with the same key.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Create and encrypt the key
+        env:
+          PW: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          OUT=android-app/app/signing/release.jks.gpg
+          if [ -f "$OUT" ]; then
+            echo "::error::A release key already exists ($OUT). A new one would stop updates from installing, so nothing was changed."
+            exit 1
+          fi
+          if [ "${#PW}" -lt 20 ]; then
+            echo "::error::First add the repository secret RELEASE_KEYSTORE_PASSWORD (Settings → Secrets and variables → Actions): a password of at least 20 characters."
+            exit 1
+          fi
+          KS="$RUNNER_TEMP/release.jks"
+          # Passwords are read from the environment, never put on the command line.
+          keytool -genkeypair -keystore "$KS" -storetype PKCS12 -alias scooter -keyalg RSA -keysize 4096 \
+            -validity 10000 -storepass:env PW -keypass:env PW -dname "CN=Scooter Companion"
+          mkdir -p "$(dirname "$OUT")"
+          # AES-256 with a deliberately slow key derivation, so the public file resists guessing.
+          printf '%s' "$PW" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --symmetric \
+            --cipher-algo AES256 --s2k-mode 3 --s2k-digest-algo SHA512 --s2k-count 65011712 --output "$OUT" "$KS"
+          rm -f "$KS"
+          # Prove it opens with the secret before committing it.
+          printf '%s' "$PW" | gpg --batch --quiet --pinentry-mode loopback --passphrase-fd 0 --decrypt "$OUT" > /dev/null
+
+      - name: Commit the encrypted key
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android-app/app/signing/release.jks.gpg
+          git commit -m "Add the encrypted release signing key"
+          git push
+
+      # A push made by this workflow doesn't start other workflows, so ask for the release.
+      - name: Publish the first release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build-and-release.yml --ref "$GITHUB_REF_NAME" -f release=true
