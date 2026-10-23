@@ -63,4 +63,29 @@ object FuelStats {
             lastPricePerLiter = priced.lastOrNull()?.let { it.cost!! / it.liters }
         )
     }
+
+    /**
+     * L/100 km of each full-to-full segment (top-ups in between included), dated at the
+     * full fill-up that closes it. Same method as [summarize]; for the consumption chart.
+     */
+    fun segments(fills: List<FuelFill>): List<Point> {
+        val sorted = fills.sortedWith(compareBy<FuelFill> { it.km }.thenBy { it.date })
+        val out = mutableListOf<Point>()
+        var anchor: FuelFill? = null
+        var pending = 0.0
+        for (f in sorted) {
+            if (anchor == null) {
+                if (f.full) anchor = f
+                continue
+            }
+            pending += f.liters
+            if (f.full) {
+                val d = f.km - anchor.km
+                if (d > 0) out += Point(f.date, pending * 100 / d)
+                anchor = f
+                pending = 0.0
+            }
+        }
+        return out
+    }
 }

@@ -12,6 +12,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.hasScrollToIndexAction
+import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.onFirst
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
@@ -174,6 +177,29 @@ class ScreensSmokeTest {
                 compose.onAllNodesWithText("Honda PCX 125", substring = true).fetchSemanticsNodes().isNotEmpty()
             }
             save(generic[i].first)
+        }
+    }
+
+    /** The stats tab is long: scroll through it so every chart is drawn (and captured). */
+    @Test
+    fun statsChartsRenderAllTheWayDown() {
+        seed()
+        runBlocking {
+            val c = AppContainer.getInstance(compose.activity)
+            val today = Dates.today()
+            // A few more priced fill-ups so the price and consumption charts have lines.
+            listOf(Triple(-50, 2400, 15.2), Triple(-35, 2500, 15.6), Triple(-5, 2850, 16.1)).forEach { (d, km, price) ->
+                c.garageRepository.saveFuel(FuelEntity(date = Dates.addDays(today, d), km = km, liters = 3.0, cost = 3.0 * price, full = true))
+            }
+        }
+        compose.setContent { ScooterTheme { Surface(color = MaterialTheme.colorScheme.background) { StatsScreen() } } }
+        compose.waitUntil(10_000) { compose.onAllNodes(hasScrollToIndexAction()).fetchSemanticsNodes().isNotEmpty() }
+        compose.waitForIdle()
+        save("s0-stats-top")
+        listOf(8, 10, 12, 14).forEachIndexed { i, index ->
+            compose.onAllNodes(hasScrollToIndexAction()).onFirst().performScrollToIndex(index)
+            compose.waitForIdle()
+            save("s${i + 1}-stats")
         }
     }
 
