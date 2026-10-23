@@ -3,6 +3,7 @@ package io.github.achmalearning.scootercompanion.data
 import androidx.test.core.app.ApplicationProvider
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.backup.BackupFile
+import io.github.achmalearning.scootercompanion.data.export.TextReport
 import io.github.achmalearning.scootercompanion.domain.CoverageState
 import io.github.achmalearning.scootercompanion.domain.Cooling
 import io.github.achmalearning.scootercompanion.domain.Dates
@@ -11,6 +12,7 @@ import io.github.achmalearning.scootercompanion.domain.StampState
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -90,5 +92,21 @@ class BackupInteropTest {
         assertEquals(original.insurance, exported.insurance)
         assertEquals(original.expenses.sortedBy { it.date }, exported.expenses.sortedBy { it.date })
         assertEquals(original.preRide, exported.preRide)
+    }
+
+    @Test
+    fun aiReportHasEverythingAndCanHideIdentifiers() = runBlocking {
+        container.garageRepository.importJson(fixture("backup-sample-v2.json"), container.maintenanceRepository)
+        val snap = container.garageRepository.current()
+        val hidden = TextReport.build(snap, container.contentRepository.content, hideIds = true, exportedOn = "2026-10-23")
+        listOf("Honda PCX 125", "125 cc, injection, liquid-cooled", "bought: used".replaceFirstChar { it.uppercase() },
+            "== FUEL (2 fill-ups) ==", "Michelin City Grip 2", "Wafa Assurance", "Passenger without helmet", "== MONTH BY MONTH")
+            .forEach { assertTrue("missing: $it", it in hidden) }
+        listOf("LXYJCBL01P0000001", "54321-B-40", "JF81E-0001", "RC-2026-0042").forEach { assertFalse("leaked: $it", it in hidden) }
+
+        // -PscreenshotsDir=… also keeps a sample report for a human to read.
+        System.getProperty("screenshots.dir").orEmpty().takeIf { it.isNotBlank() }?.let { File(it, "sample-report.txt").writeText(hidden) }
+        val shown = TextReport.build(snap, container.contentRepository.content, hideIds = false)
+        assertTrue("LXYJCBL01P0000001" in shown && "RC-2026-0042" in shown)
     }
 }

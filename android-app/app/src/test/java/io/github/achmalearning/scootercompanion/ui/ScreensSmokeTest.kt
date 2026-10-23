@@ -11,6 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.hasScrollToIndexAction
+import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.onFirst
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
@@ -41,6 +45,12 @@ import io.github.achmalearning.scootercompanion.ui.screens.more.MoreNav
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.SosScreen
 import io.github.achmalearning.scootercompanion.ui.screens.onboarding.OnboardingScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.ExpensesScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.InsuranceScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.RecommendationsScreen
+import io.github.achmalearning.scootercompanion.ui.screens.stats.StatsScreen
+import io.github.achmalearning.scootercompanion.data.db.ExpenseEntity
+import io.github.achmalearning.scootercompanion.data.db.InsurancePolicyEntity
 import io.github.achmalearning.scootercompanion.ui.screens.profile.BikeProfileScreen
 import io.github.achmalearning.scootercompanion.ui.screens.service.LogServiceScreen
 import io.github.achmalearning.scootercompanion.ui.screens.service.ServiceScreen
@@ -91,6 +101,9 @@ class ScreensSmokeTest {
         c.garageRepository.saveFuel(FuelEntity(date = Dates.addDays(today, -9), km = 2790, liters = 3.6, cost = 48.5, full = true))
         c.garageRepository.saveDocument(DocumentEntity(type = "insurance", title = "Assur'Auto — Sanlam", number = "AU-2025-8841", expiry = Dates.addDays(today, 9)))
         c.garageRepository.saveDocument(DocumentEntity(type = "registration", title = "Carte grise", number = "12345-A-40"))
+        c.garageRepository.saveInsurance(InsurancePolicyEntity(startDate = Dates.addMonths(today, -11), months = 12, totalPaid = 1500.0, insurer = "Wafa"))
+        c.garageRepository.saveExpense(ExpenseEntity(date = Dates.addDays(today, -40), category = "GEAR", title = "Helmet", amount = 650.0))
+        c.garageRepository.saveExpense(ExpenseEntity(date = Dates.addDays(today, -3), category = "FINE", title = "Passenger without helmet", amount = 150.0))
     }
 
     private val noop: () -> Unit = {}
@@ -122,8 +135,82 @@ class ScreensSmokeTest {
         "22-more" to { MoreScreen(MoreNav(noop, noop, noop, noop, noop, noop)) },
         "23-sos" to { SosScreen(noop, noop) },
         "24-settings" to { SettingsScreen(noop) },
-        "25-onboarding" to { OnboardingScreen(onDone = noop) }
+        "25-onboarding" to { OnboardingScreen(onDone = noop) },
+        "26-insurance" to { InsuranceScreen(noop) },
+        "27-expenses" to { ExpensesScreen(noop) },
+        "28-recommendations" to { RecommendationsScreen(noop) {} },
+        "29-stats" to { StatsScreen() }
     )
+
+    /** A liquid-cooled, injected 125 bought used: generic tasks, no passport, coolant checks. */
+    @Test
+    fun aGenericScooterRenders() {
+        seed()
+        runBlocking {
+            val c = AppContainer.getInstance(compose.activity)
+            c.garageRepository.saveProfile(
+                c.garageRepository.current().profile.copy(
+                    brand = "Honda", model = "PCX 125", engineCc = 125, fuelSystem = "INJECTION", cooling = "LIQUID",
+                    boughtUsed = true, purchasePrice = 21000.0, newPrice = 32000.0
+                )
+            )
+        }
+        val generic: List<Pair<String, @Composable () -> Unit>> = listOf(
+            "g1-home" to { GarageScreen(GarageNav({}, noop, noop, noop, noop, noop, noop, noop, noop, noop, noop)) },
+            "g2-service" to { ServiceScreen(openTask = {}, logService = {}) },
+            "g3-log-service" to { LogServiceScreen(null, null, null, noop) },
+            "g4-checklist" to { ChecklistScreen(noop) },
+            "g5-more" to { MoreScreen(MoreNav(noop, noop, noop, noop, noop, noop)) },
+            "g6-profile" to { BikeProfileScreen(noop) }
+        )
+        var index by mutableStateOf(0)
+        compose.setContent {
+            ScooterTheme { Surface(color = MaterialTheme.colorScheme.background) { Box { generic[index].second() } } }
+        }
+        for (i in generic.indices) {
+            index = i
+            compose.waitForIdle()
+            compose.mainClock.advanceTimeBy(500)
+            compose.waitForIdle()
+            // The garage snapshot comes from Room off the main thread; wait for the hero card.
+            if (i == 0) compose.waitUntil(10_000) {
+                compose.onAllNodesWithText("Honda PCX 125", substring = true).fetchSemanticsNodes().isNotEmpty()
+            }
+            save(generic[i].first)
+        }
+    }
+
+    /** The stats tab is long: scroll through it so every chart is drawn (and captured). */
+    @Test
+    fun statsChartsRenderAllTheWayDown() {
+        seed()
+        runBlocking {
+            val c = AppContainer.getInstance(compose.activity)
+            val today = Dates.today()
+            // A few more priced fill-ups so the price and consumption charts have lines.
+            listOf(Triple(-50, 2400, 15.2), Triple(-35, 2500, 15.6), Triple(-5, 2850, 16.1)).forEach { (d, km, price) ->
+                c.garageRepository.saveFuel(FuelEntity(date = Dates.addDays(today, d), km = km, liters = 3.0, cost = 3.0 * price, full = true))
+            }
+        }
+        compose.setContent { ScooterTheme { Surface(color = MaterialTheme.colorScheme.background) { StatsScreen() } } }
+        compose.waitUntil(10_000) { compose.onAllNodes(hasScrollToIndexAction()).fetchSemanticsNodes().isNotEmpty() }
+        compose.waitForIdle()
+        save("s0-stats-top")
+        listOf(8, 10, 12, 14).forEachIndexed { i, index ->
+            compose.onAllNodes(hasScrollToIndexAction()).onFirst().performScrollToIndex(index)
+            compose.waitForIdle()
+            save("s${i + 1}-stats")
+        }
+    }
+
+    private fun save(name: String) {
+        outDir?.let { dir ->
+            val view = compose.activity.window.decorView
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            view.draw(Canvas(bitmap))
+            File(dir, "$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        }
+    }
 
     @Test
     fun everyScreenRenders() {

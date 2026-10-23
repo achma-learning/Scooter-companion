@@ -20,9 +20,9 @@ sealed class Routes(val route: String) {
 
     // Garage
     data object Task : Routes("task/{id}") { fun build(id: String) = "task/$id" }
-    data object LogService : Routes("log?entry={entry}&task={task}&milestone={milestone}") {
-        fun build(entry: Long? = null, task: String? = null, milestone: Int? = null) =
-            "log?entry=${entry ?: -1}&task=${task ?: ""}&milestone=${milestone ?: -1}"
+    data object LogService : Routes("log?entry={entry}&task={task}&milestone={milestone}&product={product}") {
+        fun build(entry: Long? = null, task: String? = null, milestone: Int? = null, product: String? = null) =
+            "log?entry=${entry ?: -1}&task=${task ?: ""}&milestone=${milestone ?: -1}&product=${android.net.Uri.encode(product ?: "")}"
     }
     data object Passport : Routes("passport")
     data object Fuel : Routes("fuel")
@@ -30,6 +30,10 @@ sealed class Routes(val route: String) {
     data object Profile : Routes("profile")
     data object Sos : Routes("sos")
     data object Settings : Routes("settings")
+    data object Insurance : Routes("insurance")
+    data object Expenses : Routes("expenses")
+    data object Recommendations : Routes("recommendations")
+    data object Stats : Routes("stats")
 
     // Guide
     data object Checklist : Routes("checklist")

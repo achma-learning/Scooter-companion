@@ -10,30 +10,39 @@ It grew out of *Agility Companion*, a companion app for one scooter, the Kymco A
 Its service planner, manual reader and fuel log are still inside. The interval knowledge comes
 from the [Marrakech maintenance wiki](https://achma-learning.github.io/kymco-agility-50-4T/).
 
-> **Status:** being rebuilt into Scooter Companion. Done: new app identity, scooter profile
-> and add-your-scooter wizard, spending ledger and insurance rules, save file v2,
-> French / English / Arabic. In progress: the fuel, maintenance, insurance, expense and
-> statistics screens. See [CONTEXT.md](CONTEXT.md) §7.
-
 ## What it does
 
 - **Add your scooter**: brand, model, engine size, carburettor or injection, air or liquid
   cooling, petrol or electric. Bought new or used: the price you paid, and for a used scooter
-  the price new (to see what you saved), first registration and previous owners. Links to
-  used-scooter sites (Avito.ma, Leboncoin.fr). Plate, VIN, engine number, your own photo.
-- **Spending ledger**: total spent with and without the purchase price, this month, last month,
-  this year, average per month owned, cost per km. Months are projected from recurring costs
-  only, so one insurance payment doesn't predict a disaster.
+  the price new (to see what you saved), first registration and previous owners, with links
+  to used-scooter sites (Avito.ma, Leboncoin.fr). Plate, VIN, engine number, your own photo.
+- **Fuel log**: tap the amount you paid (10 / 15 / 20 / 30 / 50 DH, more for bigger
+  scooters) or Full tank; litres are worked out from the price per litre (or tap Today's
+  price). Consumption in L/100 km and km per litre, cost per km.
+- **Maintenance**: reminders tuned to your scooter's engine class and type (coolant for
+  liquid-cooled, throttle body for injection, carburettor for carburetted, none of the engine
+  jobs for electric). Log each service with the parts, the labour, the product used (e.g.
+  Ipone R4000, Michelin City Grip 2), or any custom job.
 - **Insurance**: contracts of 1, 3, 6, 12 or any number of months with the amount you actually
-  paid. Approximate prices for Morocco are shown as a hint only. Reminder every day once fewer
-  than 20 days of cover remain, until you enter the renewal.
-- **Carried over from Agility Companion**: the service planner (tuned for the Agility 50 4T
-  for now), the fuel log built around the amount paid, the documents wallet with expiry
-  countdown, the pre-ride checklist, the Agility manual reader with search, the owner's
-  guide and the SOS numbers.
-- **Save file**: export everything to one JSON file and import it on another phone. Agility
-  Companion backups import too.
+  paid. Approximate prices for Morocco are only a hint. A reminder every day once fewer than
+  20 days of cover remain, until you enter the renewal.
+- **Expenses**: accessories, riding gear, fines (150 / 400 / 700 DH and the reason), parking,
+  washing, papers, charging, anything else.
+- **Statistics**: spending per month against your target, running total, where the money goes,
+  price per litre, consumption, a spending calendar, and plain-language insights. The home
+  screen shows this month against the target and warns before you go over. A report of last
+  month arrives on the 1st.
+- **Recommendations**: City Grip 2 tyres, a top case sized for your scooter (29 / 33 / 35 L),
+  an ECE 22.06 helmet, a riding vest, gloves, a lock. "I bought it" adds the expense.
+- **Pre-ride checklist, documents wallet, SOS** (Moroccan emergency numbers including 5050
+  for motorway assistance, what to do after an accident, your insurance details).
+- **Save file**: export everything to one file, share it (WhatsApp, Quick Share, Bluetooth…)
+  and import it on another phone. Agility Companion backups import too.
+- **Report for AI**: all your costs as plain text with a suggested question, to paste into an
+  AI assistant. Plate, VIN and policy numbers can be hidden.
 - **Languages**: French, English and Arabic (right-to-left), switchable in the app.
+- **Kymco Agility 50 4T owners** also keep the Marrakech maintenance schedule, the digital
+  dealer passport, the scanned manual with search and the owner's guide.
 
 ## Get it
 

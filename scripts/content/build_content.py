@@ -224,6 +224,119 @@ tasks = [
      "notes": "Axles, engine mounts, handlebar clamps, caliper bolts. See torque table."},
 ]
 
+# Every other scooter (Scooter Companion): one task list for all brands, picked per scooter.
+# kmByClass: the km interval per engine class (CC50 / CC125 / MID / MAXI / ELECTRIC); intervalKm
+# is the fallback. requires: the task only applies when the profile matches (powertrain,
+# fuelSystem, cooling). Intervals sit between common factory schedules and the stricter
+# Marrakech wiki: heat and dust shorten oil, filter and CVT life. Ids match the Agility tasks
+# where the job is the same, so a logbook keeps working if the profile changes.
+PETROL = {"powertrain": "PETROL"}
+generic_tasks = [
+    {"id": "engine-oil", "cat": "oil", "name": "Engine oil change", "fr": "Vidange huile moteur", "ar": "تغيير زيت المحرك",
+     "intervalKm": 3000, "kmByClass": {"CC50": 2000, "CC125": 3000, "MID": 4000, "MAXI": 5000}, "intervalMonths": 6,
+     "breakInKm": [1000], "requires": PETROL, "severity": "critical",
+     "notes": "Use the grade and quantity in your owner's manual. Scooters with a dry centrifugal clutch need JASO MB oil. In summer heat don't stretch the interval: oil is the engine's only cooling margin."},
+    {"id": "oil-filter", "cat": "oil", "name": "Oil filter / screen", "fr": "Filtre / crépine d'huile", "ar": "مصفاة الزيت",
+     "intervalKm": 6000, "kmByClass": {"CC50": 4000, "CC125": 6000, "MID": 8000, "MAXI": 10000},
+     "requires": PETROL, "severity": "high",
+     "notes": "Cartridge filter: replace. Metal screen: clean it. Easiest at an oil change."},
+    {"id": "gear-oil", "cat": "oil", "name": "Final drive (gear) oil", "fr": "Huile de transmission (pont)", "ar": "زيت ناقل الحركة",
+     "intervalKm": 8000, "kmByClass": {"CC50": 4000, "CC125": 8000, "MID": 10000, "MAXI": 12000, "ELECTRIC": 10000},
+     "breakInKm": [1000], "severity": "high",
+     "notes": "Usually 80W-90 or 10W-40 depending on the model, a small quantity (100-250 ml). Check the manual."},
+    {"id": "air-filter-clean", "cat": "air", "name": "Air filter check", "fr": "Contrôle filtre à air", "ar": "فحص مصفاة الهواء",
+     "intervalKm": 3000, "kmByClass": {"CC50": 1000, "CC125": 3000, "MID": 3000, "MAXI": 4000}, "intervalMonths": 3,
+     "requires": PETROL, "severity": "high",
+     "notes": "Paper elements: tap and blow from the inside out, never wash. Foam elements: wash and re-oil. After a dust storm, check it right away."},
+    {"id": "air-filter-replace", "cat": "air", "name": "Air filter replace", "fr": "Remplacement filtre à air", "ar": "تغيير مصفاة الهواء",
+     "intervalKm": 8000, "kmByClass": {"CC50": 4000, "CC125": 8000, "MID": 10000, "MAXI": 12000},
+     "requires": PETROL, "severity": "high",
+     "notes": "Fine dust wears the cylinder. Replace earlier if it stays dark after cleaning."},
+    {"id": "cvt-foam", "cat": "cvt", "name": "CVT air intake filter", "fr": "Filtre d'admission CVT", "ar": "مصفاة هواء ناقل الحركة CVT",
+     "intervalKm": 3000, "kmByClass": {"CC50": 1000, "CC125": 3000, "MID": 3000, "MAXI": 4000, "ELECTRIC": 3000},
+     "severity": "normal",
+     "notes": "The small filter on the CVT cover intake (not every scooter has one). Blocked = hot belt."},
+    {"id": "carb-clean", "cat": "air", "name": "Carburettor cleaning", "fr": "Nettoyage carburateur", "ar": "تنظيف الكاربراتور",
+     "intervalKm": 10000, "requires": {"powertrain": "PETROL", "fuelSystem": "CARBURETOR"}, "severity": "normal",
+     "notes": "Or at the first symptom: hard starting, rough idle, stalling at lights. Never poke jets with wire."},
+    {"id": "fuel-filter", "cat": "air", "name": "Fuel filter replace", "fr": "Filtre à essence", "ar": "مصفاة البنزين",
+     "intervalKm": 6000, "requires": {"powertrain": "PETROL", "fuelSystem": "CARBURETOR"}, "severity": "normal",
+     "notes": "Cheap inline filter. Dark brown inside means change it now."},
+    {"id": "throttle-body", "cat": "air", "name": "Throttle body & injector clean", "fr": "Nettoyage boîtier papillon / injecteur", "ar": "تنظيف علبة الخانق والحاقن",
+     "intervalKm": 12000, "requires": {"powertrain": "PETROL", "fuelSystem": "INJECTION"}, "severity": "normal",
+     "notes": "Carbon at the throttle plate causes an unstable idle. Use throttle-body cleaner, not carb spray on sensors."},
+    {"id": "plug-replace", "cat": "engine", "name": "Spark plug replace", "fr": "Bougie — remplacement", "ar": "تغيير شمعة الإشعال",
+     "intervalKm": 8000, "kmByClass": {"CC50": 5000, "CC125": 8000, "MID": 10000, "MAXI": 12000},
+     "requires": PETROL, "severity": "normal",
+     "notes": "Use the plug reference from the manual. Its colour is a free health check: light brown is good."},
+    {"id": "valves", "cat": "engine", "name": "Valve clearance check", "fr": "Jeu aux soupapes", "ar": "فحص خلوص الصمامات",
+     "intervalKm": 8000, "kmByClass": {"CC50": 4000, "CC125": 8000, "MID": 12000, "MAXI": 24000},
+     "requires": PETROL, "severity": "high",
+     "notes": "Engine cold. A ticking top end or hard hot starts are signs the clearance has drifted."},
+    {"id": "coolant-level", "cat": "engine", "name": "Coolant level check", "fr": "Niveau du liquide de refroidissement", "ar": "فحص مستوى سائل التبريد",
+     "intervalDays": 14, "requires": {"powertrain": "PETROL", "cooling": "LIQUID"}, "severity": "high",
+     "notes": "Engine cold, scooter upright: between MIN and MAX in the reserve tank. Never open the radiator cap hot."},
+    {"id": "coolant-replace", "cat": "engine", "name": "Coolant replace", "fr": "Remplacement liquide de refroidissement", "ar": "تغيير سائل التبريد",
+     "intervalKm": 20000, "intervalMonths": 24, "requires": {"powertrain": "PETROL", "cooling": "LIQUID"}, "severity": "high",
+     "notes": "Ready-mixed coolant for aluminium engines. Old coolant corrodes the pump and overheats in summer."},
+    {"id": "radiator-clean", "cat": "engine", "name": "Radiator & hoses check", "fr": "Radiateur et durites", "ar": "فحص المبرد والأنابيب",
+     "intervalMonths": 6, "requires": {"powertrain": "PETROL", "cooling": "LIQUID"}, "severity": "normal",
+     "notes": "Rinse dust and insects off the fins with a gentle stream (no pressure washer). Look for cracked or soft hoses."},
+    {"id": "cvt-inspect", "cat": "cvt", "name": "CVT belt & rollers inspection", "fr": "Inspection courroie et galets", "ar": "فحص السير والبكرات",
+     "intervalKm": 6000, "kmByClass": {"CC50": 5000, "CC125": 6000, "MID": 8000, "MAXI": 10000, "ELECTRIC": 8000},
+     "severity": "high",
+     "notes": "Measure the belt width, look for flat spots on the rollers, blow out the dust. Free while the cover is open."},
+    {"id": "rollers", "cat": "cvt", "name": "Variator rollers replace", "fr": "Galets du variateur", "ar": "تغيير بكرات المتغير",
+     "intervalKm": 12000, "kmByClass": {"CC50": 10000, "CC125": 12000, "MID": 15000, "MAXI": 20000},
+     "requires": PETROL, "severity": "high",
+     "notes": "Replace the whole set together, never one by one."},
+    {"id": "belt", "cat": "cvt", "name": "Drive belt replace", "fr": "Courroie de transmission", "ar": "تغيير سير الحركة",
+     "intervalKm": 12000, "kmByClass": {"CC50": 8000, "CC125": 12000, "MID": 18000, "MAXI": 24000, "ELECTRIC": 15000},
+     "severity": "high",
+     "notes": "Or earlier when it is below the minimum width in the manual. A snapped belt leaves you stranded."},
+    {"id": "clutch", "cat": "cvt", "name": "Centrifugal clutch inspection", "fr": "Embrayage centrifuge", "ar": "فحص القابض الطارد المركزي",
+     "intervalKm": 12000, "kmByClass": {"CC50": 10000, "CC125": 12000, "MID": 15000, "MAXI": 20000},
+     "requires": PETROL, "severity": "normal",
+     "notes": "Lining thickness and springs. Creeping at idle or juddering pull-away = worn clutch."},
+    {"id": "brake-pads", "cat": "brakes", "name": "Brake pads inspection", "fr": "Plaquettes de frein", "ar": "فحص وسادات الفرامل",
+     "intervalKm": 4000, "kmByClass": {"CC50": 3000, "CC125": 4000, "MID": 5000, "MAXI": 6000, "ELECTRIC": 4000},
+     "severity": "critical",
+     "notes": "Replace at 1 mm of lining or less. A scraping noise means metal on metal: stop riding."},
+    {"id": "brake-fluid", "cat": "brakes", "name": "Brake fluid replace", "fr": "Liquide de frein", "ar": "تغيير سائل الفرامل",
+     "intervalKm": 10000, "intervalMonths": 12, "severity": "critical",
+     "notes": "DOT 4 from a sealed bottle. It absorbs moisture and boils sooner in the heat."},
+    {"id": "tyre-pressure", "cat": "tyres", "name": "Tyre pressure check", "fr": "Pression des pneus", "ar": "فحص ضغط العجلات",
+     "intervalDays": 7, "severity": "high",
+     "notes": "Cold, with a gauge. Pressures are on a sticker under the seat or in the manual."},
+    {"id": "tyre-condition", "cat": "tyres", "name": "Tyre condition check", "fr": "État des pneus", "ar": "فحص حالة العجلات",
+     "intervalDays": 7, "severity": "normal",
+     "notes": "Tread at least 1 mm, no sidewall cracks, nothing stuck in the tread."},
+    {"id": "tyre-rear", "cat": "tyres", "name": "Rear tyre replace", "fr": "Pneu arrière", "ar": "تغيير العجلة الخلفية",
+     "intervalKm": 12000, "kmByClass": {"CC50": 12000, "CC125": 12000, "MID": 12000, "MAXI": 10000, "ELECTRIC": 10000},
+     "intervalMonths": 60, "severity": "high",
+     "notes": "The rear wears faster than the front. Michelin City Grip 2 is the best all-round city scooter tyre."},
+    {"id": "tyre-front", "cat": "tyres", "name": "Front tyre replace", "fr": "Pneu avant", "ar": "تغيير العجلة الأمامية",
+     "intervalKm": 18000, "kmByClass": {"CC50": 18000, "CC125": 18000, "MID": 16000, "MAXI": 15000, "ELECTRIC": 15000},
+     "intervalMonths": 60, "severity": "high",
+     "notes": "Front and rear tyres are built differently (front marked F): never swap them."},
+    {"id": "battery", "cat": "electrical", "name": "12 V battery check", "fr": "Batterie 12 V", "ar": "فحص بطارية 12 فولت",
+     "intervalMonths": 3, "severity": "normal",
+     "notes": "Above 12.4 V at rest. Heat and vibration kill batteries in 2-3 years."},
+    {"id": "traction-battery", "cat": "electrical", "name": "Traction battery & charger check", "fr": "Batterie de traction et chargeur", "ar": "فحص بطارية الدفع والشاحن",
+     "intervalMonths": 6, "requires": {"powertrain": "ELECTRIC"}, "severity": "high",
+     "notes": "Range compared with new, connectors clean and tight, charger cable intact. Avoid charging in direct sun."},
+    {"id": "throttle-cable", "cat": "chassis", "name": "Throttle cable check & lube", "fr": "Câble d'accélérateur", "ar": "فحص وتشحيم سلك الوقود",
+     "intervalKm": 6000, "requires": PETROL, "severity": "normal",
+     "notes": "2-6 mm free play; the throttle must snap shut by itself."},
+    {"id": "bolts", "cat": "chassis", "name": "Bolts & fasteners check", "fr": "Boulonnerie", "ar": "فحص البراغي",
+     "intervalKm": 8000, "severity": "normal",
+     "notes": "Axles, engine mounts, handlebar clamps, brake caliper bolts."},
+]
+for t in generic_tasks:
+    t.setdefault("label", "")
+    t.setdefault("factory", "")
+    t.setdefault("cost", "")
+
 # Official Kymco Morocco passport stamps: 300, 1,000, 3,000 km then every 2,000 km.
 # The wiki adds a 2,000 km oil change and two wear-based milestones (8,000 / 10,000 km).
 milestone_actions = {
@@ -279,6 +392,64 @@ checklist = [
     {"id": "battery-v", "group": "weekly", "title": "Battery voltage", "detail": "> 12.4 V at rest (engine off)."},
     {"id": "under-seat", "group": "weekly", "title": "Under-seat area", "detail": "Water ingress, loose items, rodent damage to wiring."},
     {"id": "cvt-noise", "group": "weekly", "title": "Listen to the CVT", "detail": "Short test ride: no squeal, no grinding from the rear."},
+]
+
+# Every other scooter: the pre-ride and weekly checks, in three languages, picked per profile.
+def check(id, group, en, fr, ar, requires=None):
+    item = {"id": id, "group": group, "title": en[0], "detail": en[1], "titleFr": fr[0], "detailFr": fr[1],
+            "titleAr": ar[0], "detailAr": ar[1]}
+    if requires:
+        item["requires"] = requires
+    return item
+
+generic_checklist = [
+    check("tyres-visual", "ride", ("Tyres look right", "Not flat, not bulging, nothing stuck in them."),
+          ("Pneus en bon état", "Ni à plat ni déformés, rien de planté dedans."),
+          ("العجلات سليمة", "غير مفرغة ولا منتفخة ولا شيء عالق بها.")),
+    check("brakes", "ride", ("Both brakes firm", "Levers firm, no sponginess; the scooter stops straight."),
+          ("Freins fermes", "Leviers fermes, pas d'effet éponge ; le scooter freine droit."),
+          ("الفرامل قوية", "المقابض صلبة بلا ليونة، والسكوتر يتوقف باستقامة.")),
+    check("lights", "ride", ("Lights, indicators, horn", "Headlight, tail light, brake light on both levers, indicators, horn."),
+          ("Feux, clignotants, klaxon", "Phare, feu arrière, feu stop sur les deux leviers, clignotants, klaxon."),
+          ("الأضواء والإشارات والمنبّه", "الضوء الأمامي والخلفي وضوء الفرامل بالمقبضين والإشارات والمنبّه.")),
+    check("throttle", "ride", ("Throttle", "Turns smoothly and snaps back closed by itself."),
+          ("Poignée de gaz", "Tourne sans point dur et revient seule."),
+          ("مقبض الوقود", "يدور بسلاسة ويرجع وحده إلى مكانه.")),
+    check("mirrors", "ride", ("Mirrors", "Adjusted and tight."), ("Rétroviseurs", "Réglés et bien serrés."),
+          ("المرايا", "مضبوطة ومشدودة.")),
+    check("fuel", "ride", ("Fuel", "Enough for the trip; don't ride on the reserve."),
+          ("Carburant", "Assez pour le trajet ; évitez de rouler sur la réserve."),
+          ("الوقود", "يكفي للرحلة، ولا تسق على الاحتياطي."), {"powertrain": "PETROL"}),
+    check("charge", "ride", ("Battery charge", "Enough range for the trip and back."),
+          ("Charge de la batterie", "Assez d'autonomie pour l'aller et le retour."),
+          ("شحن البطارية", "مدى كافٍ للذهاب والإياب."), {"powertrain": "ELECTRIC"}),
+    check("papers", "ride", ("Papers on board", "Registration (carte grise), insurance certificate, licence."),
+          ("Papiers à bord", "Carte grise, attestation d'assurance, permis."),
+          ("الوثائق معك", "البطاقة الرمادية، شهادة التأمين، رخصة السياقة.")),
+    check("helmets", "ride", ("Helmets strapped", "Yours and your passenger's: both are mandatory."),
+          ("Casques attachés", "Le vôtre et celui du passager : les deux sont obligatoires."),
+          ("الخوذات مربوطة", "خوذتك وخوذة الراكب: كلاهما إلزامي.")),
+    check("pressure-gauge", "weekly", ("Tyre pressure with a gauge", "Cold, at the pressures on the sticker or in the manual."),
+          ("Pression au manomètre", "À froid, aux pressions de l'étiquette ou du manuel."),
+          ("ضغط العجلات بالمقياس", "والعجلات باردة، حسب الملصق أو الدليل.")),
+    check("tread", "weekly", ("Tyre condition", "Tread at least 1 mm, no cracks on the sidewalls."),
+          ("État des pneus", "Sculptures d'au moins 1 mm, pas de craquelures sur les flancs."),
+          ("حالة العجلات", "عمق النقش 1 مم على الأقل، ولا تشققات في الجوانب.")),
+    check("oil-level", "weekly", ("Engine oil level", "Scooter upright, between the two marks."),
+          ("Niveau d'huile moteur", "Scooter droit, entre les deux repères."),
+          ("مستوى زيت المحرك", "والسكوتر مستقيم، بين العلامتين."), {"powertrain": "PETROL"}),
+    check("coolant", "weekly", ("Coolant level", "Engine cold: between MIN and MAX in the reserve tank."),
+          ("Liquide de refroidissement", "Moteur froid : entre MIN et MAX dans le vase d'expansion."),
+          ("سائل التبريد", "والمحرك بارد: بين MIN وMAX في الخزان."), {"powertrain": "PETROL", "cooling": "LIQUID"}),
+    check("battery-v", "weekly", ("12 V battery", "Above 12.4 V at rest, terminals clean."),
+          ("Batterie 12 V", "Plus de 12,4 V au repos, bornes propres."),
+          ("بطارية 12 فولت", "أكثر من 12.4 فولت في الراحة، والأقطاب نظيفة."), {"powertrain": "PETROL"}),
+    check("charger", "weekly", ("Charger and connector", "Cable intact, connector clean and dry."),
+          ("Chargeur et prise", "Câble intact, prise propre et sèche."),
+          ("الشاحن والموصل", "الكابل سليم والموصل نظيف وجاف."), {"powertrain": "ELECTRIC"}),
+    check("leaks", "weekly", ("No leaks", "Look under the scooter: oil, coolant or brake fluid."),
+          ("Pas de fuite", "Regardez sous le scooter : huile, liquide de refroidissement ou de frein."),
+          ("لا تسرّب", "انظر تحت السكوتر: زيت أو سائل تبريد أو سائل فرامل.")),
 ]
 
 local_tips = [
@@ -628,6 +799,8 @@ content = {
     "torque": torque,
     "categories": categories,
     "tasks": tasks,
+    "genericTasks": generic_tasks,
+    "genericChecklist": generic_checklist,
     "milestones": milestones,
     "checklist": checklist,
     "localTips": local_tips,
@@ -659,6 +832,15 @@ for t in tasks:
     assert t["cat"] in {c["id"] for c in categories}, t
     assert "guide" not in t or t["guide"] in guide_ids, t
     assert any(k in t for k in ("intervalKm", "intervalDays", "intervalMonths")), t
+CLASSES = {"CC50", "CC125", "MID", "MAXI", "ELECTRIC"}
+REQUIRES = {"powertrain": {"PETROL", "ELECTRIC"}, "fuelSystem": {"CARBURETOR", "INJECTION"}, "cooling": {"AIR", "LIQUID"}}
+assert len({t["id"] for t in generic_tasks}) == len(generic_tasks), "duplicate generic task id"
+for t in generic_tasks:
+    assert t["cat"] in {c["id"] for c in categories}, t
+    assert any(k in t for k in ("intervalKm", "intervalDays", "intervalMonths")), t
+    assert set(t.get("kmByClass", {})) <= CLASSES, t
+    assert all(k in REQUIRES and v in REQUIRES[k] for k, v in t.get("requires", {}).items()), t
+    assert t["ar"] and t["fr"], t
 for tree in troubleshooting:
     for node in tree["nodes"].values():
         for _, nxt in node.get("options", []):
@@ -667,4 +849,4 @@ for tree in troubleshooting:
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps(content, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-print(f"wrote {OUT.relative_to(ROOT)} — {len(tasks)} tasks, {len(milestones)} milestones, {len(guides)} guides")
+print(f"wrote {OUT.relative_to(ROOT)} — {len(tasks)} tasks, {len(generic_tasks)} generic tasks, {len(milestones)} milestones, {len(guides)} guides")

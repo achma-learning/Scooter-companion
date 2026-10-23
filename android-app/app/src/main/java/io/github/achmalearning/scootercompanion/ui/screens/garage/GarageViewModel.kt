@@ -7,6 +7,8 @@ import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.content.Content
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
+import io.github.achmalearning.scootercompanion.data.db.ExpenseEntity
+import io.github.achmalearning.scootercompanion.data.db.InsurancePolicyEntity
 import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.db.MaintenanceEntryEntity
 import io.github.achmalearning.scootercompanion.data.repository.GarageSnapshot
@@ -40,6 +42,12 @@ class GarageViewModel(private val context: Context, private val container: AppCo
     fun deleteDocument(doc: DocumentEntity) = viewModelScope.launch { garage.deleteDocument(doc) }
 
     fun markPreRideDone() = viewModelScope.launch { garage.markPreRideDone() }
+
+    fun saveInsurance(policy: InsurancePolicyEntity) = viewModelScope.launch { garage.saveInsurance(policy) }
+    fun deleteInsurance(policy: InsurancePolicyEntity) = viewModelScope.launch { garage.deleteInsurance(policy) }
+
+    fun saveExpense(expense: ExpenseEntity) = viewModelScope.launch { garage.saveExpense(expense) }
+    fun deleteExpense(expense: ExpenseEntity) = viewModelScope.launch { garage.deleteExpense(expense) }
 
     fun saveService(entry: MaintenanceEntryEntity) = viewModelScope.launch {
         log.save(entry)

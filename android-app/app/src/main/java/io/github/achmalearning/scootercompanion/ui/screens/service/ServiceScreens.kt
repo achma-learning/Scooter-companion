@@ -1,5 +1,9 @@
 package io.github.achmalearning.scootercompanion.ui.screens.service
 
+import androidx.compose.ui.res.stringResource
+import io.github.achmalearning.scootercompanion.R
+import io.github.achmalearning.scootercompanion.ui.components.categoryName
+import io.github.achmalearning.scootercompanion.ui.components.intervalText
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -66,7 +70,8 @@ import io.github.achmalearning.scootercompanion.ui.components.StatusPill
 import io.github.achmalearning.scootercompanion.ui.components.VSpace
 import io.github.achmalearning.scootercompanion.ui.components.dueText
 import io.github.achmalearning.scootercompanion.ui.components.formatKm
-import io.github.achmalearning.scootercompanion.ui.components.formatMad
+import io.github.achmalearning.scootercompanion.ui.components.Money
+import io.github.achmalearning.scootercompanion.ui.components.formatMoney
 import io.github.achmalearning.scootercompanion.ui.components.statusColor
 import io.github.achmalearning.scootercompanion.ui.components.statusLabel
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageViewModel
@@ -83,19 +88,19 @@ fun ServiceScreen(openTask: (String) -> Unit, logService: (entryId: Long?) -> Un
 
     Scaffold(
         floatingActionButton = {
-            ExtendedFloatingActionButton(onClick = { logService(null) }, icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Log service") })
+            ExtendedFloatingActionButton(onClick = { logService(null) }, icon = { Icon(Icons.Filled.Add, null) }, text = { Text(stringResource(R.string.service_log)) })
         }
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
             TabRow(selectedTabIndex = tab) {
-                Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text("Due") })
-                Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text("History (${s.entries.size})") })
+                Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.service_tab_due)) })
+                Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.service_tab_history, s.entries.size)) })
             }
             if (tab == 0) {
                 LazyColumn(contentPadding = ScreenPadding) {
                     item {
                         Text(
-                            "Intervals tuned for Marrakech heat & dust. At ${formatKm(s.currentKm)}.",
+                            stringResource(R.string.service_intervals_hint, formatKm(s.currentKm)),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(top = 8.dp)
                         )
@@ -104,7 +109,15 @@ fun ServiceScreen(openTask: (String) -> Unit, logService: (entryId: Long?) -> Un
                         val group = s.statuses.filter { it.status == status }
                         if (group.isEmpty()) continue
                         item(key = "h$status") {
-                            SectionTitle(when (status) { DueStatus.OVERDUE -> "Due now"; DueStatus.SOON -> "Coming up"; DueStatus.OK -> "On schedule" } + " · ${group.size}")
+                            SectionTitle(
+                                stringResource(
+                                    when (status) {
+                                        DueStatus.OVERDUE -> R.string.service_group_due
+                                        DueStatus.SOON -> R.string.service_group_soon
+                                        DueStatus.OK -> R.string.service_group_ok
+                                    }
+                                ) + " · ${group.size}"
+                            )
                         }
                         items(group, key = { it.task.id }) { TaskRow(it) { openTask(it.task.id) } }
                     }
@@ -112,7 +125,7 @@ fun ServiceScreen(openTask: (String) -> Unit, logService: (entryId: Long?) -> Un
             } else {
                 LazyColumn(contentPadding = ScreenPadding) {
                     if (s.entries.isEmpty()) item {
-                        EmptyState(Icons.Filled.Build, "No services logged yet", "Log oil changes and dealer visits to keep reminders accurate and your passport complete.")
+                        EmptyState(Icons.Filled.Build, stringResource(R.string.service_empty_title), stringResource(R.string.service_empty_text))
                     }
                     items(s.entries, key = { it.id }) { entry ->
                         ServiceHistoryRow(entry, vm, onClick = { logService(entry.id) })
@@ -125,19 +138,22 @@ fun ServiceScreen(openTask: (String) -> Unit, logService: (entryId: Long?) -> Un
 
 @Composable
 private fun ServiceHistoryRow(entry: MaintenanceEntryEntity, vm: GarageViewModel, onClick: () -> Unit) {
-    val names = entry.taskIds.mapNotNull { vm.content.task(it)?.name }
+    val names = entry.taskIds.mapNotNull { vm.content.task(it)?.localName() } + listOfNotNull(entry.title.takeIf { it.isNotBlank() })
     Panel(onClick = onClick, modifier = Modifier.padding(vertical = 4.dp)) {
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(formatKm(entry.km), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                 Text("  ·  " + Dates.display(Dates.startOfDay(entry.date)), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
-                if (entry.stamped) StatusPill("Stamped", MaterialTheme.colorScheme.primary)
+                if (entry.stamped) StatusPill(stringResource(R.string.service_stamped), MaterialTheme.colorScheme.primary)
             }
             if (names.isNotEmpty()) Text(names.joinToString(" · "), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+            val split = if (entry.partsCost != null && entry.laborCost != null)
+                " (" + stringResource(R.string.service_parts_labour, formatMoney(entry.partsCost), formatMoney(entry.laborCost)) + ")" else ""
             val meta = listOfNotNull(
-                entry.milestoneKm?.let { "Passport ${formatKm(it)}" },
+                entry.milestoneKm?.let { stringResource(R.string.service_passport_km, formatKm(it)) },
+                entry.product.takeIf { it.isNotBlank() },
                 entry.shop.takeIf { it.isNotBlank() },
-                entry.cost?.let(::formatMad)
+                entry.cost?.let { formatMoney(it) + split }
             )
             if (meta.isNotEmpty()) Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (entry.note.isNotBlank()) Text(entry.note, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
@@ -155,13 +171,13 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
     val color = statusColor(st.status)
     var confirm by remember { mutableStateOf(false) }
 
-    Scaffold(topBar = { BackTopBar(task.name, onBack) }) { padding ->
+    Scaffold(topBar = { BackTopBar(task.localName(), onBack) }) { padding ->
         LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
             item {
                 Panel {
                     Column(Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(task.fr, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
+                            Text(if (java.util.Locale.getDefault().language == "en") task.fr else task.name, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
                             StatusPill(statusLabel(st.status), color)
                         }
                         VSpace(10.dp)
@@ -169,12 +185,16 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
                         VSpace(8.dp)
                         StatusBar(st.progress, color)
                         VSpace(12.dp)
-                        st.dueKm?.let { InfoRow("Due at", formatKm(it)) }
-                        st.dueDate?.let { InfoRow("Due by", Dates.display(it)) }
-                        InfoRow("Last done", if (st.doneBefore) listOfNotNull(st.lastKm?.let(::formatKm), st.lastDate?.let(Dates::display)).joinToString(" · ") else "Not logged yet")
-                        InfoRow("Marrakech interval", task.label)
-                        InfoRow("Factory interval", task.factory)
-                        if (task.cost.isNotBlank()) InfoRow("Typical cost", task.cost)
+                        st.dueKm?.let { InfoRow(stringResource(R.string.task_due_at), formatKm(it)) }
+                        st.dueDate?.let { InfoRow(stringResource(R.string.task_due_by), Dates.display(it)) }
+                        InfoRow(
+                            stringResource(R.string.task_last_done),
+                            if (st.doneBefore) listOfNotNull(st.lastKm?.let(::formatKm), st.lastDate?.let(Dates::display)).joinToString(" · ")
+                            else stringResource(R.string.task_not_logged)
+                        )
+                        InfoRow(stringResource(R.string.task_interval), task.label.ifBlank { intervalText(task) })
+                        if (task.factory.isNotBlank()) InfoRow(stringResource(R.string.task_factory_interval), task.factory)
+                        if (task.cost.isNotBlank()) InfoRow(stringResource(R.string.task_typical_cost), task.cost)
                     }
                 }
             }
@@ -182,15 +202,15 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
                 VSpace(12.dp)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(onClick = { confirm = true }, modifier = Modifier.weight(1f)) {
-                        Icon(Icons.Filled.Check, null); Text(" Done today")
+                        Icon(Icons.Filled.Check, null); Text(" " + stringResource(R.string.task_done_today))
                     }
-                    OutlinedButton(onClick = { logService(task.id) }, modifier = Modifier.weight(1f)) { Text("Log with details") }
+                    OutlinedButton(onClick = { logService(task.id) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.task_log_details)) }
                 }
             }
-            item { Callout("Why & how", task.notes) }
+            if (task.notes.isNotBlank()) item { Callout(stringResource(R.string.task_why_how), task.notes) }
             task.guide?.let { g ->
                 vm.content.guide(g)?.let { guide ->
-                    item { NavRow(Icons.AutoMirrored.Filled.MenuBook, "Step-by-step: ${guide.title}", "${guide.time} · ${guide.difficulty}") { openGuide(g) } }
+                    item { NavRow(Icons.AutoMirrored.Filled.MenuBook, stringResource(R.string.task_guide, guide.title), "${guide.time} · ${guide.difficulty}") { openGuide(g) } }
                 }
             }
         }
@@ -199,10 +219,10 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
     if (confirm) {
         AlertDialog(
             onDismissRequest = { confirm = false },
-            title = { Text("Mark as done?") },
-            text = { Text("Logs \"${task.name}\" today at ${formatKm(s.currentKm)}. Update the odometer first if it changed.") },
-            confirmButton = { Button(onClick = { vm.markTaskDone(task.id); confirm = false }) { Text("Log it") } },
-            dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancel") } }
+            title = { Text(stringResource(R.string.task_mark_done_title)) },
+            text = { Text(stringResource(R.string.task_mark_done_text, task.localName(), formatKm(s.currentKm))) },
+            confirmButton = { Button(onClick = { vm.markTaskDone(task.id); confirm = false }) { Text(stringResource(R.string.task_log_it)) } },
+            dismissButton = { TextButton(onClick = { confirm = false }) { Text(stringResource(R.string.action_cancel)) } }
         )
     }
 }
@@ -212,7 +232,7 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
  * pre-fill a new one from a task page or a passport stamp.
  */
 @Composable
-fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?, onDone: () -> Unit) {
+fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?, onDone: () -> Unit, presetProduct: String? = null) {
     val context = LocalContext.current
     val vm = appViewModel { GarageViewModel(context, it) }
     val s = vm.state.collectAsStateWithLifecycle().value ?: return
@@ -229,7 +249,13 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
         }
     }
     var shop by remember { mutableStateOf(existing?.shop ?: "") }
-    var cost by remember { mutableStateOf(existing?.cost?.let { if (it % 1.0 == 0.0) it.toInt().toString() else it.toString() } ?: "") }
+    fun money(v: Double?) = v?.let { if (it % 1.0 == 0.0) it.toInt().toString() else it.toString() } ?: ""
+    var parts by remember { mutableStateOf(money(existing?.partsCost)) }
+    var labour by remember { mutableStateOf(money(existing?.laborCost)) }
+    // Only a total when the parts / labour split wasn't recorded.
+    var cost by remember { mutableStateOf(if (existing?.partsCost == null && existing?.laborCost == null) money(existing?.cost) else "") }
+    var product by remember { mutableStateOf(existing?.product ?: presetProduct ?: "") }
+    var title by remember { mutableStateOf(existing?.title ?: "") }
     var stamped by remember { mutableStateOf(existing?.stamped ?: (presetMs != null)) }
     var note by remember { mutableStateOf(existing?.note ?: "") }
     var confirmDelete by remember { mutableStateOf(false) }
@@ -237,21 +263,21 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
     val candidates = s.milestones.filter { it.state != StampState.UPCOMING || it.milestone.km <= s.currentKm + 2500 }.takeLast(8)
 
     Scaffold(topBar = {
-        BackTopBar(if (existing != null) "Edit service" else "Log service", onDone) {
-            if (existing != null) IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, "Delete") }
+        BackTopBar(stringResource(if (existing != null) R.string.service_edit else R.string.service_log), onDone) {
+            if (existing != null) IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, stringResource(R.string.action_delete)) }
         }
     }) { padding ->
         LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DateField(date, { date = it }, "Date", Modifier.weight(1f))
-                    NumberField(km, { km = it }, "Odometer", Modifier.weight(1f), suffix = "km")
+                    DateField(date, { date = it }, stringResource(R.string.date), Modifier.weight(1f))
+                    NumberField(km, { km = it }, stringResource(R.string.odometer), Modifier.weight(1f), suffix = "km")
                 }
             }
-            item {
-                SectionTitle("Passport milestone")
+            if (candidates.isNotEmpty()) item {
+                SectionTitle(stringResource(R.string.service_passport_milestone))
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    item { FilterChip(selected = milestone == null, onClick = { milestone = null }, label = { Text("None") }) }
+                    item { FilterChip(selected = milestone == null, onClick = { milestone = null }, label = { Text(stringResource(R.string.service_none)) }) }
                     items(candidates, key = { it.milestone.km }) { m ->
                         FilterChip(
                             selected = milestone == m.milestone.km,
@@ -266,58 +292,86 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
                 }
                 milestone?.let { km -> content.milestones.firstOrNull { it.km == km }?.let { Text(it.actions, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 6.dp)) } }
             }
-            item { SectionTitle("Work done (${selected.size})") }
+            item { SectionTitle(stringResource(R.string.service_work_done, selected.size + if (title.isNotBlank()) 1 else 0)) }
             for (cat in content.categories) {
-                val tasks = content.tasks.filter { it.cat == cat.id }
+                val tasks = s.tasks.filter { it.cat == cat.id }
+                if (tasks.isEmpty()) continue
                 item(key = "cat${cat.id}") {
-                    Text(cat.name, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                    Text(categoryName(cat.id, cat.name), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         tasks.forEach { t ->
                             FilterChip(
                                 selected = t.id in selected,
                                 onClick = { if (t.id in selected) selected.remove(t.id) else selected.add(t.id) },
-                                label = { Text(t.name) }
+                                label = { Text(t.localName()) }
                             )
                         }
                     }
                 }
             }
             item {
-                SectionTitle("Where & cost")
-                OutlinedTextField(shop, { shop = it }, label = { Text("Workshop / dealer") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(
+                    title, { title = it }, label = { Text(stringResource(R.string.service_custom_title)) },
+                    placeholder = { Text(stringResource(R.string.service_custom_hint)) }, singleLine = true,
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                )
+                OutlinedTextField(
+                    product, { product = it }, label = { Text(stringResource(R.string.service_product)) },
+                    placeholder = { Text(stringResource(R.string.service_product_hint)) }, singleLine = true,
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                )
+            }
+            item {
+                SectionTitle(stringResource(R.string.service_where_cost))
+                val diy = stringResource(R.string.service_diy)
+                OutlinedTextField(shop, { shop = it }, label = { Text(stringResource(R.string.service_workshop)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 6.dp)) {
-                    items(content.shops.map { it.name } + "DIY") { name ->
+                    items((if (s.isAgility) content.shops.map { it.name } else emptyList()) + diy) { name ->
                         FilterChip(selected = shop == name, onClick = { shop = name }, label = { Text(name) })
                     }
                 }
                 VSpace(8.dp)
-                NumberField(cost, { cost = it }, "Cost", decimal = true, suffix = "MAD")
-                Row(Modifier.fillMaxWidth().padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    NumberField(parts, { parts = it; cost = "" }, stringResource(R.string.service_parts), Modifier.weight(1f), decimal = true, suffix = Money.symbol)
+                    NumberField(labour, { labour = it; cost = "" }, stringResource(R.string.service_labour), Modifier.weight(1f), decimal = true, suffix = Money.symbol)
+                }
+                val split = (parts.toDoubleOrNull() ?: 0.0) + (labour.toDoubleOrNull() ?: 0.0)
+                NumberField(
+                    if (parts.isNotBlank() || labour.isNotBlank()) money(split) else cost,
+                    { cost = it; parts = ""; labour = "" },
+                    stringResource(R.string.service_total), Modifier.padding(top = 8.dp), decimal = true, suffix = Money.symbol
+                )
+                Text(stringResource(R.string.service_total_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (s.isAgility) Row(Modifier.fillMaxWidth().padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("Stamped in the paper passport", style = MaterialTheme.typography.bodyLarge)
-                        Text("Approved-dealer stamps keep the warranty valid.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.service_stamped_label), style = MaterialTheme.typography.bodyLarge)
+                        Text(stringResource(R.string.service_stamped_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(stamped, { stamped = it })
                 }
-                OutlinedTextField(note, { note = it }, label = { Text("Notes") }, minLines = 2, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
+                OutlinedTextField(note, { note = it }, label = { Text(stringResource(R.string.service_notes)) }, minLines = 2, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
             }
             item {
                 VSpace(16.dp)
                 val kmValue = km.toIntOrNull()
                 Button(
-                    enabled = kmValue != null && date != null && (selected.isNotEmpty() || note.isNotBlank()),
+                    enabled = kmValue != null && date != null && (selected.isNotEmpty() || title.isNotBlank() || note.isNotBlank()),
                     onClick = {
                         val base = existing ?: MaintenanceEntryEntity(km = 0, date = 0, note = "", updatedAt = 0)
+                        val partsValue = parts.toDoubleOrNull()
+                        val labourValue = labour.toDoubleOrNull()
+                        val total = if (partsValue != null || labourValue != null) (partsValue ?: 0.0) + (labourValue ?: 0.0) else cost.toDoubleOrNull()
                         vm.saveService(
                             base.copy(
                                 km = kmValue!!, date = date!!, note = note.trim(), tasks = selected.joinToString(","),
-                                milestoneKm = milestone, shop = shop.trim(), cost = cost.toDoubleOrNull(), stamped = stamped
+                                milestoneKm = milestone, shop = shop.trim(), cost = total, partsCost = partsValue, laborCost = labourValue,
+                                product = product.trim(), title = title.trim(), stamped = stamped && s.isAgility
                             )
                         )
                         onDone()
                     },
                     modifier = Modifier.fillMaxWidth()
-                ) { Text(if (existing != null) "Save changes" else "Save service") }
+                ) { Text(stringResource(if (existing != null) R.string.service_save_changes else R.string.service_save)) }
             }
         }
     }
@@ -325,14 +379,14 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
     if (confirmDelete && existing != null) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text("Delete this service?") },
+            title = { Text(stringResource(R.string.service_delete_title)) },
             text = { Text("${formatKm(existing.km)} · ${Dates.display(Dates.startOfDay(existing.date))}") },
             confirmButton = {
                 TextButton(onClick = { vm.deleteService(existing); confirmDelete = false; onDone() }) {
-                    Text("Delete", color = LocalStatusColors.current.due)
+                    Text(stringResource(R.string.action_delete), color = LocalStatusColors.current.due)
                 }
             },
-            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(stringResource(R.string.action_cancel)) } }
         )
     }
 }

@@ -66,6 +66,12 @@ import io.github.achmalearning.scootercompanion.ui.screens.home.ManualHubScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreNav
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.SosScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.ExpensesScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.InsuranceScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.RecommendationsScreen
+import io.github.achmalearning.scootercompanion.ui.screens.stats.StatsScreen
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.ui.res.stringResource
 import io.github.achmalearning.scootercompanion.ui.screens.onboarding.OnboardingScreen
 import io.github.achmalearning.scootercompanion.ui.screens.reader.ReaderScreen
 import io.github.achmalearning.scootercompanion.ui.screens.search.SearchScreen
@@ -98,15 +104,19 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-private data class BottomDest(val route: String, val label: String, val icon: ImageVector)
+private data class BottomDest(val route: String, val label: Int, val icon: ImageVector)
 
-private val bottomDestinations = listOf(
-    BottomDest(Routes.Garage.route, "Garage", Icons.Filled.TwoWheeler),
-    BottomDest(Routes.Service.route, "Service", Icons.Filled.Build),
-    BottomDest(Routes.Manual.route, "Manual", Icons.AutoMirrored.Filled.MenuBook),
-    BottomDest(Routes.Guide.route, "Guide", Icons.Filled.Explore),
-    BottomDest(Routes.More.route, "More", Icons.Filled.MoreHoriz)
-)
+private val homeDest = BottomDest(Routes.Garage.route, R.string.nav_home, Icons.Filled.TwoWheeler)
+private val serviceDest = BottomDest(Routes.Service.route, R.string.nav_service, Icons.Filled.Build)
+private val statsDest = BottomDest(Routes.Stats.route, R.string.nav_stats, Icons.Filled.BarChart)
+private val manualDest = BottomDest(Routes.Manual.route, R.string.nav_manual, Icons.AutoMirrored.Filled.MenuBook)
+private val guideDest = BottomDest(Routes.Guide.route, R.string.nav_guide, Icons.Filled.Explore)
+private val moreDest = BottomDest(Routes.More.route, R.string.nav_more, Icons.Filled.MoreHoriz)
+
+/** The Agility's scanned manual and owner's guide get tabs; other scooters get the guide in More. */
+private fun bottomDestinations(agility: Boolean) =
+    if (agility) listOf(homeDest, serviceDest, statsDest, manualDest, moreDest)
+    else listOf(homeDest, serviceDest, statsDest, moreDest)
 
 @Composable
 private fun AppRoot() {
@@ -132,7 +142,11 @@ private fun MainNav() {
     val nav = rememberNavController()
     val backStackEntry by nav.currentBackStackEntryAsState()
     val current = backStackEntry?.destination
-    val onTab = bottomDestinations.any { d -> current?.hierarchy?.any { it.route == d.route } == true }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val agility = AppContainer.getInstance(context).garageRepository.snapshot
+        .collectAsStateWithLifecycle(null).value?.isAgility == true
+    val tabs = bottomDestinations(agility)
+    val onTab = (tabs + guideDest).any { d -> current?.hierarchy?.any { it.route == d.route } == true }
 
     fun open(route: String) = nav.navigate(route)
     val back: () -> Unit = { nav.popBackStack() }
@@ -141,12 +155,13 @@ private fun MainNav() {
     Scaffold(
         bottomBar = {
             if (onTab) NavigationBar {
-                bottomDestinations.forEach { dest ->
+                tabs.forEach { dest ->
+                    val label = stringResource(dest.label)
                     NavigationBarItem(
                         selected = current?.hierarchy?.any { it.route == dest.route } == true,
                         onClick = { nav.switchTab(dest.route) },
-                        icon = { Icon(dest.icon, contentDescription = dest.label) },
-                        label = { Text(dest.label) }
+                        icon = { Icon(dest.icon, contentDescription = label) },
+                        label = { Text(label) }
                     )
                 }
             }
@@ -167,7 +182,10 @@ private fun MainNav() {
                         openTroubleshoot = { open(Routes.Troubleshoot.route) },
                         openSos = { open(Routes.Sos.route) },
                         openProfile = { open(Routes.Profile.route) },
-                        openSeasons = { open(Routes.Seasons.route) }
+                        openSeasons = { open(Routes.Seasons.route) },
+                        openExpenses = { open(Routes.Expenses.route) },
+                        openInsurance = { open(Routes.Insurance.route) },
+                        openStats = { nav.switchTab(Routes.Stats.route) }
                     )
                 )
             }
@@ -205,7 +223,12 @@ private fun MainNav() {
                         wallet = { open(Routes.Wallet.route) },
                         sos = { open(Routes.Sos.route) },
                         profile = { open(Routes.Profile.route) },
-                        settings = { open(Routes.Settings.route) }
+                        settings = { open(Routes.Settings.route) },
+                        insurance = { open(Routes.Insurance.route) },
+                        expenses = { open(Routes.Expenses.route) },
+                        recommendations = { open(Routes.Recommendations.route) },
+                        stats = { nav.switchTab(Routes.Stats.route) },
+                        guide = { open(if (agility) Routes.Guide.route else Routes.Checklist.route) }
                     )
                 )
             }
@@ -239,7 +262,8 @@ private fun MainNav() {
                 arguments = listOf(
                     navArgument("entry") { type = NavType.LongType; defaultValue = -1L },
                     navArgument("task") { type = NavType.StringType; defaultValue = "" },
-                    navArgument("milestone") { type = NavType.IntType; defaultValue = -1 }
+                    navArgument("milestone") { type = NavType.IntType; defaultValue = -1 },
+                    navArgument("product") { type = NavType.StringType; defaultValue = "" }
                 )
             ) { entry ->
                 val args = entry.arguments
@@ -247,6 +271,7 @@ private fun MainNav() {
                     entryId = args?.getLong("entry")?.takeIf { it >= 0 },
                     presetTask = args?.getString("task")?.takeIf { it.isNotBlank() },
                     presetMilestone = args?.getInt("milestone")?.takeIf { it >= 0 },
+                    presetProduct = args?.getString("product")?.takeIf { it.isNotBlank() },
                     onDone = back
                 )
             }
@@ -261,7 +286,13 @@ private fun MainNav() {
             composable(Routes.Fuel.route) { FuelScreen(onBack = back) }
             composable(Routes.Wallet.route) { WalletScreen(onBack = back) }
             composable(Routes.Profile.route) { BikeProfileScreen(onBack = back) }
-            composable(Routes.Sos.route) { SosScreen(onBack = back, openWallet = { open(Routes.Wallet.route) }) }
+            composable(Routes.Sos.route) { SosScreen(onBack = back, openInsurance = { open(Routes.Insurance.route) }) }
+            composable(Routes.Insurance.route) { InsuranceScreen(onBack = back) }
+            composable(Routes.Expenses.route) { ExpensesScreen(onBack = back) }
+            composable(Routes.Recommendations.route) {
+                RecommendationsScreen(onBack = back, logTyres = { open(Routes.LogService.build(product = it)) })
+            }
+            composable(Routes.Stats.route) { StatsScreen() }
             composable(Routes.Settings.route) { SettingsScreen(onBack = back) }
 
             // ---- guide

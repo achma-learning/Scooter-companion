@@ -16,8 +16,12 @@ data class Content(
     val torque: List<List<String>>,
     val categories: List<Category>,
     val tasks: List<Task>,
+    /** Scooter Companion's task list for every other scooter; see domain/MaintenancePlan.kt. */
+    val genericTasks: List<Task> = emptyList(),
     val milestones: List<Milestone>,
     val checklist: List<CheckItem>,
+    /** Pre-ride checks for every other scooter, picked per profile. */
+    val genericChecklist: List<CheckItem> = emptyList(),
     val localTips: List<TitleText>,
     val troubleshooting: List<TroubleTree>,
     val failureModes: List<FailureMode>,
@@ -37,7 +41,7 @@ data class Content(
     val links: List<Link>,
     val resale: Resale
 ) {
-    fun task(id: String): Task? = tasks.firstOrNull { it.id == id }
+    fun task(id: String): Task? = tasks.firstOrNull { it.id == id } ?: genericTasks.firstOrNull { it.id == id }
     fun guide(id: String): Guide? = guides.firstOrNull { it.id == id }
     fun category(id: String): Category? = categories.firstOrNull { it.id == id }
     fun documentType(id: String): DocumentType = documentTypes.firstOrNull { it.id == id } ?: documentTypes.last()
@@ -55,6 +59,7 @@ data class Task(
     val cat: String,
     val name: String,
     val fr: String = "",
+    val ar: String = "",
     val intervalKm: Int? = null,
     val intervalMonths: Int? = null,
     val intervalDays: Int? = null,
@@ -64,11 +69,45 @@ data class Task(
     val severity: String,
     val cost: String = "",
     val guide: String? = null,
-    val notes: String = ""
-)
+    val notes: String = "",
+    /** Generic tasks: km interval per EngineClass name, overriding [intervalKm]. */
+    val kmByClass: Map<String, Int> = emptyMap(),
+    /** Generic tasks: profile fields that must match (powertrain, fuelSystem, cooling). */
+    val requires: Map<String, String> = emptyMap()
+) {
+    /** The task's name in the app language (English when no translation exists). */
+    fun localName(language: String = java.util.Locale.getDefault().language): String = when (language) {
+        "fr" -> fr.ifBlank { name }
+        "ar" -> ar.ifBlank { fr.ifBlank { name } }
+        else -> name
+    }
+}
 
 @Serializable data class Milestone(val km: Int, val source: String, val title: String, val tasks: List<String>, val actions: String)
-@Serializable data class CheckItem(val id: String, val group: String, val title: String, val detail: String)
+@Serializable
+data class CheckItem(
+    val id: String,
+    val group: String,
+    val title: String,
+    val detail: String,
+    val titleFr: String = "",
+    val detailFr: String = "",
+    val titleAr: String = "",
+    val detailAr: String = "",
+    /** Generic items: profile fields that must match (powertrain, cooling). */
+    val requires: Map<String, String> = emptyMap()
+) {
+    fun localTitle(language: String = java.util.Locale.getDefault().language) = when (language) {
+        "fr" -> titleFr.ifBlank { title }
+        "ar" -> titleAr.ifBlank { title }
+        else -> title
+    }
+    fun localDetail(language: String = java.util.Locale.getDefault().language) = when (language) {
+        "fr" -> detailFr.ifBlank { detail }
+        "ar" -> detailAr.ifBlank { detail }
+        else -> detail
+    }
+}
 @Serializable data class TitleText(val title: String, val text: String)
 
 @Serializable

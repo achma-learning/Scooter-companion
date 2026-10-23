@@ -155,5 +155,215 @@
         "ar": "الأضواء أو لوحة الترقيم"
       }
     ]
-  }
+  },
+  "sos": [
+    {
+      "number": "19",
+      "label": {
+        "en": "Police",
+        "fr": "Police",
+        "ar": "الشرطة"
+      },
+      "note": {
+        "en": "In towns",
+        "fr": "En ville",
+        "ar": "داخل المدن"
+      }
+    },
+    {
+      "number": "177",
+      "label": {
+        "en": "Gendarmerie Royale",
+        "fr": "Gendarmerie Royale",
+        "ar": "الدرك الملكي"
+      },
+      "note": {
+        "en": "Outside towns and on main roads",
+        "fr": "Hors des villes et sur les routes",
+        "ar": "خارج المدن وعلى الطرق"
+      }
+    },
+    {
+      "number": "15",
+      "label": {
+        "en": "Fire & ambulance (Protection Civile)",
+        "fr": "Pompiers et ambulance (Protection Civile)",
+        "ar": "الوقاية المدنية (إطفاء وإسعاف)"
+      },
+      "note": {
+        "en": "",
+        "fr": "",
+        "ar": ""
+      }
+    },
+    {
+      "number": "141",
+      "label": {
+        "en": "SAMU (medical emergency)",
+        "fr": "SAMU (urgence médicale)",
+        "ar": "الإسعاف الطبي SAMU"
+      },
+      "note": {
+        "en": "",
+        "fr": "",
+        "ar": ""
+      }
+    },
+    {
+      "number": "5050",
+      "label": {
+        "en": "Motorway assistance (ADM)",
+        "fr": "Assistance autoroute (ADM)",
+        "ar": "مساعدة الطريق السيار (ADM)"
+      },
+      "note": {
+        "en": "Breakdown, accident or traffic info on the motorway, 24/7",
+        "fr": "Panne, accident ou info trafic sur l'autoroute, 24h/24",
+        "ar": "عطل أو حادث أو معلومات السير على الطريق السيار، 24/24"
+      }
+    },
+    {
+      "number": "112",
+      "label": {
+        "en": "Emergency from any mobile",
+        "fr": "Urgence depuis un mobile",
+        "ar": "الطوارئ من أي هاتف محمول"
+      },
+      "note": {
+        "en": "",
+        "fr": "",
+        "ar": ""
+      }
+    }
+  ],
+  "accidentSteps": [
+    {
+      "en": "Get safe: move off the road if you can, check for injuries, call 15, 19 or 177.",
+      "fr": "Mettez-vous en sécurité : quittez la route si possible, vérifiez les blessés, appelez le 15, 19 ou 177.",
+      "ar": "احمِ نفسك: ابتعد عن الطريق إن أمكن، تفقّد المصابين، واتصل بـ 15 أو 19 أو 177."
+    },
+    {
+      "en": "Photograph everything: positions, damage, plates, the road.",
+      "fr": "Photographiez tout : positions, dégâts, plaques, la route.",
+      "ar": "صوّر كل شيء: المواقع، الأضرار، لوحات الترقيم، الطريق."
+    },
+    {
+      "en": "Take the other party's plate, insurance certificate and licence details; note a witness.",
+      "fr": "Relevez la plaque, l'attestation d'assurance et le permis de l'autre partie ; notez un témoin.",
+      "ar": "سجّل لوحة الطرف الآخر وشهادة تأمينه ورخصته، ودوّن شاهدًا."
+    },
+    {
+      "en": "Fill in a constat amiable if both agree; never sign what you don't understand.",
+      "fr": "Remplissez un constat amiable si vous êtes d'accord ; ne signez jamais ce que vous ne comprenez pas.",
+      "ar": "املأ محضرًا وديًا إن اتفقتما، ولا توقّع أبدًا ما لا تفهمه."
+    },
+    {
+      "en": "Declare it to your insurer within 5 days, in writing or against a receipt.",
+      "fr": "Déclarez-le à votre assureur sous 5 jours, par écrit ou contre récépissé.",
+      "ar": "صرّح بالحادث لشركة التأمين خلال 5 أيام، كتابةً أو مقابل وصل."
+    },
+    {
+      "en": "Don't repair anything before the insurer's expert has seen the damage.",
+      "fr": "Ne réparez rien avant le passage de l'expert de l'assureur.",
+      "ar": "لا تصلح شيئًا قبل أن يعاين خبير التأمين الأضرار."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "city-grip-2",
+      "category": "TYRES",
+      "name": {
+        "en": "Michelin City Grip 2 tyres",
+        "fr": "Pneus Michelin City Grip 2",
+        "ar": "عجلات Michelin City Grip 2"
+      },
+      "why": {
+        "en": "The best all-round city scooter tyre: strong grip on wet or dusty roads, around 10,000-20,000 km of life. Cheaper alternative: City Extra (longer life, less grip).",
+        "fr": "Le meilleur pneu scooter urbain : très bonne adhérence sur route mouillée ou poussiéreuse, environ 10 000 à 20 000 km. Moins cher : City Extra (plus durable, moins d'adhérence).",
+        "ar": "أفضل عجلة سكوتر للمدينة: تماسك قوي على الطرق المبللة أو المغبرة، وعمر يقارب 10 000 إلى 20 000 كم. بديل أرخص: City Extra (عمر أطول وتماسك أقل)."
+      },
+      "priceHint": {
+        "en": "Pair for 12-inch wheels: about 1,150 DH online, plus 70-100 DH fitting",
+        "fr": "Paire en 12 pouces : environ 1 150 DH en ligne, plus 70-100 DH de pose",
+        "ar": "زوج لعجلات 12 بوصة: حوالي 1150 درهم على الإنترنت، زائد 70-100 درهم للتركيب"
+      }
+    },
+    {
+      "id": "top-case",
+      "category": "ACCESSORY",
+      "name": {
+        "en": "Top case",
+        "fr": "Top case",
+        "ar": "صندوق خلفي"
+      },
+      "why": {
+        "en": "Lockable storage for a helmet, rain gear and shopping. Pick the size for your scooter; a bigger case on a small scooter makes it unstable.",
+        "fr": "Rangement verrouillable pour un casque, la pluie, les courses. Choisissez la taille adaptée : un grand top case sur un petit scooter le déstabilise.",
+        "ar": "مكان مقفل للخوذة وملابس المطر والمشتريات. اختر الحجم المناسب: صندوق كبير على سكوتر صغير يجعله غير مستقر."
+      },
+      "sizeByClass": {
+        "CC50": "29 L",
+        "CC125": "33 L",
+        "MID": "35 L",
+        "MAXI": "35 L+",
+        "ELECTRIC": "29-33 L"
+      }
+    },
+    {
+      "id": "helmet",
+      "category": "GEAR",
+      "name": {
+        "en": "ECE 22.06 helmet",
+        "fr": "Casque homologué ECE 22.06",
+        "ar": "خوذة معتمدة ECE 22.06"
+      },
+      "why": {
+        "en": "Mandatory for the rider and the passenger. A full-face or modular helmet protects the chin; replace it after any fall.",
+        "fr": "Obligatoire pour le conducteur et le passager. Un intégral ou modulable protège le menton ; changez-le après une chute.",
+        "ar": "إلزامية للسائق والراكب. الخوذة الكاملة أو القابلة للفتح تحمي الذقن؛ غيّرها بعد أي سقوط."
+      }
+    },
+    {
+      "id": "vest",
+      "category": "GEAR",
+      "name": {
+        "en": "Riding vest (high-visibility or airbag)",
+        "fr": "Gilet de moto (haute visibilité ou airbag)",
+        "ar": "سترة للدراجة (عاكسة أو بوسادة هوائية)"
+      },
+      "why": {
+        "en": "Being seen is the first protection in traffic. An airbag vest adds chest and back protection.",
+        "fr": "Être vu est la première protection dans la circulation. Un gilet airbag protège en plus le thorax et le dos.",
+        "ar": "أن تُرى هو أول حماية في حركة السير. السترة بوسادة هوائية تحمي الصدر والظهر أيضًا."
+      }
+    },
+    {
+      "id": "gloves",
+      "category": "GEAR",
+      "name": {
+        "en": "Riding gloves",
+        "fr": "Gants de moto",
+        "ar": "قفازات الدراجة"
+      },
+      "why": {
+        "en": "Hands touch the ground first in a fall. Ventilated summer gloves are fine in the heat.",
+        "fr": "Les mains touchent le sol en premier en cas de chute. Des gants d'été ventilés suffisent par la chaleur.",
+        "ar": "اليدان تلمسان الأرض أولًا عند السقوط. القفازات الصيفية المهوّاة مناسبة في الحرارة."
+      }
+    },
+    {
+      "id": "lock",
+      "category": "ACCESSORY",
+      "name": {
+        "en": "Disc lock or U-lock",
+        "fr": "Bloque-disque ou antivol U",
+        "ar": "قفل القرص أو قفل على شكل U"
+      },
+      "why": {
+        "en": "Scooters are stolen in minutes. A disc lock with an alarm is light and fits under the seat.",
+        "fr": "Un scooter se vole en quelques minutes. Un bloque-disque à alarme est léger et tient sous la selle.",
+        "ar": "يُسرق السكوتر في دقائق. قفل القرص بالإنذار خفيف ويوضع تحت المقعد."
+      }
+    }
+  ]
 }

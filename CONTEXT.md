@@ -1,5 +1,5 @@
 # Scooter Companion (achma-learning/scooter-companion) — AI Context File
-_Last synced: 2026-10-23 @ e0efb07 (Phase 2 on `claude/happy-sagan-x0wx57`)_
+_Last synced: 2026-10-23 @ Phases 3–5 on `claude/happy-sagan-x0wx57` (achma-learning/scooter-companion#7)_
 
 ## 1. What This Is (Plain English)
 - **In one sentence:** An offline Android app that tracks every cost of owning a scooter
@@ -87,7 +87,13 @@ _Last synced: 2026-10-23 @ e0efb07 (Phase 2 on `claude/happy-sagan-x0wx57`)_
 - `ui/screens/profile/ProfileForm.kt`: `ProfileDraft` + the type / purchase / details
   sections, shared by the wizard and `ProfileScreen.kt` ("My scooter").
 - `ui/common/Language.kt`: `AppLanguage` (fr, en, ar-MA) via `AppCompatDelegate`.
-- `ui/screens/garage/OwnerScreens.kt`: fuel log + `FuelDialog`, passport, wallet (Agility era).
+- `ui/screens/garage/FuelScreens.kt`: fuel log + `FuelDialog` (chips from the region pack).
+- `ui/screens/garage/OwnerScreens.kt`: passport (Agility only) and documents wallet.
+- `ui/screens/money/MoneyScreens.kt`: insurance, expenses (fines), recommendations.
+- `ui/screens/stats/StatsScreen.kt` + `ui/charts/Charts.kt`: the Stats tab and the chart kit.
+- `domain/MaintenancePlan.kt`: Agility schedule or generic tasks/checklist per profile.
+- `domain/Stats.kt`: chart data per range and `Insights`.
+- `data/export/TextReport.kt`: the plain-text report for AI analysis.
 - `data/update/`: tap-only updater (`achma-learning/scooter-companion`, `scooter-companion.apk`).
 - `data/fuel/FuelPriceClient.kt`, `privacy/NetworkGuard.kt`: tap-only downloads.
 - `work/ReminderWorker.kt`: daily local notifications (services, documents).
@@ -175,25 +181,31 @@ Android tests → signed release or debug artifact → Release), `fuel-price.yml
 - `android-app/app/schemas/.../{2,3}.json` and `Migrations.kt` must stay.
 
 ## 7. Current State
-- **Shipped:** Agility Companion 2.0.x (PRs achma-learning/scooter-companion#1–#3).
-  Phase 1 (achma-learning/scooter-companion#4): build moved into `android-app/`, MIT
-  license. APK backup: achma-learning/kymco-agility-50-4T#48.
-- **Phase 2 (this branch):** new app ID `io.github.achmalearning.scootercompanion` and
-  package; Firebase/ML Kit removed; private-key-only releases; Room v3 (profile type,
-  purchase, used fields, budget, photo, region; insurance and expenses tables; service
-  parts/labour/product/title); `ExpenseLedger` and `Insurance` domain; save file v2; region
-  pack MA (with Avito.ma / Leboncoin.fr links); add-your-scooter wizard and "My scooter" on a
-  shared form; FR / EN / AR with RTL; links fixed after the repo renames.
-- **Next (Phase 3, modules):** fuel log with 10/15/20/30/50/custom/full chips per engine
-  class; maintenance with parts + labour + product and liquid-cooled / injection tasks;
-  insurance screen and the daily under-20-days notification; accessories/gear; fines;
-  pre-ride checklist per profile; recommendations (City Grip 2, top case 29/33/35 L, vest);
-  SOS numbers incl. highways (verify every number first); translate the older screens.
-- **Then:** Phase 4 statistics (matplotlib-style charts in Compose Canvas, monthly target,
-  insights, 1st-of-month report notification); Phase 5 `.txt` export for AI analysis
-  (with VIN/plate masking), sharing, release.
-- **Owner to do:** add the `RELEASE_KEYSTORE_PASSWORD` secret and run *Create release key*
-  once (no release is published until then).
+- **Shipped:** Agility Companion 2.0.x; Phase 1 (`android-app/`, MIT, achma-learning/scooter-companion#4);
+  Phase 2 (identity, profile, ledger, save file v2, wizard, FR/EN/AR,
+  achma-learning/scooter-companion#5); one-password release signing
+  (achma-learning/scooter-companion#6). First signed release: v3.0.14.
+- **This PR (achma-learning/scooter-companion#7), phases 3–5:**
+  - fuel chips per engine class from the region pack, Full tank chip, km/L;
+  - generic maintenance (`genericTasks` in the knowledge base, `MaintenancePlan`), service
+    log with parts / labour / product / custom title;
+  - insurance, expenses (fines with presets and reasons), recommendations, SOS from the region
+    pack (5050 ADM added), generic pre-ride checklist (`genericChecklist`);
+  - home money card (this month vs target, projection, averages, cost/km, insurance line);
+  - Stats tab (`domain/Stats.kt`, `ui/charts/Charts.kt`): stacked monthly bars with the
+    target, cumulative line, category table, price per litre, consumption, 26-week calendar,
+    insights; palette validated with the dataviz validator for light and dark;
+  - ReminderWorker: daily insurance notification under 20 days or expired; last month's
+    report on the first run of each month;
+  - `.txt` report for AI (`data/export/TextReport.kt`, identifiers hidden by default),
+    share sheet for the save file and the report (FileProvider `cache/exports`);
+  - translated: onboarding, profile, fuel, service, insurance, expenses, stats, home, More,
+    SOS, checklist, wallet, settings, notifications.
+- **Still English only:** the Agility-only screens (passport, manual reader, guide hub and its
+  content: troubleshooting, how-tos, specs, parts, seasons). They come from the Agility
+  knowledge base; translating them means adding fields to `build_content.py`.
+- **Ideas next:** more region packs (via CONTRIBUTING), per-task interval overrides by the
+  owner, a home-screen widget for "this month vs target".
 
 ## 8. Update Protocol (Verbatim)
 > **For the AI Assistant:** When asked to "Update CONTEXT.md":

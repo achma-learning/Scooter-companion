@@ -1,5 +1,8 @@
 package io.github.achmalearning.scootercompanion.ui.components
 
+import androidx.compose.ui.res.stringResource
+import io.github.achmalearning.scootercompanion.R
+import io.github.achmalearning.scootercompanion.data.content.Task
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -72,11 +75,14 @@ fun statusColor(status: DueStatus): Color = when (status) {
     DueStatus.OK -> LocalStatusColors.current.ok
 }
 
-fun statusLabel(status: DueStatus) = when (status) {
-    DueStatus.OVERDUE -> "Due"
-    DueStatus.SOON -> "Soon"
-    DueStatus.OK -> "OK"
-}
+@Composable
+fun statusLabel(status: DueStatus) = stringResource(
+    when (status) {
+        DueStatus.OVERDUE -> R.string.status_due
+        DueStatus.SOON -> R.string.status_soon
+        DueStatus.OK -> R.string.status_ok
+    }
+)
 
 @Composable
 fun StatusPill(text: String, color: Color, modifier: Modifier = Modifier) {
@@ -307,24 +313,58 @@ fun HSpace(w: Dp) = Spacer(Modifier.width(w))
 @Composable
 fun VSpace(h: Dp) = Spacer(Modifier.height(h))
 
-fun formatKm(km: Int): String = "%,d".format(km).replace(',', ' ') + " km"
+fun formatKm(km: Int): String = "%,d".format(java.util.Locale.US, km).replace(',', ' ') + " km"
 
-fun formatMad(v: Double): String = if (v >= 100) "%,.0f MAD".format(v).replace(',', ' ') else "%.2f MAD".format(v)
+/**
+ * The currency symbol of the owner's region pack ("DH" for Morocco). GarageRepository sets it
+ * whenever the profile loads, so plain formatting functions can use it.
+ */
+object Money {
+    @Volatile var symbol: String = "DH"
+}
+
+/** "1 250 DH" above 100, "15.50 DH" below; Western digits whatever the language. */
+fun formatMoney(v: Double): String {
+    val number = if (v >= 100 || v == Math.floor(v)) "%,.0f".format(java.util.Locale.US, v).replace(',', ' ') else "%.2f".format(java.util.Locale.US, v)
+    return if (Money.symbol.isBlank()) number else "$number ${Money.symbol}"
+}
 
 fun Context.openUrl(url: String) = runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 
 fun Context.dial(number: String) = runCatching { startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 
 /** Human "due" line, e.g. "in 420 km · 3 weeks" or "1,200 km overdue". */
+@Composable
 fun dueText(kmLeft: Int?, daysLeft: Int?): String {
     val parts = mutableListOf<String>()
-    if (kmLeft != null) parts += if (kmLeft <= 0) "${formatKm(-kmLeft)} overdue" else "in ${formatKm(kmLeft)}"
+    if (kmLeft != null) parts += if (kmLeft <= 0) stringResource(R.string.due_km_overdue, formatKm(-kmLeft)) else stringResource(R.string.due_in_km, formatKm(kmLeft))
     if (daysLeft != null) parts += when {
-        daysLeft < 0 -> "${-daysLeft} d overdue"
-        daysLeft == 0 -> "today"
-        daysLeft < 14 -> "in $daysLeft d"
-        daysLeft < 60 -> "in ${daysLeft / 7} wk"
-        else -> "in ${daysLeft / 30} mo"
+        daysLeft < 0 -> stringResource(R.string.due_days_overdue, -daysLeft)
+        daysLeft == 0 -> stringResource(R.string.due_today)
+        daysLeft < 14 -> stringResource(R.string.due_in_days, daysLeft)
+        daysLeft < 60 -> stringResource(R.string.due_in_weeks, daysLeft / 7)
+        else -> stringResource(R.string.due_in_months, daysLeft / 30)
     }
-    return parts.joinToString(" · ").ifEmpty { "Not logged yet — do it once to start the clock" }
+    return parts.joinToString(" · ").ifEmpty { stringResource(R.string.due_never) }
+}
+
+/** "every 3 000 km or every 6 months": a task's interval, for tasks without a written label. */
+@Composable
+fun intervalText(task: Task): String = listOfNotNull(
+    task.intervalKm?.let { stringResource(R.string.interval_every_km, formatKm(it)) },
+    task.intervalMonths?.let { stringResource(R.string.interval_every_months, it) },
+    task.intervalDays?.let { stringResource(R.string.interval_every_days, it) }
+).joinToString(stringResource(R.string.interval_or))
+
+@Composable
+fun categoryName(id: String, fallback: String): String = when (id) {
+    "oil" -> stringResource(R.string.cat_oil)
+    "air" -> stringResource(R.string.cat_air)
+    "cvt" -> stringResource(R.string.cat_cvt)
+    "engine" -> stringResource(R.string.cat_engine)
+    "brakes" -> stringResource(R.string.cat_brakes)
+    "tyres" -> stringResource(R.string.cat_tyres)
+    "electrical" -> stringResource(R.string.cat_electrical)
+    "chassis" -> stringResource(R.string.cat_chassis)
+    else -> fallback
 }
