@@ -3,8 +3,8 @@ name: Build & release
 # Every push to main (and every v* tag) publishes a GitHub Release with:
 #   scooter-companion.apk      — the Android app, signed with the private release key
 #   agility-companion-web.zip  — the frozen Agility Companion website
-# Releases need the signing secrets (see README "Releases"). Without them, and on pull
-# requests, the run still tests everything and uploads a debug APK as a workflow artifact.
+# Releases need the release key (see README "Releases": one password, one click). Without it
+# the run still tests everything and uploads a debug APK as a workflow artifact.
 
 on:
   push:
@@ -60,29 +60,37 @@ jobs:
         working-directory: android-app
         run: ./gradlew testDebugUnitTest --stacktrace
 
-      # The private release key: repository secrets RELEASE_KEYSTORE_BASE64,
-      # RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS and RELEASE_KEY_PASSWORD. Every release
-      # must be signed with the same key, or phones refuse to install it as an update.
+      # The release key, the same for every release or phones refuse the update. Two ways:
+      # - usual: android-app/app/signing/release.jks.gpg, created once by the "Create release
+      #   key" workflow and decrypted with the RELEASE_KEYSTORE_PASSWORD secret;
+      # - advanced: your own keystore in RELEASE_KEYSTORE_BASE64 (+ RELEASE_KEY_ALIAS and
+      #   RELEASE_KEY_PASSWORD when they differ from "scooter" and the keystore password).
       - name: Decode signing key
         id: key
         env:
           KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
         run: |
+          ENCRYPTED=android-app/app/signing/release.jks.gpg
           if [ -n "$KEYSTORE_B64" ]; then
             echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
-            echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
-            echo "signed=true" >> "$GITHUB_OUTPUT"
+          elif [ -f "$ENCRYPTED" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            printf '%s' "$KEYSTORE_PASSWORD" | gpg --batch --quiet --pinentry-mode loopback --passphrase-fd 0 \
+              --decrypt --output "$RUNNER_TEMP/release.jks" "$ENCRYPTED"
           else
-            echo "::warning::No release signing key in repository secrets: building a debug APK only, no GitHub Release."
+            echo "::warning::No release key yet: building a debug APK only, no GitHub Release. See README \"Releases\" (one password + one click)."
             echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
 
       - name: Build release APK
         if: steps.key.outputs.signed == 'true'
         env:
           RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
-          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS || 'scooter' }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD || secrets.RELEASE_KEYSTORE_PASSWORD }}
         run: |
           (cd android-app && ./gradlew assembleRelease --stacktrace)
           mkdir -p out

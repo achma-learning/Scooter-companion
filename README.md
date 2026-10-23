@@ -63,18 +63,25 @@ you tap **Today's price** (fuel) or **Check for updates**. Details: [PRIVACY.md]
 3. Builds the release APK (`versionCode` = run number) and publishes a GitHub Release
    `v3.0.<run>` with `scooter-companion.apk`.
 
-**Signing (required for releases).** Every release must be signed with the same private key,
-or phones refuse to install it as an update. Create the key once and keep a copy somewhere
-safe; losing it means every user has to reinstall.
+**Turning on releases (once, about 2 minutes, works from a phone).** Releases are signed with
+the app's own key, so that each new version installs as an update. GitHub creates and keeps
+that key for you:
 
-```bash
-keytool -genkeypair -v -keystore scooter-release.jks -alias scooter -keyalg RSA -keysize 4096 -validity 10000
-base64 -w0 scooter-release.jks   # paste the output into RELEASE_KEYSTORE_BASE64
-```
+1. Invent a long password (at least 20 characters, for example 5 or 6 random words) and save
+   it in your notes or password manager. Don't share it.
+2. Open **Settings → Secrets and variables → Actions → New repository secret**. Name:
+   `RELEASE_KEYSTORE_PASSWORD`. Secret: your password. Click **Add secret**.
+3. Open **Actions → Create release key → Run workflow**.
 
-Then add the repository secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`,
-`RELEASE_KEY_ALIAS` (`scooter`) and `RELEASE_KEY_PASSWORD`. Without them, CI still tests
-everything and uploads a debug APK as a workflow artifact, but publishes no release.
+GitHub then creates the key, stores it in the repo encrypted with your password
+(`android-app/app/signing/release.jks.gpg`, AES-256) and publishes the first release. Every
+later push to `main` is released automatically. Keep the password: without it no future
+release can install as an update, and users would have to reinstall. Until step 3, CI still
+tests everything and uploads a debug APK as a workflow artifact, but publishes no release.
+
+*Advanced:* to use a keystore of your own instead, put it in the secret
+`RELEASE_KEYSTORE_BASE64` (base64), with `RELEASE_KEYSTORE_PASSWORD`, and `RELEASE_KEY_ALIAS` /
+`RELEASE_KEY_PASSWORD` if they differ from `scooter` and the keystore password.
 
 **Fuel price**: `.github/workflows/fuel-price.yml` runs weekly. It reads Morocco's national
 average gasoline price from GlobalPetrolPrices.com (`scripts/fuel/fetch_price.py`) and commits
