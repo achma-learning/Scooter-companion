@@ -3,7 +3,7 @@
 Android app (bundled as an asset) and the website (fetched as data/agility50.json).
 
 Source of truth for the figures: the Marrakech maintenance wiki
-(https://achma-learning.github.io/moto/) — maintenance.html is canonical for intervals,
+(https://achma-learning.github.io/kymco-agility-50-4T/) — maintenance.html is canonical for intervals,
 specs.html for factory figures. Edit this file, then run:
 
     python3 scripts/content/build_content.py
@@ -20,7 +20,7 @@ bike = {
     "tagline": "Durability over performance — tuned for Marrakech heat, dust and traffic.",
     "newPriceMad": 16500,
     "city": "Marrakech",
-    "wiki": "https://achma-learning.github.io/moto/",
+    "wiki": "https://achma-learning.github.io/kymco-agility-50-4T/",
 }
 
 quick_specs = [
@@ -604,7 +604,7 @@ docs = [
 ]
 
 links = [
-    {"title": "Marrakech maintenance wiki", "url": "https://achma-learning.github.io/moto/"},
+    {"title": "Marrakech maintenance wiki", "url": "https://achma-learning.github.io/kymco-agility-50-4T/"},
     {"title": "Workshop manual (KN10EM)", "url": "https://web.archive.org/web/20260310223918/https://www.azmotors.fr/eclates/MANUEL/PIECES_KYMCO/AGILITY-50-4T-E5-KN10EM-manuel-atelier.pdf"},
     {"title": "Parts catalogue (exploded views)", "url": "https://www.bike-parts-kymco.uk/kymco-motorcycle/50-SCOOTER/AGILITY"},
     {"title": "Ipone 4T scooter oils", "url": "https://www.ipone.com/en/motor-oil-ranges/4-stroke-scooters"},

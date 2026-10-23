@@ -23,7 +23,7 @@ data class FuelPrice(
  * `data` branch by .github/workflows/fuel-price.yml. Same file and checks as web/js/fuelprice.js.
  */
 object FuelPriceClient {
-    const val PRICE_URL = "https://raw.githubusercontent.com/achma-learning/kymco-agility-moto/data/fuel-price.json"
+    const val PRICE_URL = "https://raw.githubusercontent.com/achma-learning/scooter-companion/data/fuel-price.json"
     private val json = Json { ignoreUnknownKeys = true }
 
     /** Only from a tap on the button — see [NetworkGuard.userRequested]. */
