@@ -232,7 +232,7 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
  * pre-fill a new one from a task page or a passport stamp.
  */
 @Composable
-fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?, onDone: () -> Unit) {
+fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?, onDone: () -> Unit, presetProduct: String? = null) {
     val context = LocalContext.current
     val vm = appViewModel { GarageViewModel(context, it) }
     val s = vm.state.collectAsStateWithLifecycle().value ?: return
@@ -254,7 +254,7 @@ fun LogServiceScreen(entryId: Long?, presetTask: String?, presetMilestone: Int?,
     var labour by remember { mutableStateOf(money(existing?.laborCost)) }
     // Only a total when the parts / labour split wasn't recorded.
     var cost by remember { mutableStateOf(if (existing?.partsCost == null && existing?.laborCost == null) money(existing?.cost) else "") }
-    var product by remember { mutableStateOf(existing?.product ?: "") }
+    var product by remember { mutableStateOf(existing?.product ?: presetProduct ?: "") }
     var title by remember { mutableStateOf(existing?.title ?: "") }
     var stamped by remember { mutableStateOf(existing?.stamped ?: (presetMs != null)) }
     var note by remember { mutableStateOf(existing?.note ?: "") }

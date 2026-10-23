@@ -1,5 +1,6 @@
 package io.github.achmalearning.scootercompanion.domain
 
+import io.github.achmalearning.scootercompanion.data.content.CheckItem
 import io.github.achmalearning.scootercompanion.data.content.Content
 import io.github.achmalearning.scootercompanion.data.content.Milestone
 import io.github.achmalearning.scootercompanion.data.content.Task
@@ -24,7 +25,13 @@ object MaintenancePlan {
     fun milestonesFor(content: Content, agility: Boolean): List<Milestone> =
         if (agility) content.milestones else emptyList()
 
-    fun applies(task: Task, spec: VehicleSpec): Boolean = task.requires.all { (field, value) ->
+    fun checklistFor(content: Content, spec: VehicleSpec, agility: Boolean): List<CheckItem> =
+        if (agility || content.genericChecklist.isEmpty()) content.checklist
+        else content.genericChecklist.filter { matches(it.requires, spec) }
+
+    fun applies(task: Task, spec: VehicleSpec): Boolean = matches(task.requires, spec)
+
+    private fun matches(requires: Map<String, String>, spec: VehicleSpec): Boolean = requires.all { (field, value) ->
         when (field) {
             "powertrain" -> spec.powertrain.name == value
             "fuelSystem" -> spec.fuelSystem.name == value

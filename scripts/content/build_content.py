@@ -394,6 +394,64 @@ checklist = [
     {"id": "cvt-noise", "group": "weekly", "title": "Listen to the CVT", "detail": "Short test ride: no squeal, no grinding from the rear."},
 ]
 
+# Every other scooter: the pre-ride and weekly checks, in three languages, picked per profile.
+def check(id, group, en, fr, ar, requires=None):
+    item = {"id": id, "group": group, "title": en[0], "detail": en[1], "titleFr": fr[0], "detailFr": fr[1],
+            "titleAr": ar[0], "detailAr": ar[1]}
+    if requires:
+        item["requires"] = requires
+    return item
+
+generic_checklist = [
+    check("tyres-visual", "ride", ("Tyres look right", "Not flat, not bulging, nothing stuck in them."),
+          ("Pneus en bon état", "Ni à plat ni déformés, rien de planté dedans."),
+          ("العجلات سليمة", "غير مفرغة ولا منتفخة ولا شيء عالق بها.")),
+    check("brakes", "ride", ("Both brakes firm", "Levers firm, no sponginess; the scooter stops straight."),
+          ("Freins fermes", "Leviers fermes, pas d'effet éponge ; le scooter freine droit."),
+          ("الفرامل قوية", "المقابض صلبة بلا ليونة، والسكوتر يتوقف باستقامة.")),
+    check("lights", "ride", ("Lights, indicators, horn", "Headlight, tail light, brake light on both levers, indicators, horn."),
+          ("Feux, clignotants, klaxon", "Phare, feu arrière, feu stop sur les deux leviers, clignotants, klaxon."),
+          ("الأضواء والإشارات والمنبّه", "الضوء الأمامي والخلفي وضوء الفرامل بالمقبضين والإشارات والمنبّه.")),
+    check("throttle", "ride", ("Throttle", "Turns smoothly and snaps back closed by itself."),
+          ("Poignée de gaz", "Tourne sans point dur et revient seule."),
+          ("مقبض الوقود", "يدور بسلاسة ويرجع وحده إلى مكانه.")),
+    check("mirrors", "ride", ("Mirrors", "Adjusted and tight."), ("Rétroviseurs", "Réglés et bien serrés."),
+          ("المرايا", "مضبوطة ومشدودة.")),
+    check("fuel", "ride", ("Fuel", "Enough for the trip; don't ride on the reserve."),
+          ("Carburant", "Assez pour le trajet ; évitez de rouler sur la réserve."),
+          ("الوقود", "يكفي للرحلة، ولا تسق على الاحتياطي."), {"powertrain": "PETROL"}),
+    check("charge", "ride", ("Battery charge", "Enough range for the trip and back."),
+          ("Charge de la batterie", "Assez d'autonomie pour l'aller et le retour."),
+          ("شحن البطارية", "مدى كافٍ للذهاب والإياب."), {"powertrain": "ELECTRIC"}),
+    check("papers", "ride", ("Papers on board", "Registration (carte grise), insurance certificate, licence."),
+          ("Papiers à bord", "Carte grise, attestation d'assurance, permis."),
+          ("الوثائق معك", "البطاقة الرمادية، شهادة التأمين، رخصة السياقة.")),
+    check("helmets", "ride", ("Helmets strapped", "Yours and your passenger's: both are mandatory."),
+          ("Casques attachés", "Le vôtre et celui du passager : les deux sont obligatoires."),
+          ("الخوذات مربوطة", "خوذتك وخوذة الراكب: كلاهما إلزامي.")),
+    check("pressure-gauge", "weekly", ("Tyre pressure with a gauge", "Cold, at the pressures on the sticker or in the manual."),
+          ("Pression au manomètre", "À froid, aux pressions de l'étiquette ou du manuel."),
+          ("ضغط العجلات بالمقياس", "والعجلات باردة، حسب الملصق أو الدليل.")),
+    check("tread", "weekly", ("Tyre condition", "Tread at least 1 mm, no cracks on the sidewalls."),
+          ("État des pneus", "Sculptures d'au moins 1 mm, pas de craquelures sur les flancs."),
+          ("حالة العجلات", "عمق النقش 1 مم على الأقل، ولا تشققات في الجوانب.")),
+    check("oil-level", "weekly", ("Engine oil level", "Scooter upright, between the two marks."),
+          ("Niveau d'huile moteur", "Scooter droit, entre les deux repères."),
+          ("مستوى زيت المحرك", "والسكوتر مستقيم، بين العلامتين."), {"powertrain": "PETROL"}),
+    check("coolant", "weekly", ("Coolant level", "Engine cold: between MIN and MAX in the reserve tank."),
+          ("Liquide de refroidissement", "Moteur froid : entre MIN et MAX dans le vase d'expansion."),
+          ("سائل التبريد", "والمحرك بارد: بين MIN وMAX في الخزان."), {"powertrain": "PETROL", "cooling": "LIQUID"}),
+    check("battery-v", "weekly", ("12 V battery", "Above 12.4 V at rest, terminals clean."),
+          ("Batterie 12 V", "Plus de 12,4 V au repos, bornes propres."),
+          ("بطارية 12 فولت", "أكثر من 12.4 فولت في الراحة، والأقطاب نظيفة."), {"powertrain": "PETROL"}),
+    check("charger", "weekly", ("Charger and connector", "Cable intact, connector clean and dry."),
+          ("Chargeur et prise", "Câble intact, prise propre et sèche."),
+          ("الشاحن والموصل", "الكابل سليم والموصل نظيف وجاف."), {"powertrain": "ELECTRIC"}),
+    check("leaks", "weekly", ("No leaks", "Look under the scooter: oil, coolant or brake fluid."),
+          ("Pas de fuite", "Regardez sous le scooter : huile, liquide de refroidissement ou de frein."),
+          ("لا تسرّب", "انظر تحت السكوتر: زيت أو سائل تبريد أو سائل فرامل.")),
+]
+
 local_tips = [
     {"title": "Summer (May-Sep)", "text": "Check cooling fins more often — dust builds up fast at 40 °C+."},
     {"title": "After a dust storm", "text": "Inspect the air filter immediately; one day can clog it."},
@@ -742,6 +800,7 @@ content = {
     "categories": categories,
     "tasks": tasks,
     "genericTasks": generic_tasks,
+    "genericChecklist": generic_checklist,
     "milestones": milestones,
     "checklist": checklist,
     "localTips": local_tips,

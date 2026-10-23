@@ -1284,6 +1284,187 @@
    "cost": ""
   }
  ],
+ "genericChecklist": [
+  {
+   "id": "tyres-visual",
+   "group": "ride",
+   "title": "Tyres look right",
+   "detail": "Not flat, not bulging, nothing stuck in them.",
+   "titleFr": "Pneus en bon état",
+   "detailFr": "Ni à plat ni déformés, rien de planté dedans.",
+   "titleAr": "العجلات سليمة",
+   "detailAr": "غير مفرغة ولا منتفخة ولا شيء عالق بها."
+  },
+  {
+   "id": "brakes",
+   "group": "ride",
+   "title": "Both brakes firm",
+   "detail": "Levers firm, no sponginess; the scooter stops straight.",
+   "titleFr": "Freins fermes",
+   "detailFr": "Leviers fermes, pas d'effet éponge ; le scooter freine droit.",
+   "titleAr": "الفرامل قوية",
+   "detailAr": "المقابض صلبة بلا ليونة، والسكوتر يتوقف باستقامة."
+  },
+  {
+   "id": "lights",
+   "group": "ride",
+   "title": "Lights, indicators, horn",
+   "detail": "Headlight, tail light, brake light on both levers, indicators, horn.",
+   "titleFr": "Feux, clignotants, klaxon",
+   "detailFr": "Phare, feu arrière, feu stop sur les deux leviers, clignotants, klaxon.",
+   "titleAr": "الأضواء والإشارات والمنبّه",
+   "detailAr": "الضوء الأمامي والخلفي وضوء الفرامل بالمقبضين والإشارات والمنبّه."
+  },
+  {
+   "id": "throttle",
+   "group": "ride",
+   "title": "Throttle",
+   "detail": "Turns smoothly and snaps back closed by itself.",
+   "titleFr": "Poignée de gaz",
+   "detailFr": "Tourne sans point dur et revient seule.",
+   "titleAr": "مقبض الوقود",
+   "detailAr": "يدور بسلاسة ويرجع وحده إلى مكانه."
+  },
+  {
+   "id": "mirrors",
+   "group": "ride",
+   "title": "Mirrors",
+   "detail": "Adjusted and tight.",
+   "titleFr": "Rétroviseurs",
+   "detailFr": "Réglés et bien serrés.",
+   "titleAr": "المرايا",
+   "detailAr": "مضبوطة ومشدودة."
+  },
+  {
+   "id": "fuel",
+   "group": "ride",
+   "title": "Fuel",
+   "detail": "Enough for the trip; don't ride on the reserve.",
+   "titleFr": "Carburant",
+   "detailFr": "Assez pour le trajet ; évitez de rouler sur la réserve.",
+   "titleAr": "الوقود",
+   "detailAr": "يكفي للرحلة، ولا تسق على الاحتياطي.",
+   "requires": {
+    "powertrain": "PETROL"
+   }
+  },
+  {
+   "id": "charge",
+   "group": "ride",
+   "title": "Battery charge",
+   "detail": "Enough range for the trip and back.",
+   "titleFr": "Charge de la batterie",
+   "detailFr": "Assez d'autonomie pour l'aller et le retour.",
+   "titleAr": "شحن البطارية",
+   "detailAr": "مدى كافٍ للذهاب والإياب.",
+   "requires": {
+    "powertrain": "ELECTRIC"
+   }
+  },
+  {
+   "id": "papers",
+   "group": "ride",
+   "title": "Papers on board",
+   "detail": "Registration (carte grise), insurance certificate, licence.",
+   "titleFr": "Papiers à bord",
+   "detailFr": "Carte grise, attestation d'assurance, permis.",
+   "titleAr": "الوثائق معك",
+   "detailAr": "البطاقة الرمادية، شهادة التأمين، رخصة السياقة."
+  },
+  {
+   "id": "helmets",
+   "group": "ride",
+   "title": "Helmets strapped",
+   "detail": "Yours and your passenger's: both are mandatory.",
+   "titleFr": "Casques attachés",
+   "detailFr": "Le vôtre et celui du passager : les deux sont obligatoires.",
+   "titleAr": "الخوذات مربوطة",
+   "detailAr": "خوذتك وخوذة الراكب: كلاهما إلزامي."
+  },
+  {
+   "id": "pressure-gauge",
+   "group": "weekly",
+   "title": "Tyre pressure with a gauge",
+   "detail": "Cold, at the pressures on the sticker or in the manual.",
+   "titleFr": "Pression au manomètre",
+   "detailFr": "À froid, aux pressions de l'étiquette ou du manuel.",
+   "titleAr": "ضغط العجلات بالمقياس",
+   "detailAr": "والعجلات باردة، حسب الملصق أو الدليل."
+  },
+  {
+   "id": "tread",
+   "group": "weekly",
+   "title": "Tyre condition",
+   "detail": "Tread at least 1 mm, no cracks on the sidewalls.",
+   "titleFr": "État des pneus",
+   "detailFr": "Sculptures d'au moins 1 mm, pas de craquelures sur les flancs.",
+   "titleAr": "حالة العجلات",
+   "detailAr": "عمق النقش 1 مم على الأقل، ولا تشققات في الجوانب."
+  },
+  {
+   "id": "oil-level",
+   "group": "weekly",
+   "title": "Engine oil level",
+   "detail": "Scooter upright, between the two marks.",
+   "titleFr": "Niveau d'huile moteur",
+   "detailFr": "Scooter droit, entre les deux repères.",
+   "titleAr": "مستوى زيت المحرك",
+   "detailAr": "والسكوتر مستقيم، بين العلامتين.",
+   "requires": {
+    "powertrain": "PETROL"
+   }
+  },
+  {
+   "id": "coolant",
+   "group": "weekly",
+   "title": "Coolant level",
+   "detail": "Engine cold: between MIN and MAX in the reserve tank.",
+   "titleFr": "Liquide de refroidissement",
+   "detailFr": "Moteur froid : entre MIN et MAX dans le vase d'expansion.",
+   "titleAr": "سائل التبريد",
+   "detailAr": "والمحرك بارد: بين MIN وMAX في الخزان.",
+   "requires": {
+    "powertrain": "PETROL",
+    "cooling": "LIQUID"
+   }
+  },
+  {
+   "id": "battery-v",
+   "group": "weekly",
+   "title": "12 V battery",
+   "detail": "Above 12.4 V at rest, terminals clean.",
+   "titleFr": "Batterie 12 V",
+   "detailFr": "Plus de 12,4 V au repos, bornes propres.",
+   "titleAr": "بطارية 12 فولت",
+   "detailAr": "أكثر من 12.4 فولت في الراحة، والأقطاب نظيفة.",
+   "requires": {
+    "powertrain": "PETROL"
+   }
+  },
+  {
+   "id": "charger",
+   "group": "weekly",
+   "title": "Charger and connector",
+   "detail": "Cable intact, connector clean and dry.",
+   "titleFr": "Chargeur et prise",
+   "detailFr": "Câble intact, prise propre et sèche.",
+   "titleAr": "الشاحن والموصل",
+   "detailAr": "الكابل سليم والموصل نظيف وجاف.",
+   "requires": {
+    "powertrain": "ELECTRIC"
+   }
+  },
+  {
+   "id": "leaks",
+   "group": "weekly",
+   "title": "No leaks",
+   "detail": "Look under the scooter: oil, coolant or brake fluid.",
+   "titleFr": "Pas de fuite",
+   "detailFr": "Regardez sous le scooter : huile, liquide de refroidissement ou de frein.",
+   "titleAr": "لا تسرّب",
+   "detailAr": "انظر تحت السكوتر: زيت أو سائل تبريد أو سائل فرامل."
+  }
+ ],
  "milestones": [
   {
    "km": 300,

@@ -1,5 +1,8 @@
 package io.github.achmalearning.scootercompanion.ui.screens.guide
 
+import io.github.achmalearning.scootercompanion.domain.MaintenancePlan
+import io.github.achmalearning.scootercompanion.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -124,20 +127,22 @@ fun ChecklistScreen(onBack: () -> Unit) {
     val c = vm.content
     val checked = remember { mutableStateListOf<String>() }
     var weekly by rememberSaveable { mutableStateOf(false) }
-    val items = c.checklist.filter { it.group == if (weekly) "weekly" else "ride" }
+    val agility = s?.isAgility == true
+    val all = s?.let { MaintenancePlan.checklistFor(c, it.spec, agility) } ?: c.checklist
+    val items = all.filter { it.group == if (weekly) "weekly" else "ride" }
     val done = items.count { it.id in checked }
 
-    Scaffold(topBar = { BackTopBar("Pre-ride checklist", onBack) }) { padding ->
+    Scaffold(topBar = { BackTopBar(stringResource(R.string.check_title), onBack) }) { padding ->
         LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
             item {
                 TabRow(selectedTabIndex = if (weekly) 1 else 0) {
-                    Tab(selected = !weekly, onClick = { weekly = false }, text = { Text("Every ride") })
-                    Tab(selected = weekly, onClick = { weekly = true }, text = { Text("Weekly") })
+                    Tab(selected = !weekly, onClick = { weekly = false }, text = { Text(stringResource(R.string.check_every_ride)) })
+                    Tab(selected = weekly, onClick = { weekly = true }, text = { Text(stringResource(R.string.check_weekly)) })
                 }
                 VSpace(10.dp)
-                StatusBar(done.toFloat() / items.size, LocalStatusColors.current.ok)
+                StatusBar(done.toFloat() / items.size.coerceAtLeast(1), LocalStatusColors.current.ok)
                 Text(
-                    "$done / ${items.size}" + (s?.lastPreRide?.let { " · last full check ${Dates.display(it)}" } ?: ""),
+                    "$done / ${items.size}" + (s?.lastPreRide?.let { " · " + stringResource(R.string.check_last, Dates.display(it)) } ?: ""),
                     style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp)
                 )
             }
@@ -147,8 +152,8 @@ fun ChecklistScreen(onBack: () -> Unit) {
                     Row(Modifier.padding(horizontal = 6.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(on, { if (on) checked.remove(item.id) else checked.add(item.id) })
                         Column(Modifier.weight(1f)) {
-                            Text(item.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                            Text(item.detail, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(item.localTitle(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                            Text(item.localDetail(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -159,11 +164,11 @@ fun ChecklistScreen(onBack: () -> Unit) {
                     enabled = done == items.size,
                     onClick = { vm.markPreRideDone(); if (weekly) listOf("tyre-pressure", "tyre-condition").forEach(vm::markTaskDone); onBack() },
                     modifier = Modifier.fillMaxWidth()
-                ) { Text(if (done == items.size) "All good — ride safe" else "Tick every item") }
-                Callout("If anything feels wrong, don't ride", "Spongy brakes, unusual engine noise, steering wobble or fluid leaks all warrant investigation first.", LocalStatusColors.current.due)
-                SectionTitle("Marrakech specifics")
+                ) { Text(stringResource(if (done == items.size) R.string.check_all_good else R.string.check_tick_all)) }
+                Callout(stringResource(R.string.check_dont_ride), stringResource(R.string.check_dont_ride_text), LocalStatusColors.current.due)
+                if (agility) SectionTitle(stringResource(R.string.check_local))
             }
-            items(c.localTips) { Callout(it.title, it.text, LocalStatusColors.current.soon) }
+            if (agility) items(c.localTips) { Callout(it.title, it.text, LocalStatusColors.current.soon) }
         }
     }
 }

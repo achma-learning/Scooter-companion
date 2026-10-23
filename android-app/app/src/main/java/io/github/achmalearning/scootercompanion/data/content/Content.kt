@@ -20,6 +20,8 @@ data class Content(
     val genericTasks: List<Task> = emptyList(),
     val milestones: List<Milestone>,
     val checklist: List<CheckItem>,
+    /** Pre-ride checks for every other scooter, picked per profile. */
+    val genericChecklist: List<CheckItem> = emptyList(),
     val localTips: List<TitleText>,
     val troubleshooting: List<TroubleTree>,
     val failureModes: List<FailureMode>,
@@ -82,7 +84,30 @@ data class Task(
 }
 
 @Serializable data class Milestone(val km: Int, val source: String, val title: String, val tasks: List<String>, val actions: String)
-@Serializable data class CheckItem(val id: String, val group: String, val title: String, val detail: String)
+@Serializable
+data class CheckItem(
+    val id: String,
+    val group: String,
+    val title: String,
+    val detail: String,
+    val titleFr: String = "",
+    val detailFr: String = "",
+    val titleAr: String = "",
+    val detailAr: String = "",
+    /** Generic items: profile fields that must match (powertrain, cooling). */
+    val requires: Map<String, String> = emptyMap()
+) {
+    fun localTitle(language: String = java.util.Locale.getDefault().language) = when (language) {
+        "fr" -> titleFr.ifBlank { title }
+        "ar" -> titleAr.ifBlank { title }
+        else -> title
+    }
+    fun localDetail(language: String = java.util.Locale.getDefault().language) = when (language) {
+        "fr" -> detailFr.ifBlank { detail }
+        "ar" -> detailAr.ifBlank { detail }
+        else -> detail
+    }
+}
 @Serializable data class TitleText(val title: String, val text: String)
 
 @Serializable

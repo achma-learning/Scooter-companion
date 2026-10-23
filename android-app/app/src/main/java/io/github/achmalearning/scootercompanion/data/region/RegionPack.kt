@@ -28,6 +28,24 @@ data class RegionInsurance(
     val note: Localized = emptyMap()
 )
 
+/** An emergency number, dialled with one tap from the SOS screen. */
+@Serializable
+data class SosNumber(val number: String, val label: Localized = emptyMap(), val note: Localized = emptyMap())
+
+/**
+ * A suggestion for the owner (tyres, top case, gear). [category] is a SpendCategory name, or
+ * "TYRES" for tyres, which are logged as a service. [sizeByClass] picks a size per EngineClass.
+ */
+@Serializable
+data class Recommendation(
+    val id: String,
+    val category: String,
+    val name: Localized = emptyMap(),
+    val why: Localized = emptyMap(),
+    val priceHint: Localized = emptyMap(),
+    val sizeByClass: Map<String, String> = emptyMap()
+)
+
 /** A website for buying or selling used scooters, opened in the browser. */
 @Serializable
 data class UsedMarket(val name: String, val url: String, val country: String = "")
@@ -51,7 +69,10 @@ data class RegionPack(
     /** Fuel amount chips by EngineClass name. */
     val fuelChips: Map<String, List<Double>> = emptyMap(),
     val insurance: RegionInsurance = RegionInsurance(),
-    val fines: RegionFines = RegionFines()
+    val fines: RegionFines = RegionFines(),
+    val sos: List<SosNumber> = listOf(SosNumber("112", mapOf("en" to "Emergency", "fr" to "Urgence", "ar" to "الطوارئ"))),
+    val accidentSteps: List<Localized> = emptyList(),
+    val recommendations: List<Recommendation> = emptyList()
 ) {
     fun fuelChipsFor(engineClass: EngineClass): List<Double> =
         fuelChips[engineClass.name] ?: fuelChips.values.firstOrNull() ?: listOf(5.0, 10.0, 20.0, 50.0)
