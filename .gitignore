@@ -12,6 +12,4 @@ captures/
 *.keystore
 *.jks
 
-# The sideload signing key is committed on purpose (see android-app/app/build.gradle.kts).
-!android-app/app/signing/sideload.keystore
 __pycache__/

@@ -1,292 +1,194 @@
-# Agility Companion (kymco-agility-moto) — AI Context File
-_Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-ay0rzy`)_
+# Scooter Companion (achma-learning/scooter-companion) — AI Context File
+_Last synced: 2026-10-23 @ e0efb07 (Phase 2 on `claude/happy-sagan-x0wx57`)_
 
 ## 1. What This Is (Plain English)
-- **In one sentence:** A phone app and a matching website that act as the "owner's
-  companion" for one specific scooter, the Kymco Agility 50 4T. It tracks when each service
-  is due, keeps the service book and paperwork, and holds the scanned owner's manual you can
-  search.
-- **Why it exists:** The official booklet doesn't fit how the bike is actually ridden in
-  Marrakech, with heat, dust and stop-and-go traffic. The intervals come from the owner's own
-  Marrakech maintenance wiki (https://achma-learning.github.io/moto/), which is stricter than
-  the factory figures. The app turns that wiki into reminders.
-- **The owner's favourite part:** the fuel log. The owner mostly tops up a fixed amount
-  ("30 dh"), only sometimes fills the tank, so the fill-up form starts from the money paid.
-  Litres are worked out from the price per litre, which can be fetched with a tap.
-- **Who uses it:** The owner, plus anyone who installs the APK from GitHub Releases or uses
-  the website. The repo is public and releases are public. Treat it as a small public tool:
-  people's garage data lives on their device, so never break backups or migrations.
-- **Vibe:** A polished personal tool. It has real CI, tests on both platforms, a
-  privacy model enforced in code, and versioned DB migrations. It is not a weekend hack.
+- **In one sentence:** An offline Android app that tracks every cost of owning a scooter
+  (purchase, fuel, maintenance, insurance, gear, accessories, fines). It shows monthly
+  spending against the owner's own target, and keeps the service book and paperwork.
+- **History:** it started as *Agility Companion*, a companion for one scooter (Kymco Agility
+  50 4T, Marrakech). In October 2026 the repo was renamed from `kymco-agility-moto` and the
+  app became generic. The old app's last APK (2.0.7) is archived in
+  `achma-learning/kymco-agility-50-4T` (`apk-backup/`), the repo formerly named `moto`, which
+  also hosts the Marrakech maintenance wiki (https://achma-learning.github.io/kymco-agility-50-4T/,
+  capital T: the lowercase URL is a 404).
+- **Who it's for:** scooter owners worldwide, optimised first for **Morocco** (50 cc, 125 cc,
+  126–249 cc, maxi-scooters, electric). Country-specific data lives in region packs.
+- **The owner's priorities:** simple and fast to log (the fuel form starts from the money
+  paid, e.g. "30 dh"), an "intelligence report" view of spending without complication,
+  a monthly target, and a save file that moves to another phone. Fully offline.
+- **Open source:** MIT, public repo, community contributions welcome (`CONTRIBUTING.md`).
+- **Vibe:** a polished personal tool with real CI, tested domain logic, tested Room
+  migrations and a public save-file contract. Not a weekend hack.
 
 ## 2. How To Run It
-- **Setup once:**
-  - JDK 17, Android SDK (compileSdk 35), Node 22, Python 3. The Gradle wrapper (8.7) is
-    committed, so there's no separate Gradle install.
-  - Nothing to copy. There is no `.env.example`. `android-app/app/google-services.json` is a placeholder
-    that builds fine (see §6).
-- **Run dev:**
-  - Website: `scripts/build-web.sh && npx http-server dist/web`, then open the printed URL.
-    The service worker only registers over `https:` (`web/js/app.js:95`), so offline mode
-    won't show up on localhost http. That's expected.
-  - Android: `cd android-app && ./gradlew assembleDebug` gives you
-    `android-app/app/build/outputs/apk/debug/app-debug.apk`. The debug build installs as
-    `com.example.kymcoagility50.debug`, next to the release one.
+- **Setup once:** JDK 17, Android SDK (compileSdk 35), Node 22 (frozen website tests),
+  Python 3. The Gradle wrapper (8.7) is in `android-app/`.
+- **Run dev (Android):** `cd android-app && ./gradlew assembleDebug` gives
+  `android-app/app/build/outputs/apk/debug/app-debug.apk`, which installs as
+  `io.github.achmalearning.scootercompanion.debug` next to a release install.
 - **Tests:**
-  - `node --test web/tests/*.test.mjs` runs 16 tests and passes as of this sync.
-  - `python3 -m unittest discover -s scripts/fuel` tests the fuel-price parser.
-  - `./gradlew testDebugUnitTest` (from `android-app/`) runs the Robolectric tests. Add
-    `-PscreenshotsDir=/tmp/shots` to save a PNG of every screen.
-- **Change the knowledge base:** edit `scripts/content/build_content.py`, then run
-  `python3 scripts/content/build_content.py`. Commit the regenerated JSON.
-- **Build / deploy:** you don't deploy by hand. Every push to `main` runs
-  `.github/workflows/build-and-release.yml`, which tests everything, then builds and
-  publishes a GitHub Release `v2.0.<run_number>` with `agility-companion.apk` and
-  `agility-companion-web.zip`. GitHub Pages deploy is optional and only runs when the repo
-  variable `DEPLOY_PAGES=true` is set.
-- **Required env vars / secrets:** none for local dev. CI or build-time only:
-  - `APP_VERSION_CODE` and `APP_VERSION_NAME`, read in `android-app/app/build.gradle.kts:15-16`.
-  - Optional real signing key: `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`,
-    `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD` (repo secrets). The workflow decodes the
-    first into `RELEASE_KEYSTORE_PATH`.
-  - Repo variable: `DEPLOY_PAGES`.
-- **Fuel price:** run the *Fuel price* workflow once from the Actions tab after merging. It
-  creates the `data` branch with `fuel-price.json`, then refreshes it every Tuesday.
+  - `cd android-app && ./gradlew testDebugUnitTest`: 48 tests (domain, migrations, save-file
+    interop, every screen rendered, the wizard in EN/FR/AR). Add `-PscreenshotsDir=/tmp/shots`
+    for a PNG of every screen.
+  - From the root: `node --test web/tests/*.test.mjs` (16) and
+    `python3 -m unittest discover -s scripts/fuel`.
+- **Knowledge base:** edit `scripts/content/build_content.py`, run it, commit the JSON.
+- **Release:** every push to `main` runs `.github/workflows/build-and-release.yml`. With the
+  signing secrets it publishes GitHub Release `v3.0.<run>` with `scooter-companion.apk`;
+  without them it builds a debug APK artifact and publishes nothing.
+- **Secrets:** `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`,
+  `RELEASE_KEY_PASSWORD` (README "Releases" has the keytool command). Build-time env:
+  `APP_VERSION_CODE`, `APP_VERSION_NAME`.
+- **Fuel price:** `.github/workflows/fuel-price.yml` refreshes `fuel-price.json` on the
+  orphan `data` branch every Tuesday.
 
 ## 3. Tech Stack
-- **Language + runtime:** Kotlin 1.9.24 on JVM 17 (Android minSdk 24, target/compile 35).
-  The website is vanilla JavaScript (ES modules, no build step). The content generator is
-  Python 3, standard library only. CI uses Node 22.
-- **Android libraries** (versions from `android-app/build.gradle.kts` and `android-app/app/build.gradle.kts`):
-  - AGP 8.5.2, with KSP for Room.
-  - Jetpack Compose BOM 2024.06.00, Material3 1.2.1, Compose compiler 1.5.14.
-  - Navigation-Compose 2.7.7.
-  - Room 2.6.1, with exported schemas in `android-app/app/schemas/`.
-  - WorkManager 2.9.1, DataStore 1.1.1, kotlinx-serialization-json 1.6.3.
-  - ML Kit text-recognition 16.0.0, the on-device bundled model.
-  - Firebase BOM 33.1.2 (Auth + Firestore) and play-services-auth 21.2.0. These are used in
-    Sync Mode only.
-  - Tests use JUnit 4 and Robolectric 4.13.
-- **Website libraries:** none installed. pdf.js 3.11.174 is lazy-loaded from cdnjs only when
-  you open a manual page (`web/js/views-manual.js:5`). The icons are Lucide SVGs inlined in
-  `web/js/icons.js`.
-- **What kind of project:** one repo with two deliverables that share their data:
-  - an Android app (`android-app/`)
-  - an installable, offline-capable PWA (`web/`)
-  - a shared data folder (`shared/`) that both consume
-- **External services:**
-  - Firebase Auth + Firestore, opt-in Sync Mode only, at
-    `/users/{uid}/maintenanceEntries/*`.
-  - cdnjs, for pdf.js on the web.
-  - GitHub Releases and Pages, for distribution.
-  - GlobalPetrolPrices.com, read weekly by CI only (CC BY-NC-ND 3.0, credited in the JSON).
-  - `raw.githubusercontent.com/.../data/fuel-price.json`, fetched by the app and site only
-    when the owner taps *Today's price*.
-  - Nothing else. There are no analytics.
+- **Android:** Kotlin 1.9.24, JVM 17, minSdk 24, target/compile 35. AGP 8.5.2 with KSP.
+  Compose BOM 2024.06.00, Material3 1.2.1, Navigation-Compose 2.7.7, Room 2.6.1 (schemas
+  exported to `android-app/app/schemas/`), WorkManager 2.9.1, DataStore 1.1.1,
+  kotlinx-serialization 1.6.3, AppCompat 1.7.0 (per-app language only). Tests: JUnit 4,
+  Robolectric 4.13, room-testing.
+- **No cloud, no Google services.** Firebase and ML Kit were removed in Phase 2 (APK 69 → 25
+  MB). That also keeps the app eligible for F-Droid.
+- **Other parts:** `scripts/` (Python 3, stdlib only), `web/` (the Agility Companion PWA,
+  vanilla JS, **frozen**: bug fixes only).
+- **External services:** GitHub Releases (APK + update check, tap-only),
+  `raw.githubusercontent.com/achma-learning/scooter-companion/data/fuel-price.json`
+  (tap-only), GlobalPetrolPrices.com (read by CI weekly). Nothing else.
 
 ## 4. Code Map (The Important Files Only)
-**Shared data (both platforms read these)**
-- `scripts/content/build_content.py` — **the source of truth** for every interval, spec,
-  guide, troubleshooting tree, price and emergency number. It ends with referential-integrity
-  asserts (task, guide and tree-node ids must exist).
-- `shared/content/agility50.json` — GENERATED output: 25 tasks, 25 milestones, 9 guides.
-  Never hand-edit it.
-- `shared/docs/` — `owner_manual.pdf` (48 p, ~10 MB), `passport.pdf` (16 p), the
-  pre-computed OCR text `*_index.json`, `toc.json` and the covers.
-- `shared/fixtures/backup-sample.json` — **the app↔web backup contract**. Both test suites
-  load it.
+**Android (`android-app/app/src/main/java/io/github/achmalearning/scootercompanion/`)**
+- `MainActivity.kt` (an `AppCompatActivity`): NavHost, bottom bar (Garage / Service / Manual
+  / Guide / More), onboarding gate on `PrivacyManager.onboarded`.
+- `AppContainer.kt`: hand-rolled DI singleton (repositories, `regionRepository`).
+- `domain/` (pure Kotlin, unit-tested):
+  - `ExpenseLedger.kt`: `SpendCategory`, `Spend`, `LedgerStats` (total, running, this month,
+    last month, this year, avg/month, cost/km, months, by category, budget), last-month report.
+  - `Insurance.kt`: `InsurancePolicy` (end = start + months − 1 day), `Coverage`
+    (NONE / EXPIRED / EXPIRING under 20 days / OK).
+  - `Vehicle.kt`: `Powertrain`, `FuelSystem`, `Cooling`, `EngineClass` (CC50, CC125, MID,
+    MAXI, ELECTRIC), `VehicleSpec`, `enumOr`.
+  - `ServicePlanner.kt`, `FuelStats.kt`: from Agility Companion (Agility 50 intervals).
+  - `Dates.kt`: UTC-midnight millis; `monthKey` = year × 12 + month0.
+- `data/repository/GarageRepository.kt`: combines every table into `GarageSnapshot`
+  (profile, `spec`, entries, fuel, insurance, expenses, `spends`, `ledger`, `coverage`…);
+  `spendsOf()` flattens all modules into payments; save-file export/import.
+- `data/repository/PhotoStore.kt`: the owner's photo, one ≤1024 px JPEG in `filesDir`.
+- `data/db/`: `ManualDatabase` (v3, file `scooter_companion.db`), `GarageEntities.kt`
+  (`BikeProfileEntity`, `InsurancePolicyEntity`, `ExpenseEntity`, …), `Migrations.kt`
+  (`MIGRATION_1_2`, `MIGRATION_2_3`).
+- `data/backup/Backup.kt`: the save file, format `scooter-companion` v2; reads
+  `agility-companion` v1.
+- `data/region/RegionPack.kt`: region packs from `shared/assets/regions/<id>.json`
+  (currency, brands, used-scooter sites, fuel chips per class, insurance hints, fines).
+- `ui/screens/onboarding/OnboardingScreen.kt`: welcome + 3-step wizard; `LanguageChips`.
+- `ui/screens/profile/ProfileForm.kt`: `ProfileDraft` + the type / purchase / details
+  sections, shared by the wizard and `ProfileScreen.kt` ("My scooter").
+- `ui/common/Language.kt`: `AppLanguage` (fr, en, ar-MA) via `AppCompatDelegate`.
+- `ui/screens/garage/OwnerScreens.kt`: fuel log + `FuelDialog`, passport, wallet (Agility era).
+- `data/update/`: tap-only updater (`achma-learning/scooter-companion`, `scooter-companion.apk`).
+- `data/fuel/FuelPriceClient.kt`, `privacy/NetworkGuard.kt`: tap-only downloads.
+- `work/ReminderWorker.kt`: daily local notifications (services, documents).
+- `res/values{,-fr,-ar}/strings.xml`: new screens are translated; older screens are still
+  English literals in code.
 
-**Android (`android-app/app/src/main/java/com/example/kymcoagility50/`)**
-- `MainActivity.kt` — open this first. It has the whole Compose NavHost, the bottom bar
-  (Garage / Service / Manual / Guide / More) and the onboarding gate.
-- `KymcoApp.kt` → `privacy/PrivacyManager.kt` — initialized first thing, before anything
-  can touch the network.
-- `AppContainer.kt` — hand-rolled DI singleton that wires all repositories. There's no
-  Hilt.
-- `domain/ServicePlanner.kt` — the brain. It answers "what's due, overdue, soon", the health
-  score and the passport stamp states. It is pure Kotlin.
-- `domain/FuelStats.kt` — L/100 km (full-to-full; partial top-ups count inside a segment),
-  MAD/km, average and last MAD/L.
-- `domain/Dates.kt` — all dates are UTC-midnight epoch millis.
-- `data/repository/GarageRepository.kt` — combines Room, the planner and the content into a
-  `GarageSnapshot`. It also does JSON backup export/import.
-- `data/db/ManualDatabase.kt` (v2) and `data/db/Migrations.kt` — Room DB
-  `kymco_agility50.db`, with an explicit `MIGRATION_1_2`.
-- `data/backup/Backup.kt` — `@Serializable` mirror of the backup JSON.
-- `data/content/Content.kt` + `ContentRepository.kt` — typed model of `agility50.json`,
-  parsed with `ignoreUnknownKeys`.
-- `privacy/NetworkGuard.kt`, `auth/AuthManager.kt`, `work/SyncScheduler.kt` and
-  `work/MaintenanceSyncWorker.kt` — the Sync Mode path, gated at every layer.
-- `data/update/UpdateChecker.kt` + `ApkUpdater.kt` — Settings → App updates. They read
-  `api.github.com/.../releases/latest`, download the APK with DownloadManager into
-  `getExternalFilesDir(Downloads)/updates/`, and install it through the FileProvider
-  `${applicationId}.updates` (`res/xml/update_paths.xml`). Everything is tap-only.
-- `data/fuel/FuelPriceClient.kt` — tap-only download of `fuel-price.json` (plain
-  `HttpURLConnection`, no new dependency).
-- `ui/screens/garage/OwnerScreens.kt` → `FuelScreen` + `FuelDialog` — the fuel log and the
-  amount-first form (amount chips, price/L, litres derived).
-- `work/ReminderWorker.kt` — daily local notification for overdue services and expiring
-  documents. It never touches the network.
-- `pdf/PdfPageRenderer.kt` + `data/repository/OcrRepository.kt` — the PDF reader and the
-  OCR search, which is seeded from the bundled JSON with an ML Kit fallback.
-- `ui/screens/**` — one folder per area. `ui/nav/Routes.kt` lists every route.
+**Shared data**
+- `shared/assets/regions/MA.json`: the Morocco pack. Bundled as assets (`regions/…`).
+- `shared/content/agility50.json`: GENERATED by `scripts/content/build_content.py`.
+- `shared/docs/`: Agility manual and passport PDFs with OCR indexes.
+- `shared/fixtures/backup-sample.json` (Agility v1, also used by the web tests) and
+  `backup-sample-v2.json` (Scooter Companion).
 
-**Website (`web/`)**
-- `index.html` → `js/app.js` — the hash router (`ROUTES` table) and boot. Views are pure
-  functions returning `{ html, mount? }`.
-- `js/planner.js` — **JS twin of `ServicePlanner.kt` + `FuelStats.kt`**.
-- `js/store.js` — the garage lives in localStorage under key `agility-companion:garage:v1`.
-  The state shape *is* the backup format plus local `id`s.
-- `js/views-garage.js` (biggest, 470 lines), `views-guide.js` and `views-manual.js` — the
-  screens.
-- `js/ui.js` — HTML helpers, including `esc()` for escaping.
-- `js/config.js` — `APK_URL` for the "get the app" links and `FUEL_PRICE_URL`.
-- `js/fuelprice.js` — web twin of `FuelPriceClient.kt`. `fuelDialog` in `views-garage.js` is
-  the web twin of `FuelDialog`.
-- `sw.js` — offline cache. `__BUILD__` gets stamped by `scripts/build-web.sh`.
-
-**Pipeline**
-- `.github/workflows/build-and-release.yml` — in order: content-staleness check → web tests
-  → Android tests → release APK → web zip → Release (and optionally Pages).
-- `.github/workflows/fuel-price.yml` + `scripts/fuel/fetch_price.py` — weekly scrape →
-  commits `fuel-price.json` to the orphan `data` branch. It never touches `main`, so it
-  never triggers a release.
-- `scripts/build-web.sh` — copies `web/`, the content JSON and the docs into `dist/web`,
-  strips the tests, and stamps the SW version.
+**Pipeline:** `build-and-release.yml` (content check → fuel parser tests → web tests →
+Android tests → signed release or debug artifact → Release), `fuel-price.yml`.
 
 ## 5. Rules For Editing This Code
-- **Never hand-edit `shared/content/agility50.json`.** Edit `build_content.py` and
-  regenerate. CI runs the generator and fails on any `git diff` in that file.
-- **Planner logic lives twice. Change both or neither.** That means
-  `domain/ServicePlanner.kt` + `FuelStats.kt` and `web/js/planner.js`. Mirror every test too:
-  `ServicePlannerTest.kt`/`FuelStatsTest.kt` and `web/tests/planner.test.mjs` cover the same
-  scenarios.
-- **The backup format is a public contract.** If you add a field to `Backup.kt`, give it a
-  default value. Update `store.js` `exportBackup`/`importBackup` and the fixture, and keep
-  `BackupInteropTest.kt` + `web/tests/store.test.mjs` green. Old backups must still import.
-- **Room schema changes need a real `Migration`.** Bump `version` in `ManualDatabase.kt`,
-  add `MIGRATION_x_y` in `Migrations.kt`, and commit the new exported schema JSON. There is
-  no destructive fallback, and losing someone's logbook is the worst bug this app can have.
-- **Every network-capable call goes through `NetworkGuard` / `PrivacyManager.isPrivate()`.**
-  Never call `FirebaseApp.initializeApp` or Firestore outside `AuthManager` and the sync
-  worker. See `PRIVACY.md`, which documents exactly where this is enforced. Keep it true.
-- **The only exception is `NetworkGuard.userRequested {}`.** It's for public downloads the
-  owner starts with a tap: today's fuel price, and "Check for updates" / "Download &
-  install". The owner chose "on tap only" over a
-  setting or a Sync-only feature. Never call it from a worker, app start or a
-  `LaunchedEffect`, and never send user data through it.
-- **Sync Mode uploads only maintenance-log entries.** Never sync the bike profile, fuel,
-  documents, bookmarks or settings.
-- **Dates:** on Android, use UTC-midnight millis via `Dates`. On the web, use ISO
-  `YYYY-MM-DD` strings computed in UTC. Backups always use ISO strings.
-- **Website stays zero-dependency, no bundler, no framework.** `web/package.json` only sets
-  `"type":"module"`. Any new third-party script must be loaded lazily from cdnjs and added to
-  the `isPdfJs`-style allowlist in `sw.js` if it should work offline.
-- **Escape user text with `esc()`** before putting it into view HTML. Every view builds
-  HTML with template strings and `innerHTML`.
-- **New web files must be added to `PRECACHE` in `sw.js`**, or they won't work offline.
-- **The fuel form is twinned too.** It has the same amounts (20/30/50/100), the same
-  "any two of paid / price / litres give the third" rules, and the same 5–40 MAD/L
-  plausibility band in `fetch_price.py`, `fuelprice.js` and `FuelPriceClient.kt`.
-  Price per litre is never stored. It's always `cost ÷ liters`, so backups and Room are
-  unchanged.
-- **Task, guide and tree-node ids are referenced across content, logbook entries and
-  routes.** Renaming an id orphans every logged service that used it.
+- **Never lose someone's data.** Room schema changes need a version bump, a real
+  `Migration`, the exported schema JSON, and a case in `MigrationTest`. No destructive
+  fallback.
+- **The save file is a public contract.** New fields get defaults; never rename or remove
+  one. Both fixtures must keep importing (`BackupInteropTest`). Bump `VERSION` only for a
+  breaking change, and keep reading older versions.
+- **Every money statistic reads the ledger** (`GarageSnapshot.spends` / `ledger`). Don't sum
+  tables in a screen. New spending sources go into `spendsOf()`.
+- **Money that is "a reference" is never spending**: `newPrice` and region insurance prices
+  are hints. Only what the owner paid counts.
+- **Profile edits go through `ProfileDraft.toEntity()`**, which copies onto the stored row.
+  Building a fresh `BikeProfileEntity` in a screen wipes the fields that screen doesn't show.
+- **Country-specific values belong in a region pack**, not in code.
+- **New UI text goes in string resources, in all three languages** (`values`, `values-fr`,
+  `values-ar`). Arabic is `ar-MA` so digits stay Western.
+- **Network only from a tap, through `NetworkGuard.userRequested {}`.** Never from a worker,
+  app start or `LaunchedEffect`. Never send user data.
+- **Dates:** UTC-midnight millis via `Dates`; ISO `yyyy-MM-dd` in save files.
+- **Never hand-edit `shared/content/agility50.json`**; CI fails on a stale file.
+- **`web/` is frozen.** Bug fixes only; it keeps the Agility v1 format.
+- **Task, guide and tree-node ids** are stored in logbook entries; renaming one orphans them.
 
 ## 6. Fragile Bits & Landmines
 **Works, but subtle**
-- `PrivacyManager.isPrivate()` defaults to PRIVATE until DataStore finishes loading
-  asynchronously (`privacy/PrivacyManager.kt:50-58`). This is intentional fail-closed
-  behavior. A Sync-Mode user can briefly read as Private right after cold start. Don't
-  "fix" this by defaulting to the stored value synchronously.
-- Planner edge rules that look arbitrary but are deliberate, in both twins:
-  - A time-only task that has never been logged is shown as "due once" (`neverTimed`), not
-    counted from the purchase date.
-  - "Soon" means within 15% of the km span (minimum 100 km) or 20% of the day span.
-  - Milestones only become "missed" once they are 1,000 km past (`MISSED_TOLERANCE_KM`).
-  - `addMonths` in JS clamps month-end days to match `java.util.Calendar`
-    (`web/js/planner.js:16-24`).
-- On Android, `MaintenanceEntryEntity.tasks` is stored as a comma-separated
-  string, read through the `taskIds` extension. Never store ids with commas.
-- Fuel text fields use `decimalText()` (BigDecimal, dot separator), not `"%.2f".format`. A
-  French-locale phone prints `15,18`, which `toDoubleOrNull()` can't read back.
-- `fetch_price.py` parses one English sentence on the GlobalPetrolPrices page. If they
-  reword it, the weekly workflow fails loudly and the last good `fuel-price.json` stays
-  published. Fix the regex; the apps need no change.
-- Computed litres keep **4 decimals** (`round4` / `decimalText(scale = 4)`). At 2 decimals,
-  30 MAD @ 15.18 → 1.98 L → reads back as 15.15 MAD/L, and the remembered price drifts down
-  with every fill. On the web, the litres input therefore needs `step="any"`, or the browser
-  silently blocks Save.
-- **The updater compares `versionCode`s.** It reads the code from
-  `<!-- versionCode: N -->` in the release body, which `build-and-release.yml` writes. If
-  that line is missing, it falls back to the tag `v2.0.N`. Keep that body line, and keep the
-  asset name `agility-companion.apk`. A release built with another signing key won't
-  install as an update; Android refuses it.
-- New fill-ups default to **not** full. That's on purpose for a top-up rider: a 30 MAD
-  partial logged as "full" would wreck the L/100 km figure.
+- **Signing.** Releases are signed only with the private key from secrets; the old public
+  sideload key was deleted. Every release must use the same key or updates fail to install.
+  Losing the key means every user reinstalls (export first).
+- **The updater compares `versionCode`s** read from `<!-- versionCode: N -->` in the release
+  body (fallback: the tag's last number). Keep that line and the asset name
+  `scooter-companion.apk`. GitHub may spell the repo `Scooter-companion`; the URL check
+  ignores case.
+- **Agility Companion 2.0.x can't update to this app** (different ID and key). Its own
+  updater also rejects the renamed repo's URLs. Users move with Export → Import.
+- **Month projection** extrapolates only `SpendCategory.recurring` costs (fuel, parking,
+  washing, charging). One-offs count once.
+- **Insurance coverage** follows renewals that start by the day after the current end; a gap
+  is not hidden. Under 20 days left = daily reminder (the reminder itself is Phase 3).
+- **A purchase price without a date** is placed on the first logged day, so totals stay right.
+- **Fuel text fields** use `decimalText()` (BigDecimal, dot), not `"%.2f".format`: a French
+  phone prints `15,18`. `NumberField` turns commas into dots.
+- **Computed litres keep 4 decimals**, or the remembered price per litre drifts down.
+- **New fill-ups default to not full**: a 30 dh top-up logged as full wrecks L/100 km.
+- **Planner rules** (both twins): never-logged time-only tasks are "due once"; "soon" is
+  within 15% of the km span (min 100 km) or 20% of the days; milestones are "missed" only
+  1,000 km past.
+- **`MaintenanceEntryEntity.tasks`** is comma-separated; ids must never contain commas.
+  Its `remoteId` / `dirty` / `deleted` columns are leftovers of the removed sync.
+- **Room schemas ride in debug assets** so Robolectric's `MigrationTestHelper` can read them
+  (`sourceSets.debug` in `app/build.gradle.kts`). Release APKs don't carry them.
+- **There is no `1.json` schema**: version 1 was never exported, so only v2 → v3 is replayed.
+- `fetch_price.py` parses one English sentence; if the site rewords it, the weekly job fails
+  loudly and the last good price stays published.
 
 **Hard-won fixes**
-- **Committed sideload signing key** (`android-app/app/signing/sideload.keystore`, with the passwords in
-  `android-app/app/build.gradle.kts`). It is public *on purpose*: every Release must be signed with the
-  same key so it installs as an update. A per-runner debug key forced an uninstall, which
-  wiped the user's garage. `.gitignore` has an explicit `!` exception for it. **Do not
-  delete it, rotate it, or "secure" it** without a migration plan. Switching keys means users
-  have to uninstall.
-- **`android-app/app/google-services.json` is a placeholder.** The `google-services` plugin refuses to
-  build without it. It must include the `.debug` client, or debug builds fail (fixed in
-  `ef4bddf`). Sign-in fails until you replace it with a real one.
-- **R8/minify is off** in release builds (`android-app/app/build.gradle.kts:47`). Room,
-  kotlinx-serialization and Firebase use reflection. `proguard-rules.pro` exists but is
-  untested.
-- **`noCompress += "pdf"`**: the manual is ~10 MB of scanned images. `PdfPageRenderer`
-  copies the asset into `filesDir` because `PdfRenderer` needs a real file descriptor, and
-  it serializes `openPage()` with a mutex.
-- **The web store only re-renders after any open `<dialog>` closes** (`web/js/app.js:80-90`).
-  That's so a cancelled confirm doesn't wipe a half-filled form.
-- **The service worker serves whole cached PDFs** even when pdf.js asks for byte ranges.
+- **R8/minify is off** in release builds (Room and kotlinx-serialization reflection).
+- **`noCompress += "pdf"`**; `PdfPageRenderer` copies the PDF into `filesDir` and serializes
+  `openPage()` with a mutex.
+- **The wizard's step survives recreation** (`rememberSaveable`), because changing the
+  language recreates the activity.
 
 **Skip on cleanup passes**
-- The duplicated planner code (`ServicePlanner.kt` and `planner.js`). It's intentional.
-- `shared/docs/*_index.json` are the real OCR output used to seed search, not junk.
-- The `INTERNET` permission in the manifest is used by Sync Mode, the tap-only fuel price
-  and the updater. `REQUEST_INSTALL_PACKAGES` and the `.updates` FileProvider are used by
-  the updater.
-- `NetworkGuard.attemptsWhilePrivate`, a counter that "should always be 0", is the privacy
-  proof. It is pinned by `NetworkGuardTest`.
-- Both `android-app/app/schemas/.../2.json` and `Migrations.kt` must stay.
-- `rootProject.name = "Owner Manual"` in `settings.gradle.kts` is a leftover from the v0
-  manual-reader. It's harmless; renaming it is optional.
-
-**Docs vs code conflicts**
-- Backup import on Android marks every imported logbook row `dirty = true`, so in Sync Mode
-  an import pushes the whole logbook to Firestore. That's intentional, but worth knowing.
-- `GarageRepository.wipeGarage()` doesn't touch the logbook by itself. The Settings action
-  (`SettingsViewModel.wipeGarage`) also calls `maintenanceRepository.replaceAll(emptyList())`.
-  So "Erase garage data" clears everything on both platforms. Call the ViewModel path, not
-  the repository one.
+- The duplicated planner code (`ServicePlanner.kt` and `web/js/planner.js`): intentional.
+- `shared/docs/*_index.json`: the real OCR output that powers manual search.
+- `INTERNET` and `REQUEST_INSTALL_PACKAGES` permissions: the fuel price and the updater.
+- `android-app/app/schemas/.../{2,3}.json` and `Migrations.kt` must stay.
 
 ## 7. Current State
-- **Last shipped (2026-10-09/10, PR achma-learning/kymco-agility-moto#1):**
-  - The v0 PDF manual reader became the full owner companion: garage, planner, passport,
-    fuel, wallet, guide and SOS.
-  - The PWA website was added with backup interop.
-  - The CI release pipeline now publishes the APK and the web zip.
-  - The Room v1→v2 migration shipped.
-- **Last shipped (PR achma-learning/kymco-agility-moto#2):** the fuel log built around
-  the amount paid. It has 20/30/50/100 MAD chips, a tap-to-fetch national price per litre,
-  MAD/L stats, and the weekly `fuel-price.yml`.
-- **Working on now:** turning the app into **Scooter Companion**, a generic, open-source (MIT)
-  scooter expense tracker optimised for Morocco. Done so far: the v2.0.7 APK is backed up in
-  `achma-learning/moto` (`apk-backup/`), and the Android build moved into `android-app/`
-  (run Gradle from there). `web/` is frozen: bug fixes only. Next: bike profile and
-  onboarding, a spending ledger, new app ID and private signing key.
-- **Next up:**
-  - Run the *Fuel price* workflow once so the `data` branch exists (still 404 at this sync).
-  - Maybe a price-per-litre trend chart, and the fuel stats on the Garage dashboard.
-  - Wire in a real Firebase project and turn on `DEPLOY_PAGES` (both still optional).
-
-**Missing repo hygiene:** no `LICENSE` file and no `dependabot.yml`. There are no other AI
-memory files (`CLAUDE.md`, `AGENTS.md`, etc.).
+- **Shipped:** Agility Companion 2.0.x (PRs achma-learning/scooter-companion#1–#3).
+  Phase 1 (achma-learning/scooter-companion#4): build moved into `android-app/`, MIT
+  license. APK backup: achma-learning/kymco-agility-50-4T#48.
+- **Phase 2 (this branch):** new app ID `io.github.achmalearning.scootercompanion` and
+  package; Firebase/ML Kit removed; private-key-only releases; Room v3 (profile type,
+  purchase, used fields, budget, photo, region; insurance and expenses tables; service
+  parts/labour/product/title); `ExpenseLedger` and `Insurance` domain; save file v2; region
+  pack MA (with Avito.ma / Leboncoin.fr links); add-your-scooter wizard and "My scooter" on a
+  shared form; FR / EN / AR with RTL; links fixed after the repo renames.
+- **Next (Phase 3, modules):** fuel log with 10/15/20/30/50/custom/full chips per engine
+  class; maintenance with parts + labour + product and liquid-cooled / injection tasks;
+  insurance screen and the daily under-20-days notification; accessories/gear; fines;
+  pre-ride checklist per profile; recommendations (City Grip 2, top case 29/33/35 L, vest);
+  SOS numbers incl. highways (verify every number first); translate the older screens.
+- **Then:** Phase 4 statistics (matplotlib-style charts in Compose Canvas, monthly target,
+  insights, 1st-of-month report notification); Phase 5 `.txt` export for AI analysis
+  (with VIN/plate masking), sharing, release.
+- **Owner to do:** create the release key and the 4 secrets (no release is published
+  without them).
 
 ## 8. Update Protocol (Verbatim)
 > **For the AI Assistant:** When asked to "Update CONTEXT.md":

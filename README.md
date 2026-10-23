@@ -1,173 +1,123 @@
-# Agility Companion — Kymco Agility 50 4T
+# Scooter Companion
 
-A digital owner's companion for the **Kymco Agility 50 4T**, in the spirit of the SYM, My Honda+
-and BMW Motorrad apps: your scooter's dashboard, service book, paperwork and manual in one
-place. Every interval is tuned for **Marrakech heat, Saharan dust and stop-and-go traffic**,
-from the [Marrakech maintenance wiki](https://achma-learning.github.io/moto/).
+An offline Android app that tracks **every cost of owning a scooter**: the purchase, fuel,
+maintenance, insurance, gear, accessories and fines. It shows where the money goes each month
+and warns you before you go over your own monthly target. Built first for scooter owners in
+**Morocco** (50 cc, 125 cc, bigger scooters, maxi-scooters, electric), and open to every
+country through region packs.
 
-It ships two ways, with the same data and features:
+It grew out of *Agility Companion*, a companion app for one scooter, the Kymco Agility 50 4T.
+Its service planner, manual reader and fuel log are still inside. The interval knowledge comes
+from the [Marrakech maintenance wiki](https://achma-learning.github.io/kymco-agility-50-4T/).
 
-| | Android app (`android-app/`) | Website (`web/`) |
-|---|---|---|
-| Runs | Installed APK, fully offline | Any browser; installable, works offline |
-| Stores your garage | On the phone (Room) | In that browser (localStorage) |
-| Reminders | Daily notification for due services & expiring documents | Shown on the dashboard |
-| Move data | Settings → Export / Import | Settings → Export / Import (same JSON file) |
+> **Status:** being rebuilt into Scooter Companion. Done: new app identity, scooter profile
+> and add-your-scooter wizard, spending ledger and insurance rules, save file v2,
+> French / English / Arabic. In progress: the fuel, maintenance, insurance, expense and
+> statistics screens. See [CONTEXT.md](CONTEXT.md) §7.
 
-## What's inside
+## What it does
 
-- **Garage**: nickname, plate, odometer, a health score, the next services due, documents that
-  are expiring, a tip for the current season, and quick actions.
-- **Service planner**: 25 maintenance tasks with Marrakech and factory intervals side by side,
-  break-in milestones (300 · 1,000 · 2,000 · 3,000 km), and limits by km *or* by time. Due-soon
-  and overdue are tracked per task, and you can log one tap as "done today" or record full
-  details.
-- **Digital passport**: the Kymco booklet's stamp schedule (plus the wiki's 2,000 / 8,000 /
-  10,000 km checks) shown as stamps. Each one is marked stamped by a dealer, done, next, or
-  missed. It also shows the warranty end date and the bike's identity (plate, VIN, dealer).
-- **Fuel log**: built for the "30 dh" top-up. Pick the amount (20 / 30 / 50 / 100 MAD), and
-  the litres are worked out from the price per litre. The price is your last one, or Morocco's
-  national average fetched when you tap **Today's price**. Tracks L/100 km measured between
-  full tanks, MAD/km, MAD/L and total spend.
-- **Documents wallet**: insurance, carte grise, licence and warranty, with an expiry countdown.
-- **Manual**: the scanned Driver's Manual (48 p.) and Maintenance Passport (16 p.), with
-  full-text search over their OCR text (FR/AR/EN), a table of contents and bookmarks.
-- **Owner's guide**:
-  - pre-ride and weekly checklist
-  - troubleshooting decision trees (won't start, power loss, noises, overheating)
-  - known failure modes, ranked
-  - 9 step-by-step how-tos
-  - specs and torque table
-  - oil strategy by season
-  - seasonal and storage advice
-  - parts and prices in MAD, with resale timing
-  - riding gear
-- **SOS**: Moroccan emergency numbers (tap to dial), what to do after an accident (declare it to
-  your insurer within 5 days), your insurance number, and approved dealers in Maps.
+- **Add your scooter**: brand, model, engine size, carburettor or injection, air or liquid
+  cooling, petrol or electric. Bought new or used: the price you paid, and for a used scooter
+  the price new (to see what you saved), first registration and previous owners. Links to
+  used-scooter sites (Avito.ma, Leboncoin.fr). Plate, VIN, engine number, your own photo.
+- **Spending ledger**: total spent with and without the purchase price, this month, last month,
+  this year, average per month owned, cost per km. Months are projected from recurring costs
+  only, so one insurance payment doesn't predict a disaster.
+- **Insurance**: contracts of 1, 3, 6, 12 or any number of months with the amount you actually
+  paid. Approximate prices for Morocco are shown as a hint only. Reminder every day once fewer
+  than 20 days of cover remain, until you enter the renewal.
+- **Carried over from Agility Companion**: the service planner (tuned for the Agility 50 4T
+  for now), the fuel log built around the amount paid, the documents wallet with expiry
+  countdown, the pre-ride checklist, the Agility manual reader with search, the owner's
+  guide and the SOS numbers.
+- **Save file**: export everything to one JSON file and import it on another phone. Agility
+  Companion backups import too.
+- **Languages**: French, English and Arabic (right-to-left), switchable in the app.
 
 ## Get it
 
-**Android**: open the latest [GitHub Release](../../releases/latest) on your phone and install
-`agility-companion.apk` (allow "install unknown apps" once). Each new release installs over the
-previous one and keeps your data. Once installed, update from inside the app: **Settings →
-App updates → Check for updates** downloads the newest release and opens the installer.
-The first time, Android asks you to allow installs from Agility Companion.
+Open the latest [GitHub Release](../../releases/latest) on your phone and install
+`scooter-companion.apk` (allow "install unknown apps" once). Later versions install from
+inside the app: **Settings → App updates → Check for updates**.
 
-**Website**: download `agility-companion-web.zip` from the same release, unzip it, and upload
-the files to any static host (GitHub Pages, Netlify, Cloudflare Pages, your own server). It
-is plain HTML/CSS/JS with no server code. To publish it on this repo's GitHub Pages
-automatically, go to *Settings → Pages* and set *Source = GitHub Actions*, then add the
-repository variable `DEPLOY_PAGES=true`.
+**Coming from Agility Companion?** Scooter Companion is a new app (new name, new signing key),
+so it installs next to the old one instead of replacing it. In Agility Companion: **Settings →
+Export**. In Scooter Companion, on the first screen: **I have a save file**. Then uninstall
+Agility Companion. Its last APK is kept in
+[kymco-agility-50-4T/apk-backup](https://github.com/achma-learning/kymco-agility-50-4T/tree/main/apk-backup).
+
+## Privacy
+
+No account, no analytics, no ads. Everything stays on the phone. The app goes online only when
+you tap **Today's price** (fuel) or **Check for updates**. Details: [PRIVACY.md](PRIVACY.md).
 
 ## Releases
 
 `.github/workflows/build-and-release.yml` runs on every push to `main` (and on `v*` tags):
 
 1. Regenerates the knowledge base and fails if `shared/content/agility50.json` is stale.
-2. Runs the website tests and the Android unit tests. These cover the planner, app ↔ web
-   backup interop, and a Robolectric pass that renders every screen.
-3. Builds the release APK (`versionCode` = run number) and the website zip.
-4. Publishes a GitHub Release `v2.0.<run>` with both files attached. Pull requests get the
-   same files as workflow artifacts.
+2. Runs the fuel-price parser tests, the website tests and the Android unit tests (domain
+   logic, Room migrations, save-file interop, every screen rendered, the wizard in three
+   languages).
+3. Builds the release APK (`versionCode` = run number) and publishes a GitHub Release
+   `v3.0.<run>` with `scooter-companion.apk`.
 
-**Signing**: without secrets, the APK is signed with the committed *sideload* key
-(`android-app/app/signing/sideload.keystore`). That keeps every release updatable in place, but the key is
-public, so don't use it for the Play Store. To sign with your own key, add the repository
-secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and
-`RELEASE_KEY_PASSWORD`. Changing keys later means one uninstall, so export a backup first.
+**Signing (required for releases).** Every release must be signed with the same private key,
+or phones refuse to install it as an update. Create the key once and keep a copy somewhere
+safe; losing it means every user has to reinstall.
 
-**Fuel price**: `.github/workflows/fuel-price.yml` runs weekly (and on demand from the Actions
-tab). It reads the national average gasoline price from GlobalPetrolPrices.com
-(`scripts/fuel/fetch_price.py`) and commits `fuel-price.json` to the `data` branch. The app
-and the website download that file only when the owner taps *Today's price*. Until the
-workflow has run once, the button says "No price published yet".
+```bash
+keytool -genkeypair -v -keystore scooter-release.jks -alias scooter -keyalg RSA -keysize 4096 -validity 10000
+base64 -w0 scooter-release.jks   # paste the output into RELEASE_KEYSTORE_BASE64
+```
+
+Then add the repository secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`,
+`RELEASE_KEY_ALIAS` (`scooter`) and `RELEASE_KEY_PASSWORD`. Without them, CI still tests
+everything and uploads a debug APK as a workflow artifact, but publishes no release.
+
+**Fuel price**: `.github/workflows/fuel-price.yml` runs weekly. It reads Morocco's national
+average gasoline price from GlobalPetrolPrices.com (`scripts/fuel/fetch_price.py`) and commits
+`fuel-price.json` to the `data` branch, which the app downloads only on a tap.
 
 ## Project layout
 
 ```
+android-app/                 the Android app; run Gradle from here
+  app/src/main/java/io/github/achmalearning/scootercompanion/
+    domain/                  ExpenseLedger, Insurance, Vehicle, ServicePlanner, FuelStats, Dates (pure Kotlin)
+    data/                    Room (garage, logbook, insurance, expenses), backup format, region packs, repositories
+    ui/screens/              onboarding, profile, garage, service, guide, manual, more, settings…
+    work/ReminderWorker.kt   daily local reminders
+  app/schemas/               exported Room schemas, one per database version
 shared/
-  content/agility50.json   knowledge base (tasks, milestones, specs, guides, trees…) — GENERATED
-  docs/                    owner_manual.pdf, passport.pdf, OCR indexes, toc.json, covers
-  fixtures/                backup-sample.json — the app ↔ web backup contract, tested on both sides
-scripts/
-  content/build_content.py source of the knowledge base → writes shared/content/agility50.json
-  build-web.sh             assembles the website into dist/web
-  fuel/fetch_price.py      weekly fuel-price scraper (+ test_fetch_price.py)
-app/                       Android app (Kotlin, Jetpack Compose, Room, WorkManager)
-  …/domain/                ServicePlanner, FuelStats, Dates — pure Kotlin, unit-tested
-  …/data/                  Room (garage + logbook), content & backup models, repositories
-  …/ui/screens/            garage, service, guide, home (manual), more, settings, reader…
-  …/work/                  ReminderWorker (local), MaintenanceSyncWorker (Sync Mode only)
-web/                       Website (vanilla ES modules, no build step, no framework)
-  js/planner.js            JavaScript twin of ServicePlanner.kt — keep them in sync
-  js/store.js              localStorage + backup import/export
-  js/views-*.js            screens; js/app.js is the hash router
-  sw.js                    offline cache
+  assets/regions/MA.json     Morocco region pack (currency, brands, fuel chips, insurance hints, fines)
+  content/agility50.json     Agility 50 knowledge base, GENERATED by scripts/content/build_content.py
+  docs/                      Agility manual and passport PDFs with their OCR indexes
+  fixtures/                  save-file fixtures: backup-sample.json (Agility v1) and backup-sample-v2.json
+scripts/                     knowledge-base generator, weekly fuel-price scraper, website build
+web/                         the Agility Companion website (frozen: bug fixes only)
 ```
-
-The app bundles `shared/docs` and `shared/content` as assets (`sourceSets` in
-`android-app/app/build.gradle.kts`). The website build copies the same files, so both always ship the same
-data.
 
 ## Develop
 
 ```bash
-# Knowledge base: edit the generator, never the JSON
-python3 scripts/content/build_content.py
-
-# Website: build + serve locally
-scripts/build-web.sh && npx http-server dist/web
-node --test web/tests/*.test.mjs
-
-# Android
-cd android-app && ./gradlew assembleDebug          # android-app/app/build/outputs/apk/debug/app-debug.apk
-./gradlew testDebugUnitTest        # add -PscreenshotsDir=/tmp/shots to save a PNG per screen
+cd android-app
+./gradlew testDebugUnitTest   # add -PscreenshotsDir=/tmp/shots to save a PNG per screen
+./gradlew assembleDebug       # app/build/outputs/apk/debug/app-debug.apk
 ```
 
-To change an interval: edit `tasks` in `build_content.py`, regenerate, and run both test suites.
-The planner logic lives twice (`ServicePlanner.kt` and `web/js/planner.js`), and the two test
-files cover the same scenarios to keep them in agreement.
+From the repo root: `python3 scripts/content/build_content.py` (regenerate the knowledge base),
+`node --test web/tests/*.test.mjs`, `python3 -m unittest discover -s scripts/fuel`.
 
-## Two modes — the privacy model
+**Add your country**: copy `shared/assets/regions/MA.json` to `<country code>.json` and change
+the currency, brands, fuel amount chips, insurance hints and fine presets. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
-On first launch the app asks for **Private Mode** (default) or **Sync Mode**:
+## License and sources
 
-- **Private Mode**: no account, Firebase is never initialised, and the app never goes online
-  by itself. Everything works offline. The only network use is a download you start by
-  tapping *Today's price* in the fuel form, or *Check for updates* in Settings.
-- **Sync Mode**: sign in with Google. Only the service logbook syncs (date, km, tasks,
-  milestone, shop, cost, stamp, notes). The bike profile, fuel log, documents, bookmarks and
-  settings always stay local.
-
-See [PRIVACY.md](PRIVACY.md) for what each mode does and where it's enforced in code.
-
-### Sync Mode / Firebase setup
-
-`android-app/app/google-services.json` is a **placeholder** (valid enough to build; sign-in fails until you
-replace it).
-
-1. Create a Firebase project and register the Android app `com.example.kymcoagility50` (add
-   `com.example.kymcoagility50.debug` too for debug builds). Download the real
-   `google-services.json` into `android-app/app/`.
-2. Enable **Authentication → Google** and **Firestore**.
-3. Firestore rules, so each user only reaches their own logbook:
-   ```
-   rules_version = '2';
-   service cloud.firestore {
-     match /databases/{database}/documents {
-       match /users/{userId}/{document=**} {
-         allow read, write: if request.auth != null && request.auth.uid == userId;
-       }
-     }
-   }
-   ```
-
-Entries sync to `/users/{uid}/maintenanceEntries/*`. Nothing else is ever written.
-
-## Sources
-
-Intervals, prices and procedures come from the
-[Kymco Agility 50 4T Marrakech wiki](https://achma-learning.github.io/moto/)
-([repo](https://github.com/achma-learning/moto)). Factory figures come from the official
-Driver's Manual (KN10EM, p.39–40) and the KN10 workshop manual. Icons on the website are from
-[Lucide](https://lucide.dev) (ISC). This project is not affiliated with KYMCO.
+[MIT](LICENSE). Intervals, prices and procedures for the Agility 50 come from the
+[Kymco Agility 50 4T Marrakech wiki](https://achma-learning.github.io/kymco-agility-50-4T/)
+([repo](https://github.com/achma-learning/kymco-agility-50-4T)). Factory figures come from the
+official Driver's Manual (KN10EM, p.39–40) and the KN10 workshop manual. Not affiliated with
+KYMCO or any other manufacturer.

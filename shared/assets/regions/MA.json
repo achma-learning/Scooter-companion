@@ -1,0 +1,159 @@
+{
+  "id": "MA",
+  "name": {
+    "en": "Morocco",
+    "fr": "Maroc",
+    "ar": "المغرب"
+  },
+  "currency": "MAD",
+  "currencySymbol": "DH",
+  "brands": [
+    "Kymco",
+    "SYM",
+    "Yamaha",
+    "Honda",
+    "Peugeot",
+    "Piaggio",
+    "Vespa",
+    "Suzuki",
+    "Keeway",
+    "Benelli",
+    "Docker",
+    "Daelim",
+    "Aprilia",
+    "BMW",
+    "Niu",
+    "Yadea"
+  ],
+  "usedMarkets": [
+    {
+      "name": "Avito.ma",
+      "url": "https://www.avito.ma/",
+      "country": "MA"
+    },
+    {
+      "name": "Leboncoin.fr",
+      "url": "https://www.leboncoin.fr/",
+      "country": "FR"
+    }
+  ],
+  "fuelChips": {
+    "CC50": [
+      10,
+      15,
+      20,
+      30,
+      50
+    ],
+    "CC125": [
+      10,
+      15,
+      20,
+      30,
+      50
+    ],
+    "MID": [
+      20,
+      30,
+      50,
+      100
+    ],
+    "MAXI": [
+      50,
+      100,
+      150,
+      200
+    ]
+  },
+  "insurance": {
+    "mandatory": "RC",
+    "durations": [
+      1,
+      3,
+      6,
+      12
+    ],
+    "yearlyReference": {
+      "ELECTRIC": 600,
+      "CC50": 1500,
+      "CC125": 2000,
+      "MID": 2500,
+      "MAXI": 2500
+    },
+    "yearlySaving": 100,
+    "note": {
+      "en": "Approximate yearly prices for third-party (RC) cover; your insurer's price may differ. Above 125 cc the RC price is about the same for a 150 cc scooter as for a 1000 cc bike.",
+      "fr": "Prix annuels approximatifs pour la Responsabilité Civile (RC) ; le prix de votre assureur peut varier. Au-delà de 125 cc, la RC coûte à peu près autant pour un 150 cc que pour une moto de 1000 cc.",
+      "ar": "أسعار سنوية تقريبية لتأمين المسؤولية المدنية (RC)، وقد يختلف سعر شركة التأمين. فوق 125 سم³ يكلّف تأمين RC تقريبًا نفس الثمن لسكوتر 150 سم³ ولدراجة 1000 سم³."
+    }
+  },
+  "fines": {
+    "amounts": [
+      150,
+      400,
+      700
+    ],
+    "reasons": [
+      {
+        "id": "no-helmet",
+        "en": "No helmet",
+        "fr": "Sans casque",
+        "ar": "عدم ارتداء الخوذة"
+      },
+      {
+        "id": "passenger-no-helmet",
+        "en": "Passenger without helmet",
+        "fr": "Passager sans casque",
+        "ar": "راكب بدون خوذة"
+      },
+      {
+        "id": "no-insurance",
+        "en": "No insurance",
+        "fr": "Défaut d'assurance",
+        "ar": "انعدام التأمين"
+      },
+      {
+        "id": "no-papers",
+        "en": "Papers missing (registration, licence)",
+        "fr": "Papiers manquants (carte grise, permis)",
+        "ar": "عدم الإدلاء بالوثائق (البطاقة الرمادية، رخصة السياقة)"
+      },
+      {
+        "id": "red-light",
+        "en": "Red light",
+        "fr": "Feu rouge grillé",
+        "ar": "تجاوز الضوء الأحمر"
+      },
+      {
+        "id": "phone",
+        "en": "Phone while riding",
+        "fr": "Téléphone en conduisant",
+        "ar": "استعمال الهاتف أثناء السياقة"
+      },
+      {
+        "id": "speeding",
+        "en": "Speeding",
+        "fr": "Excès de vitesse",
+        "ar": "تجاوز السرعة"
+      },
+      {
+        "id": "wrong-way",
+        "en": "Wrong way",
+        "fr": "Sens interdit",
+        "ar": "السير في الاتجاه الممنوع"
+      },
+      {
+        "id": "parking",
+        "en": "Parking",
+        "fr": "Stationnement",
+        "ar": "الوقوف الممنوع"
+      },
+      {
+        "id": "lights",
+        "en": "Lights or plate",
+        "fr": "Feux ou plaque",
+        "ar": "الأضواء أو لوحة الترقيم"
+      }
+    ]
+  }
+}

@@ -55,7 +55,7 @@ def parse(html: str) -> dict:
 
 def main() -> None:
     out = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "fuel-price.json")
-    req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": "agility-companion-fuel-bot (weekly; github.com/achma-learning/kymco-agility-moto)"})
+    req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": "scooter-companion-fuel-bot (weekly; github.com/achma-learning/scooter-companion)"})
     with urllib.request.urlopen(req, timeout=30) as res:
         html = res.read().decode("utf-8", "replace")
     data = parse(html)

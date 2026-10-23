@@ -1,0 +1,52 @@
+{
+  "format": "scooter-companion",
+  "version": 2,
+  "exportedAt": "2026-10-23T12:00:00Z",
+  "bike": {
+    "nickname": "Bleu",
+    "plate": "54321-B-40",
+    "vin": "LXYJCBL01P0000001",
+    "engineNo": "JF81E-0001",
+    "color": "Blue",
+    "purchaseDate": "2026-03-01",
+    "purchaseKm": 8200,
+    "dealer": "Private seller, Marrakech",
+    "warrantyMonths": 0,
+    "brand": "Honda",
+    "model": "PCX 125",
+    "engineCc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID",
+    "modelYear": 2022,
+    "boughtUsed": true,
+    "purchasePrice": 21000,
+    "newPrice": 32000,
+    "firstRegistration": "2022-05-12",
+    "previousOwners": 1,
+    "monthlyBudget": 600,
+    "region": "MA",
+    "photoJpeg": ""
+  },
+  "odometer": [{ "date": "2026-10-20", "km": 11950 }],
+  "services": [
+    { "date": "2026-09-14", "km": 11000, "tasks": ["engine-oil"], "milestone": null, "shop": "Garage Atlas", "cost": 230, "stamped": false, "notes": "", "partsCost": 150, "laborCost": 80, "product": "Motul Scooter Power 10W-30", "title": "" },
+    { "date": "2026-07-02", "km": 9800, "tasks": [], "milestone": null, "shop": "", "cost": 1134, "stamped": false, "notes": "front + rear", "partsCost": 1134, "laborCost": null, "product": "Michelin City Grip 2", "title": "New tyres" }
+  ],
+  "fuel": [
+    { "date": "2026-10-01", "km": 11700, "liters": 5.6, "cost": 80, "full": true },
+    { "date": "2026-10-12", "km": 11920, "liters": 2.1, "cost": 30, "full": false }
+  ],
+  "documents": [
+    { "type": "registration", "title": "Carte grise", "number": "CG-778812", "expiry": null, "notes": "" }
+  ],
+  "preRide": { "last": "2026-10-20" },
+  "insurance": [
+    { "start": "2026-03-01", "months": 12, "totalPaid": 2000, "insurer": "Wafa Assurance", "policyNumber": "RC-2026-0042", "notes": "RC only" }
+  ],
+  "expenses": [
+    { "date": "2026-03-02", "category": "GEAR", "title": "Helmet ECE 22.06", "amount": 650, "km": null, "quantity": null, "notes": "" },
+    { "date": "2026-03-10", "category": "ACCESSORY", "title": "Top case 33 L", "amount": 450, "km": 8300, "quantity": null, "notes": "" },
+    { "date": "2026-08-18", "category": "FINE", "title": "Passenger without helmet", "amount": 150, "km": null, "quantity": null, "notes": "" }
+  ]
+}

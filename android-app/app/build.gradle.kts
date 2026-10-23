@@ -3,37 +3,28 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.kymcoagility50"
+    namespace = "io.github.achmalearning.scootercompanion"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.kymcoagility50"
+        applicationId = "io.github.achmalearning.scootercompanion"
         minSdk = 24
         targetSdk = 35
         // CI passes the run number so every GitHub Release carries an upgradable APK.
-        versionCode = (System.getenv("APP_VERSION_CODE") ?: "2").toInt()
-        versionName = System.getenv("APP_VERSION_NAME") ?: "2.0"
+        versionCode = (System.getenv("APP_VERSION_CODE") ?: "1").toInt()
+        versionName = System.getenv("APP_VERSION_NAME") ?: "3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // Release signing. With CI secrets (see README "Releases") the APK is signed with your
-    // private key. Otherwise it uses the committed *sideload* key below, so every GitHub
-    // Release is signed identically and installs as an update over the previous one (a
-    // per-runner debug key would force an uninstall — and wipe the garage — each release).
-    // The sideload key is public by design: fine for sideloading, not for the Play Store.
+    // Release signing uses the owner's private key, passed by CI from repository secrets (see
+    // README "Releases"). Every release must be signed with that same key, or Android refuses
+    // to install it as an update. Without the key, assembleRelease gives an unsigned APK.
     val releaseKeystore = System.getenv("RELEASE_KEYSTORE_PATH")?.let { file(it) }?.takeIf { it.exists() }
     signingConfigs {
-        create("sideload") {
-            storeFile = file("signing/sideload.keystore")
-            storePassword = "agility-sideload"
-            keyAlias = "sideload"
-            keyPassword = "agility-sideload"
-        }
         if (releaseKeystore != null) {
             create("release") {
                 storeFile = releaseKeystore
@@ -46,11 +37,11 @@ android {
 
     buildTypes {
         release {
-            // R8 stays off: Room, kotlinx-serialization and Firebase reflection make a
+            // R8 stays off: Room and kotlinx-serialization reflection make a
             // shrunk build risky to ship untested, and the APK is dominated by the PDFs anyway.
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName(if (releaseKeystore != null) "release" else "sideload")
+            if (releaseKeystore != null) signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false
@@ -62,7 +53,12 @@ android {
     // ships exactly the same data; they're bundled here as flat assets.
     sourceSets {
         getByName("main") {
-            assets.srcDirs("src/main/assets", "../../shared/docs", "../../shared/content")
+            assets.srcDirs("src/main/assets", "../../shared/docs", "../../shared/content", "../../shared/assets")
+        }
+        // MigrationTestHelper reads the exported schemas as assets. Robolectric only sees the
+        // merged app assets, so they ride in debug builds (a few KB), never in release.
+        getByName("debug") {
+            assets.srcDirs("$projectDir/schemas")
         }
     }
 
@@ -120,6 +116,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
     implementation("androidx.activity:activity-compose:1.9.1")
+    // Per-app language (French / English / Arabic) on every Android version
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -140,30 +138,18 @@ dependencies {
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
-    // .await() on Task<T> (Firebase Auth / Firestore), used only from Sync-Mode-only code
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
 
     // JSON
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-    // ML Kit on-device text recognition (bundled model, offline after install)
-    implementation("com.google.mlkit:text-recognition:16.0.0")
-
-    // DataStore for lightweight settings (also backs PrivacyManager's mode flag)
+    // DataStore for lightweight settings and the first-launch flag
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-
-    // Sync Mode only (Firebase Auth + Firestore). Every call site is gated by
-    // PrivacyManager.isPrivate() / NetworkGuard before any of this is touched, and
-    // FirebaseApp.initializeApp() itself is never called while Private Mode is on.
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.13")
     testImplementation("androidx.test:core-ktx:1.6.1")
+    testImplementation("androidx.room:room-testing:2.6.1")
     testImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     testImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
