@@ -86,7 +86,10 @@ fun MoreScreen(nav: MoreNav) {
         if (agility) item { NavRow(Icons.Filled.Verified, stringResource(R.string.more_passport), stringResource(R.string.more_passport_sub), onClick = nav.passport) }
         item { NavRow(Icons.Filled.Badge, stringResource(R.string.more_wallet), stringResource(R.string.more_wallet_sub), onClick = nav.wallet) }
         item { SectionTitle(stringResource(R.string.more_help)) }
-        item { NavRow(Icons.Filled.MenuBook, stringResource(R.string.nav_guide), stringResource(R.string.more_guide_sub), onClick = nav.guide) }
+        item {
+            if (agility) NavRow(Icons.Filled.MenuBook, stringResource(R.string.nav_guide), stringResource(R.string.more_guide_sub), onClick = nav.guide)
+            else NavRow(Icons.Filled.MenuBook, stringResource(R.string.check_title), stringResource(R.string.check_every_ride) + " · " + stringResource(R.string.check_weekly), onClick = nav.guide)
+        }
         item { NavRow(Icons.Filled.Sos, stringResource(R.string.sos_title), stringResource(R.string.more_sos_sub), tint = LocalStatusColors.current.due, onClick = nav.sos) }
         if (agility) item { NavRow(Icons.Filled.Public, stringResource(R.string.more_wiki), vm.content.bike.wiki) { context.openUrl(vm.content.bike.wiki) } }
         item { SectionTitle(stringResource(R.string.more_app)) }

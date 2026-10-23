@@ -1,5 +1,7 @@
 package io.github.achmalearning.scootercompanion.ui.screens.garage
 
+import io.github.achmalearning.scootercompanion.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -189,22 +191,22 @@ fun WalletScreen(onBack: () -> Unit) {
     val colors = LocalStatusColors.current
 
     Scaffold(
-        topBar = { BackTopBar("Documents wallet", onBack) },
+        topBar = { BackTopBar(stringResource(R.string.more_wallet), onBack) },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { editing = DocumentEntity(type = "insurance", title = content.documentType("insurance").label) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Add document") }
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(stringResource(R.string.wal_add)) }
             )
         }
     ) { padding ->
         LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
             item {
                 Callout(
-                    "Keep these under the seat",
-                    "Insurance certificate + carte grise must be on the bike. Riding with an expired licence or no certificate voids your insurance cover."
+                    stringResource(R.string.wal_keep_title),
+                    stringResource(R.string.wal_keep_text)
                 )
             }
-            if (s.documents.isEmpty()) item { EmptyState(Icons.Filled.Badge, "No documents yet", "Add your insurance, carte grise and licence to get expiry reminders.") }
+            if (s.documents.isEmpty()) item { EmptyState(Icons.Filled.Badge, stringResource(R.string.wal_empty_title), stringResource(R.string.wal_empty_text)) }
             items(s.documents, key = { it.id }) { d ->
                 val type = content.documentType(d.type)
                 val days = d.expiry?.let { Dates.daysBetween(s.today, it) }
@@ -220,9 +222,9 @@ fun WalletScreen(onBack: () -> Unit) {
                         Column(Modifier.weight(1f).padding(start = 12.dp)) {
                             Text(d.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                             Text(listOf(type.fr, d.number).filter { it.isNotBlank() }.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            d.expiry?.let { Text("Expires ${Dates.display(it)}", style = MaterialTheme.typography.bodySmall) }
+                            d.expiry?.let { Text(stringResource(R.string.wal_expires, Dates.display(it)), style = MaterialTheme.typography.bodySmall) }
                         }
-                        if (days != null) StatusPill(if (days < 0) "Expired" else "$days d", color)
+                        if (days != null) StatusPill(if (days < 0) stringResource(R.string.wal_expired) else stringResource(R.string.wal_days, days), color)
                     }
                 }
             }
@@ -237,7 +239,7 @@ fun WalletScreen(onBack: () -> Unit) {
         var notes by remember(d) { mutableStateOf(d.notes) }
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(if (d.id == 0L) "Add document" else "Edit document") },
+            title = { Text(stringResource(if (d.id == 0L) R.string.wal_add else R.string.wal_edit)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -249,22 +251,22 @@ fun WalletScreen(onBack: () -> Unit) {
                         }
                     }
                     content.documentType(type).hint.takeIf { it.isNotBlank() }?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
-                    OutlinedTextField(title, { title = it }, label = { Text("Name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                    OutlinedTextField(number, { number = it }, label = { Text("Number / policy") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                    DateField(expiry, { expiry = it }, "Expiry date", clearable = true)
-                    OutlinedTextField(notes, { notes = it }, label = { Text("Notes") }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(title, { title = it }, label = { Text(stringResource(R.string.wal_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(number, { number = it }, label = { Text(stringResource(R.string.wal_number)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    DateField(expiry, { expiry = it }, stringResource(R.string.wal_expiry), clearable = true)
+                    OutlinedTextField(notes, { notes = it }, label = { Text(stringResource(R.string.service_notes)) }, modifier = Modifier.fillMaxWidth())
                 }
             },
             confirmButton = {
                 Button(enabled = title.isNotBlank(), onClick = {
                     vm.saveDocument(d.copy(type = type, title = title.trim(), number = number.trim(), expiry = expiry, notes = notes.trim()))
                     editing = null
-                }) { Text("Save") }
+                }) { Text(stringResource(R.string.action_save)) }
             },
             dismissButton = {
                 Row {
-                    if (d.id != 0L) IconButton(onClick = { vm.deleteDocument(d); editing = null }) { Icon(Icons.Filled.Delete, "Delete", tint = colors.due) }
-                    TextButton(onClick = { editing = null }) { Text("Cancel") }
+                    if (d.id != 0L) IconButton(onClick = { vm.deleteDocument(d); editing = null }) { Icon(Icons.Filled.Delete, stringResource(R.string.action_delete), tint = colors.due) }
+                    TextButton(onClick = { editing = null }) { Text(stringResource(R.string.action_cancel)) }
                 }
             }
         )

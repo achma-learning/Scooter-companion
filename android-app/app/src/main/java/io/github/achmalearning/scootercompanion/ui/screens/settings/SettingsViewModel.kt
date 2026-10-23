@@ -10,7 +10,13 @@ import io.github.achmalearning.scootercompanion.data.update.ApkUpdater
 import io.github.achmalearning.scootercompanion.data.update.AppUpdate
 import io.github.achmalearning.scootercompanion.data.update.UpdateChecker
 import io.github.achmalearning.scootercompanion.work.ReminderWorker
+import android.content.Intent
 import android.net.Uri
+import androidx.core.content.FileProvider
+import io.github.achmalearning.scootercompanion.R
+import io.github.achmalearning.scootercompanion.data.export.TextReport
+import io.github.achmalearning.scootercompanion.domain.Dates
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -86,26 +92,59 @@ class SettingsViewModel(
         }
     }
 
-    fun exportTo(uri: Uri) {
+    /** Shows [text] as the one-line result under the save-file buttons. */
+    private fun done(text: String) { _message.value = text }
+
+    fun exportTo(uri: Uri) = write(uri) { container.garageRepository.exportJson() }
+
+    fun exportReportTo(uri: Uri, hideIds: Boolean) = write(uri) { report(hideIds) }
+
+    private suspend fun report(hideIds: Boolean) =
+        TextReport.build(container.garageRepository.current(), container.contentRepository.content, hideIds)
+
+    private fun write(uri: Uri, text: suspend () -> String) {
         viewModelScope.launch {
-            _message.value = runCatching {
-                val json = container.garageRepository.exportJson()
+            done(runCatching {
+                val body = text()
                 withContext(Dispatchers.IO) {
-                    context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(json.toByteArray()) }
+                    context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(body.toByteArray()) }
                 }
-                "Save file written. Import it in Scooter Companion on any phone."
-            }.getOrElse { "Export failed: ${it.message}" }
+                context.getString(R.string.set_saved)
+            }.getOrElse { context.getString(R.string.set_failed, it.message ?: it.javaClass.simpleName) })
+        }
+    }
+
+    /**
+     * Opens Android's share sheet (WhatsApp, Quick Share, Bluetooth, e-mail…) with the save
+     * file or the AI report, written to the app's cache first.
+     */
+    fun share(saveFile: Boolean, hideIds: Boolean = true) {
+        viewModelScope.launch {
+            runCatching {
+                val name = if (saveFile) "scooter-companion-${Dates.toIso(Dates.today())}.json" else "scooter-report-${Dates.toIso(Dates.today())}.txt"
+                val body = if (saveFile) container.garageRepository.exportJson() else report(hideIds)
+                val file = withContext(Dispatchers.IO) {
+                    File(context.cacheDir, "exports").apply { mkdirs() }.resolve(name).apply { writeText(body) }
+                }
+                val uri = FileProvider.getUriForFile(context, "${context.packageName}.updates", file)
+                val send = Intent(Intent.ACTION_SEND)
+                    .setType(if (saveFile) "application/json" else "text/plain")
+                    .putExtra(Intent.EXTRA_STREAM, uri)
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                if (!saveFile) send.putExtra(Intent.EXTRA_TEXT, body)
+                context.startActivity(Intent.createChooser(send, name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            }.onFailure { done(context.getString(R.string.set_failed, it.message ?: it.javaClass.simpleName)) }
         }
     }
 
     fun importFrom(uri: Uri) {
         viewModelScope.launch {
-            _message.value = runCatching {
+            done(runCatching {
                 val text = withContext(Dispatchers.IO) {
                     context.contentResolver.openInputStream(uri)!!.use { it.readBytes().decodeToString() }
                 }
-                container.garageRepository.importJson(text, container.maintenanceRepository)
-            }.getOrElse { "Import failed: ${it.message}" }
+                context.getString(R.string.set_imported, container.garageRepository.importJson(text, container.maintenanceRepository))
+            }.getOrElse { context.getString(R.string.set_failed, it.message ?: it.javaClass.simpleName) })
         }
     }
 

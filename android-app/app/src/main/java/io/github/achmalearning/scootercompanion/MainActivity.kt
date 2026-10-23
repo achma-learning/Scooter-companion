@@ -228,7 +228,7 @@ private fun MainNav() {
                         expenses = { open(Routes.Expenses.route) },
                         recommendations = { open(Routes.Recommendations.route) },
                         stats = { nav.switchTab(Routes.Stats.route) },
-                        guide = { open(Routes.Guide.route) }
+                        guide = { open(if (agility) Routes.Guide.route else Routes.Checklist.route) }
                     )
                 )
             }

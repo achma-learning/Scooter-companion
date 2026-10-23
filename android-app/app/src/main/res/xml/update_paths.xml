@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Only the downloaded update APK is shared, and only with the system installer
-     (data/update/ApkUpdater.kt). The folder name must match ApkUpdater.UPDATE_DIR. -->
+<!-- Files this app hands to other apps, through the FileProvider "${applicationId}.updates":
+     - the downloaded update APK, for the system installer (data/update/ApkUpdater.kt; the
+       folder must match ApkUpdater.UPDATE_DIR);
+     - a save file or AI report the owner chose to share (SettingsViewModel.share). -->
 <paths>
     <external-files-path name="updates" path="Download/updates/" />
+    <cache-path name="exports" path="exports/" />
 </paths>
