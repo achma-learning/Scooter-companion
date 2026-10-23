@@ -42,6 +42,7 @@ import io.github.achmalearning.scootercompanion.domain.ServicePlanner
 import io.github.achmalearning.scootercompanion.domain.ServiceRecord
 import io.github.achmalearning.scootercompanion.domain.Spend
 import io.github.achmalearning.scootercompanion.domain.SpendCategory
+import io.github.achmalearning.scootercompanion.domain.SpendSource
 import io.github.achmalearning.scootercompanion.domain.TaskStatus
 import io.github.achmalearning.scootercompanion.domain.VehicleSpec
 import kotlinx.coroutines.flow.Flow
@@ -302,12 +303,16 @@ fun spendsOf(
     profile.purchasePrice?.takeIf { it > 0 }?.let { price ->
         // A price without a date counts from the first thing logged, so totals stay right.
         val day = profile.purchaseDate ?: firstDay ?: Dates.today()
-        add(Spend(day, SpendCategory.PURCHASE, price, listOf(profile.brand, profile.model).filter { it.isNotBlank() }.joinToString(" ")))
+        add(Spend(day, SpendCategory.PURCHASE, price, listOf(profile.brand, profile.model).filter { it.isNotBlank() }.joinToString(" "), SpendSource.PURCHASE))
     }
-    fuel.forEach { f -> f.cost?.takeIf { it > 0 }?.let { add(Spend(f.date, SpendCategory.FUEL, it)) } }
+    fuel.forEach { f ->
+        f.cost?.takeIf { it > 0 }?.let { add(Spend(f.date, SpendCategory.FUEL, it, "%.2f L".format(java.util.Locale.US, f.liters), SpendSource.FUEL, f.id)) }
+    }
     entries.forEach { e ->
-        e.cost?.takeIf { it > 0 }?.let { add(Spend(Dates.startOfDay(e.date), SpendCategory.MAINTENANCE, it, e.title.ifBlank { e.product })) }
+        e.cost?.takeIf { it > 0 }?.let { add(Spend(Dates.startOfDay(e.date), SpendCategory.MAINTENANCE, it, e.title.ifBlank { e.product }, SpendSource.SERVICE, e.id)) }
     }
-    insurance.forEach { p -> if (p.totalPaid > 0) add(Spend(p.startDate, SpendCategory.INSURANCE, p.totalPaid, p.insurer)) }
-    expenses.forEach { x -> if (x.amount > 0) add(Spend(x.date, ExpenseLedger.categoryOf(x.category), x.amount, x.title)) }
+    insurance.forEach { p -> if (p.totalPaid > 0) add(Spend(p.startDate, SpendCategory.INSURANCE, p.totalPaid, p.insurer, SpendSource.INSURANCE, p.id)) }
+    expenses.forEach { x ->
+        if (x.amount > 0) add(Spend(x.date, ExpenseLedger.categoryOf(x.category), x.amount, x.title, SpendSource.EXPENSE, x.id))
+    }
 }.sortedBy { it.date }

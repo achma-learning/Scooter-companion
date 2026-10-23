@@ -59,6 +59,11 @@ import io.github.achmalearning.scootercompanion.data.region.pick
 import io.github.achmalearning.scootercompanion.domain.CoverageState
 import io.github.achmalearning.scootercompanion.domain.Dates
 import io.github.achmalearning.scootercompanion.domain.EngineClass
+import io.github.achmalearning.scootercompanion.domain.ChartGroup
+import io.github.achmalearning.scootercompanion.domain.Insurance
+import io.github.achmalearning.scootercompanion.ui.charts.MonthBarChart
+import io.github.achmalearning.scootercompanion.ui.charts.chartColors
+import io.github.achmalearning.scootercompanion.ui.components.StatTile
 import io.github.achmalearning.scootercompanion.domain.ExpenseLedger
 import io.github.achmalearning.scootercompanion.domain.InsurancePolicy
 import io.github.achmalearning.scootercompanion.domain.SpendCategory
@@ -188,6 +193,7 @@ fun InsuranceScreen(onBack: () -> Unit) {
                     }
                 }
             }
+            if (s.insurance.isNotEmpty()) item { InsuranceMonthly(s.insurance, s.today, reference) }
             if (s.insurance.isNotEmpty()) item { SectionTitle(stringResource(R.string.ins_history)) }
             items(s.insurance, key = { it.id }) { p ->
                 val policy = InsurancePolicy(p.startDate, p.months, p.totalPaid)
@@ -213,6 +219,59 @@ fun InsuranceScreen(onBack: () -> Unit) {
 
     editing?.let { p ->
         InsuranceDialog(p, reference, onSave = { vm.saveInsurance(it); editing = null }, onDelete = { vm.deleteInsurance(p); editing = null }, onDismiss = { editing = null })
+    }
+}
+
+/** Insurance as a monthly cost: what cover costs now, on average, per year, and per month as bars. */
+@Composable
+private fun InsuranceMonthly(contracts: List<InsurancePolicyEntity>, today: Long, yearlyReference: Double?) {
+    val policies = contracts.map { InsurancePolicy(it.startDate, it.months, it.totalPaid) }
+    val nowKey = Dates.monthKey(today)
+    val data = remember(policies, nowKey) { Insurance.months(policies, nowKey - 11, nowKey) }
+    val now = data.perMonth.last().second
+    val monthShort = remember { utc("MMM") }
+    val monthLong = remember { utc("MMMM yyyy") }
+    var selected by remember { mutableStateOf<Int?>(null) }
+    val color = chartColors().of(ChartGroup.INSURANCE)
+
+    Panel(modifier = Modifier.padding(vertical = 6.dp)) {
+        Column(Modifier.padding(14.dp)) {
+            Text(stringResource(R.string.ins_monthly), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            VSpace(8.dp)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                StatTile(formatMoney(now), stringResource(R.string.ins_now_per_month), Modifier.weight(1f), accent = color)
+                StatTile(formatMoney(now * 12 / 365), stringResource(R.string.ins_now_per_day), Modifier.weight(1f))
+                StatTile(data.averagePerMonth?.let { formatMoney(it) } ?: "–", stringResource(R.string.ins_avg_month), Modifier.weight(1f))
+            }
+            VSpace(14.dp)
+            Text(stringResource(R.string.ins_chart_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            MonthBarChart(
+                labels = data.perMonth.map { monthShort.format(Dates.monthStart(it.first)) },
+                values = data.perMonth.map { it.second },
+                color = color,
+                reference = yearlyReference?.let { it / 12 },
+                referenceLabel = yearlyReference?.let { stringResource(R.string.ins_typical_month, formatMoney(it / 12)) }.orEmpty(),
+                selected = selected,
+                onSelect = { selected = it }
+            )
+            Text(
+                selected?.let { i ->
+                    val (key, value) = data.perMonth[i]
+                    stringResource(R.string.ins_bar_detail, monthLong.format(Dates.monthStart(key)), formatMoney(value))
+                } ?: stringResource(R.string.ins_chart_hint),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            if (data.paidPerYear.isNotEmpty()) {
+                VSpace(12.dp)
+                Text(stringResource(R.string.ins_years), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                data.paidPerYear.entries.reversed().forEach { (year, paid) ->
+                    Row(Modifier.fillMaxWidth().padding(top = 4.dp)) {
+                        Text(stringResource(R.string.ins_paid_year, year), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                        Text(formatMoney(paid), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -288,60 +347,6 @@ private fun InsuranceDialog(
 }
 
 // ------------------------------------------------------------------------------ Expenses
-
-/** Accessories, gear, fines, parking, washing, papers, charging, anything else. */
-@Composable
-fun ExpensesScreen(onBack: () -> Unit, initialCategory: SpendCategory? = null) {
-    val context = LocalContext.current
-    val vm = appViewModel { GarageViewModel(context, it) }
-    val s = vm.state.collectAsStateWithLifecycle().value ?: return
-    var filter by rememberSaveable { mutableStateOf<String?>(null) }
-    var editing by remember { mutableStateOf<ExpenseEntity?>(null) }
-    val shown = s.expenses.filter { filter == null || ExpenseLedger.categoryOf(it.category).name == filter }
-
-    Scaffold(
-        topBar = { BackTopBar(stringResource(R.string.exp_title), onBack) },
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = { editing = newExpense(filter?.let { ExpenseLedger.categoryOf(it) } ?: initialCategory ?: SpendCategory.ACCESSORY, s.currentKm) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(stringResource(R.string.exp_add)) }
-            )
-        }
-    ) { padding ->
-        LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
-            item {
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 4.dp)) {
-                    item { FilterChip(selected = filter == null, onClick = { filter = null }, label = { Text(stringResource(R.string.exp_all)) }) }
-                    items(SpendCategory.manual) { c ->
-                        FilterChip(selected = filter == c.name, onClick = { filter = c.name }, label = { Text(spendCategoryLabel(c)) })
-                    }
-                }
-                if (filter != null && shown.isNotEmpty()) Text(
-                    stringResource(R.string.exp_total_category, formatMoney(shown.sumOf { it.amount })),
-                    style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-            if (shown.isEmpty()) item { EmptyState(Icons.Filled.Receipt, stringResource(R.string.exp_empty_title), stringResource(R.string.exp_empty_text)) }
-            items(shown, key = { it.id }) { x ->
-                val c = ExpenseLedger.categoryOf(x.category)
-                Panel(onClick = { editing = x }, modifier = Modifier.padding(vertical = 4.dp)) {
-                    Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                        IconBadge(spendCategoryIcon(c), if (c == SpendCategory.FINE) LocalStatusColors.current.due else MaterialTheme.colorScheme.primary)
-                        Column(Modifier.weight(1f).padding(start = 12.dp)) {
-                            Text(x.title.ifBlank { spendCategoryLabel(c) }, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                            Text("${spendCategoryLabel(c)} · ${Dates.display(x.date)}", style = MaterialTheme.typography.bodySmall)
-                        }
-                        Text(formatMoney(x.amount), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-        }
-    }
-
-    editing?.let { x ->
-        ExpenseDialog(x, s.region, onSave = { vm.saveExpense(it); editing = null }, onDelete = { vm.deleteExpense(x); editing = null }, onDismiss = { editing = null })
-    }
-}
 
 fun newExpense(category: SpendCategory, km: Int?, title: String = "") =
     ExpenseEntity(date = Dates.today(), category = category.name, title = title, amount = 0.0, km = km)

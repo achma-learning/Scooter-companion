@@ -62,7 +62,8 @@ data class MoreNav(
     val expenses: () -> Unit = {},
     val recommendations: () -> Unit = {},
     val stats: () -> Unit = {},
-    val guide: () -> Unit = {}
+    val guide: () -> Unit = {},
+    val manual: () -> Unit = {}
 )
 
 @Composable
@@ -79,10 +80,11 @@ fun MoreScreen(nav: MoreNav) {
         item { NavRow(Icons.Filled.BarChart, stringResource(R.string.nav_stats), stringResource(R.string.stats_sub), onClick = nav.stats) }
         if (s?.spec?.isElectric != true) item { NavRow(Icons.Filled.LocalGasStation, stringResource(R.string.fuel_title), stringResource(R.string.more_fuel_sub), onClick = nav.fuel) }
         item { NavRow(Icons.Filled.Shield, stringResource(R.string.ins_title), stringResource(R.string.more_insurance_sub), onClick = nav.insurance) }
-        item { NavRow(Icons.Filled.Receipt, stringResource(R.string.exp_title), stringResource(R.string.more_expenses_sub), onClick = nav.expenses) }
+        item { NavRow(Icons.Filled.Receipt, stringResource(R.string.money_title), stringResource(R.string.more_expenses_sub), onClick = nav.expenses) }
         item { NavRow(Icons.Filled.ThumbUp, stringResource(R.string.rec_title), stringResource(R.string.more_rec_sub), onClick = nav.recommendations) }
         item { SectionTitle(stringResource(R.string.more_ownership)) }
         item { NavRow(Icons.Filled.Edit, stringResource(R.string.my_scooter), stringResource(R.string.more_profile_sub), onClick = nav.profile) }
+        if (agility) item { NavRow(Icons.Filled.MenuBook, stringResource(R.string.nav_manual), stringResource(R.string.more_manual_sub), onClick = nav.manual) }
         if (agility) item { NavRow(Icons.Filled.Verified, stringResource(R.string.more_passport), stringResource(R.string.more_passport_sub), onClick = nav.passport) }
         item { NavRow(Icons.Filled.Badge, stringResource(R.string.more_wallet), stringResource(R.string.more_wallet_sub), onClick = nav.wallet) }
         item { SectionTitle(stringResource(R.string.more_help)) }

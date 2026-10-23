@@ -45,7 +45,8 @@ import io.github.achmalearning.scootercompanion.ui.screens.more.MoreNav
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.SosScreen
 import io.github.achmalearning.scootercompanion.ui.screens.onboarding.OnboardingScreen
-import io.github.achmalearning.scootercompanion.ui.screens.money.ExpensesScreen
+import io.github.achmalearning.scootercompanion.ui.screens.money.MoneyNav
+import io.github.achmalearning.scootercompanion.ui.screens.money.MoneyTab
 import io.github.achmalearning.scootercompanion.ui.screens.money.InsuranceScreen
 import io.github.achmalearning.scootercompanion.ui.screens.money.RecommendationsScreen
 import io.github.achmalearning.scootercompanion.ui.screens.stats.StatsScreen
@@ -137,7 +138,7 @@ class ScreensSmokeTest {
         "24-settings" to { SettingsScreen(noop) },
         "25-onboarding" to { OnboardingScreen(onDone = noop) },
         "26-insurance" to { InsuranceScreen(noop) },
-        "27-expenses" to { ExpensesScreen(noop) },
+        "27-expenses" to { MoneyTab(MoneyNav({}, noop, noop, noop)) },
         "28-recommendations" to { RecommendationsScreen(noop) {} },
         "29-stats" to { StatsScreen() }
     )

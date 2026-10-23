@@ -60,8 +60,8 @@ _Last synced: 2026-10-23 @ Phases 3–5 on `claude/happy-sagan-x0wx57` (achma-le
 
 ## 4. Code Map (The Important Files Only)
 **Android (`android-app/app/src/main/java/io/github/achmalearning/scootercompanion/`)**
-- `MainActivity.kt` (an `AppCompatActivity`): NavHost, bottom bar (Garage / Service / Manual
-  / Guide / More), onboarding gate on `PrivacyManager.onboarded`.
+- `MainActivity.kt` (an `AppCompatActivity`): NavHost, bottom bar (Home / Expenses / Service /
+  Stats / More; Manual and Guide open from More), onboarding gate on `PrivacyManager.onboarded`.
 - `AppContainer.kt`: hand-rolled DI singleton (repositories, `regionRepository`).
 - `domain/` (pure Kotlin, unit-tested):
   - `ExpenseLedger.kt`: `SpendCategory`, `Spend`, `LedgerStats` (total, running, this month,
@@ -89,7 +89,11 @@ _Last synced: 2026-10-23 @ Phases 3–5 on `claude/happy-sagan-x0wx57` (achma-le
 - `ui/common/Language.kt`: `AppLanguage` (fr, en, ar-MA) via `AppCompatDelegate`.
 - `ui/screens/garage/FuelScreens.kt`: fuel log + `FuelDialog` (chips from the region pack).
 - `ui/screens/garage/OwnerScreens.kt`: passport (Agility only) and documents wallet.
-- `ui/screens/money/MoneyScreens.kt`: insurance, expenses (fines), recommendations.
+- `ui/screens/money/MoneyTab.kt`: the Expenses tab, every `Spend` (fuel, service, insurance,
+  expenses, purchase) by month with a 12-month chart; tapping a row opens it where it was
+  logged (`Spend.source` / `refId`).
+- `ui/screens/money/MoneyScreens.kt`: insurance (with the monthly cost chart from
+  `Insurance.months`), expense dialog (fines), recommendations.
 - `ui/screens/stats/StatsScreen.kt` + `ui/charts/Charts.kt`: the Stats tab and the chart kit.
 - `domain/MaintenancePlan.kt`: Agility schedule or generic tasks/checklist per profile.
 - `domain/Stats.kt`: chart data per range and `Insights`.
@@ -201,6 +205,9 @@ Android tests → signed release or debug artifact → Release), `fuel-price.yml
     share sheet for the save file and the report (FileProvider `cache/exports`);
   - translated: onboarding, profile, fuel, service, insurance, expenses, stats, home, More,
     SOS, checklist, wallet, settings, notifications.
+- **Expense tracker PR:** Expenses tab in the bottom bar listing every payment from every
+  module; insurance as a monthly cost (now per month / per day, average, paid per year, bars
+  per month against the typical price); fuel spending per month on the fuel log.
 - **Still English only:** the Agility-only screens (passport, manual reader, guide hub and its
   content: troubleshooting, how-tos, specs, parts, seasons). They come from the Agility
   knowledge base; translating them means adding fields to `build_content.py`.

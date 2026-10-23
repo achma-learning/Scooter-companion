@@ -117,11 +117,17 @@ private val Density.BOTTOM_AXIS: Float get() = 22.dp.toPx()
 private val Density.TOP_PAD: Float get() = 24.dp.toPx()
 
 /** Text centred vertically on [y]; kept inside the canvas horizontally. */
-private fun DrawScope.label(tm: TextMeasurer, text: String, x: Float, y: Float, color: Color, fontSize: Float = 10f, bold: Boolean = false, alignEnd: Boolean = false, center: Boolean = false) {
+private fun DrawScope.label(tm: TextMeasurer, text: String, x: Float, y: Float, color: Color, fontSize: Float = 10f, bold: Boolean = false, alignEnd: Boolean = false, center: Boolean = false, halo: Color? = null) {
     val layout = tm.measure(text, TextStyle(color = color, fontSize = fontSize.sp, fontWeight = if (bold) FontWeight.SemiBold else FontWeight.Normal))
     val dx = when { alignEnd -> -layout.size.width.toFloat(); center -> -layout.size.width / 2f; else -> 0f }
     val left = (x + dx).coerceIn(0f, max(0f, size.width - layout.size.width))
-    drawText(layout, topLeft = Offset(left, y - layout.size.height / 2f))
+    val top = y - layout.size.height / 2f
+    // A label drawn over bars stays readable on a patch of the background.
+    halo?.let {
+        val pad = 3.dp.toPx()
+        drawRoundRect(it.copy(alpha = 0.9f), Offset(left - pad, top), Size(layout.size.width + 2 * pad, layout.size.height.toFloat()), CornerRadius(pad))
+    }
+    drawText(layout, topLeft = Offset(left, top))
 }
 
 /** Gridlines and y labels; returns the y of a value. */
@@ -156,7 +162,9 @@ fun StackedBarChart(
     targetLabel: String,
     selected: Int?,
     onSelect: (Int?) -> Unit,
-    height: Dp = 220.dp
+    height: Dp = 220.dp,
+    /** One colour for every bar (single-series charts); null = the group colours. */
+    singleColor: Color? = null
 ) = Ltr {
     val c = chartColors()
     val tm = rememberTextMeasurer()
@@ -192,7 +200,7 @@ fun StackedBarChart(
                     topLeftCornerRadius = if (top) CornerRadius(4.dp.toPx()) else CornerRadius.Zero,
                     topRightCornerRadius = if (top) CornerRadius(4.dp.toPx()) else CornerRadius.Zero
                 )
-                drawPath(Path().apply { addRoundRect(rect) }, c.of(group).copy(alpha = if (dim) 0.3f else 1f))
+                drawPath(Path().apply { addRoundRect(rect) }, (singleColor ?: c.of(group)).copy(alpha = if (dim) 0.3f else 1f))
                 acc += value
             }
             if (i % labelEvery == 0 || i == n - 1) label(tm, labels[i], x + barW / 2, size.height - BOTTOM_AXIS / 2, if (selected == i) c.ink else c.muted, center = true, bold = selected == i)
@@ -201,7 +209,7 @@ fun StackedBarChart(
         target?.takeIf { it > 0 }?.let { t ->
             val ty = y(t)
             drawLine(c.ink, Offset(LEFT_AXIS, ty), Offset(size.width, ty), strokeWidth = 1.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 8f)))
-            label(tm, targetLabel, size.width - 4f, ty - 12f, c.ink, alignEnd = true, bold = true)
+            label(tm, targetLabel, size.width - 4f, ty - 12f, c.ink, alignEnd = true, bold = true, halo = c.surface)
         }
     }
 }
@@ -319,3 +327,28 @@ fun CalendarHeatmap(
         }
     }
 }
+
+/**
+ * One value per month as bars, e.g. fuel spending or insurance cost per month, with an
+ * optional dashed reference line (a target, a typical price). Tap a bar to read it.
+ */
+@Composable
+fun MonthBarChart(
+    labels: List<String>,
+    values: List<Double>,
+    color: Color,
+    reference: Double? = null,
+    referenceLabel: String = "",
+    selected: Int?,
+    onSelect: (Int?) -> Unit,
+    height: Dp = 180.dp
+) = StackedBarChart(
+    labels = labels,
+    stacks = values.map { listOf(ChartGroup.OTHER to it) },
+    target = reference,
+    targetLabel = referenceLabel,
+    selected = selected,
+    onSelect = onSelect,
+    height = height,
+    singleColor = color
+)

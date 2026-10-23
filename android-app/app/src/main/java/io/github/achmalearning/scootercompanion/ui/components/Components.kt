@@ -44,6 +44,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -163,7 +164,14 @@ fun InfoRow(label: String, value: String) {
 fun StatTile(value: String, label: String, modifier: Modifier = Modifier, accent: Color = MaterialTheme.colorScheme.onSurface) {
     Panel(modifier) {
         Column(Modifier.padding(14.dp)) {
-            Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = accent, maxLines = 1)
+            // Shrinks a long amount (20 928 DH) until it fits the tile instead of cutting it.
+            var scale by remember(value) { mutableFloatStateOf(1f) }
+            val style = MaterialTheme.typography.titleLarge
+            Text(
+                value, style = style.copy(fontSize = style.fontSize * scale), fontWeight = FontWeight.Bold, color = accent,
+                maxLines = 1, softWrap = false,
+                onTextLayout = { if (it.hasVisualOverflow && scale > 0.6f) scale *= 0.9f }
+            )
             Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }

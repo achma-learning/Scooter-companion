@@ -28,8 +28,18 @@ enum class SpendCategory(
     }
 }
 
-/** One payment, whatever module it was logged in. */
-data class Spend(val date: Long, val category: SpendCategory, val amount: Double, val label: String = "")
+/** Which screen a payment was logged in, so the expense tracker can open it for editing. */
+enum class SpendSource { PURCHASE, FUEL, SERVICE, INSURANCE, EXPENSE }
+
+/** One payment, whatever module it was logged in. [refId] is its row id in that module. */
+data class Spend(
+    val date: Long,
+    val category: SpendCategory,
+    val amount: Double,
+    val label: String = "",
+    val source: SpendSource = SpendSource.EXPENSE,
+    val refId: Long = 0
+)
 
 data class MonthTotal(val key: Int, val total: Double, val byCategory: Map<SpendCategory, Double>)
 
