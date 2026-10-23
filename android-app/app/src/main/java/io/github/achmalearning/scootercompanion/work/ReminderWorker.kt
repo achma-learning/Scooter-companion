@@ -27,6 +27,7 @@ import io.github.achmalearning.scootercompanion.domain.Insurance
 import io.github.achmalearning.scootercompanion.domain.Spend
 import io.github.achmalearning.scootercompanion.ui.components.formatMoney
 import io.github.achmalearning.scootercompanion.ui.screens.money.spendCategoryRes
+import io.github.achmalearning.scootercompanion.widget.ScooterWidget
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -44,6 +45,8 @@ import java.util.concurrent.TimeUnit
 class ReminderWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
+        // Once a day the widget catches up with the date (days of cover left, the new month).
+        runCatching { ScooterWidget.update(applicationContext) }
         val container = AppContainer.getInstance(applicationContext)
         if (!container.settingsRepository.settings.first().reminders) return Result.success()
         val content = container.contentRepository.content

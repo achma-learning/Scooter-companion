@@ -1,3 +1,12 @@
 <resources>
     <color name="splash_background">#E30613</color>
+
+    <!-- Home-screen widget (widget/ScooterWidget.kt); dark values in values-night. -->
+    <color name="widget_surface">#FFFFFF</color>
+    <color name="widget_ink">#15171C</color>
+    <color name="widget_muted">#4A4F59</color>
+    <color name="widget_track">#EDEEF2</color>
+    <color name="widget_ok">#1F9D57</color>
+    <color name="widget_soon">#D98A00</color>
+    <color name="widget_due">#D62C36</color>
 </resources>

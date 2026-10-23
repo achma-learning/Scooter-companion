@@ -53,6 +53,19 @@
                 android:value="true" />
         </service>
 
+        <!-- Home-screen widget: this month vs target, insurance, next service (widget/ScooterWidget.kt). -->
+        <receiver
+            android:name=".widget.ScooterWidget"
+            android:exported="false"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_scooter_info" />
+        </receiver>
+
         <!-- Shares the downloaded update APK with the system installer (res/xml/update_paths.xml). -->
         <provider
             android:name="androidx.core.content.FileProvider"

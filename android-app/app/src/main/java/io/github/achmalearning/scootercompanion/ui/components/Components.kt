@@ -5,7 +5,10 @@ import io.github.achmalearning.scootercompanion.R
 import io.github.achmalearning.scootercompanion.data.content.Task
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
+import android.text.TextUtils
+import android.view.View
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -59,6 +62,8 @@ import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.PathParser
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -321,7 +326,7 @@ fun HSpace(w: Dp) = Spacer(Modifier.width(w))
 @Composable
 fun VSpace(h: Dp) = Spacer(Modifier.height(h))
 
-fun formatKm(km: Int): String = "%,d".format(java.util.Locale.US, km).replace(',', ' ') + " km"
+fun formatKm(km: Int): String = keepLtr("%,d".format(java.util.Locale.US, km).replace(',', ' ') + " km")
 
 /**
  * The currency symbol of the owner's region pack ("DH" for Morocco). GarageRepository sets it
@@ -334,8 +339,15 @@ object Money {
 /** "1 250 DH" above 100, "15.50 DH" below; Western digits whatever the language. */
 fun formatMoney(v: Double): String {
     val number = if (v >= 100 || v == Math.floor(v)) "%,.0f".format(java.util.Locale.US, v).replace(',', ' ') else "%.2f".format(java.util.Locale.US, v)
-    return if (Money.symbol.isBlank()) number else "$number ${Money.symbol}"
+    return keepLtr(if (Money.symbol.isBlank()) number else "$number ${Money.symbol}")
 }
+
+/**
+ * In Arabic, "400 DH" or "870 km" inside a sentence would show as "DH 400": a left-to-right
+ * mark keeps the number and its unit together, in that order.
+ */
+private fun keepLtr(text: String): String =
+    if (TextUtils.getLayoutDirectionFromLocale(java.util.Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL) "\u200E$text" else text
 
 fun Context.openUrl(url: String) = runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 
@@ -344,16 +356,22 @@ fun Context.dial(number: String) = runCatching { startActivity(Intent(Intent.ACT
 /** Human "due" line, e.g. "in 420 km · 3 weeks" or "1,200 km overdue". */
 @Composable
 fun dueText(kmLeft: Int?, daysLeft: Int?): String {
+    LocalConfiguration.current // re-read when the language changes
+    return dueText(LocalContext.current.resources, kmLeft, daysLeft)
+}
+
+/** [dueText] outside Compose (the home-screen widget). */
+fun dueText(res: Resources, kmLeft: Int?, daysLeft: Int?): String {
     val parts = mutableListOf<String>()
-    if (kmLeft != null) parts += if (kmLeft <= 0) stringResource(R.string.due_km_overdue, formatKm(-kmLeft)) else stringResource(R.string.due_in_km, formatKm(kmLeft))
+    if (kmLeft != null) parts += if (kmLeft <= 0) res.getString(R.string.due_km_overdue, formatKm(-kmLeft)) else res.getString(R.string.due_in_km, formatKm(kmLeft))
     if (daysLeft != null) parts += when {
-        daysLeft < 0 -> stringResource(R.string.due_days_overdue, -daysLeft)
-        daysLeft == 0 -> stringResource(R.string.due_today)
-        daysLeft < 14 -> stringResource(R.string.due_in_days, daysLeft)
-        daysLeft < 60 -> stringResource(R.string.due_in_weeks, daysLeft / 7)
-        else -> stringResource(R.string.due_in_months, daysLeft / 30)
+        daysLeft < 0 -> res.getString(R.string.due_days_overdue, -daysLeft)
+        daysLeft == 0 -> res.getString(R.string.due_today)
+        daysLeft < 14 -> res.getString(R.string.due_in_days, daysLeft)
+        daysLeft < 60 -> res.getString(R.string.due_in_weeks, daysLeft / 7)
+        else -> res.getString(R.string.due_in_months, daysLeft / 30)
     }
-    return parts.joinToString(" · ").ifEmpty { stringResource(R.string.due_never) }
+    return parts.joinToString(" · ").ifEmpty { res.getString(R.string.due_never) }
 }
 
 /** "every 3 000 km or every 6 months": a task's interval, for tasks without a written label. */

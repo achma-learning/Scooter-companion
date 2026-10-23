@@ -36,6 +36,9 @@ from the [Marrakech maintenance wiki](https://achma-learning.github.io/kymco-agi
   price per litre, consumption, fuel spending per month, a spending calendar, and plain-language insights. The home
   screen shows this month against the target and warns before you go over. A report of last
   month arrives on the 1st.
+- **Home-screen widget**: this month's spending against your target (green, orange when the
+  pace says you will go over, red over), days of insurance left and the next service, without
+  opening the app. Long-press the home screen → Widgets → Scooter Companion.
 - **Recommendations**: City Grip 2 tyres, a top case sized for your scooter (29 / 33 / 35 L),
   an ECE 22.06 helmet, a riding vest, gloves, a lock. "I bought it" adds the expense.
 - **Pre-ride checklist, documents wallet, SOS** (Moroccan emergency numbers including 5050
@@ -109,6 +112,7 @@ android-app/                 the Android app; run Gradle from here
     data/                    Room (garage, logbook, insurance, expenses), backup format, region packs, repositories
     ui/screens/              onboarding, profile, garage, service, guide, manual, more, settings…
     work/ReminderWorker.kt   daily local reminders
+    widget/ScooterWidget.kt  home-screen widget (RemoteViews)
   app/schemas/               exported Room schemas, one per database version
 shared/
   assets/regions/MA.json     Morocco region pack (currency, brands, fuel chips, insurance hints, fines)

@@ -41,6 +41,7 @@ import io.github.achmalearning.scootercompanion.data.repository.AppSettings
 import io.github.achmalearning.scootercompanion.data.repository.ThemeMode
 import io.github.achmalearning.scootercompanion.privacy.PrivacyManager
 import io.github.achmalearning.scootercompanion.ui.nav.Routes
+import io.github.achmalearning.scootercompanion.widget.ScooterWidget
 import io.github.achmalearning.scootercompanion.ui.screens.bookmarks.BookmarksScreen
 import io.github.achmalearning.scootercompanion.ui.screens.contents.ContentsScreen
 import io.github.achmalearning.scootercompanion.ui.screens.profile.BikeProfileScreen
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val container = AppContainer.getInstance(this)
+        ScooterWidget.watch(this)
         setContent {
             val settings by container.settingsRepository.settings.collectAsStateWithLifecycle(AppSettings())
             val dark = when (settings.theme) {
