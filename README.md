@@ -7,7 +7,7 @@ from the [Marrakech maintenance wiki](https://achma-learning.github.io/moto/).
 
 It ships two ways, with the same data and features:
 
-| | Android app (`app/`) | Website (`web/`) |
+| | Android app (`android-app/`) | Website (`web/`) |
 |---|---|---|
 | Runs | Installed APK, fully offline | Any browser; installable, works offline |
 | Stores your garage | On the phone (Room) | In that browser (localStorage) |
@@ -71,7 +71,7 @@ repository variable `DEPLOY_PAGES=true`.
    same files as workflow artifacts.
 
 **Signing**: without secrets, the APK is signed with the committed *sideload* key
-(`app/signing/sideload.keystore`). That keeps every release updatable in place, but the key is
+(`android-app/app/signing/sideload.keystore`). That keeps every release updatable in place, but the key is
 public, so don't use it for the Play Store. To sign with your own key, add the repository
 secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and
 `RELEASE_KEY_PASSWORD`. Changing keys later means one uninstall, so export a backup first.
@@ -106,7 +106,7 @@ web/                       Website (vanilla ES modules, no build step, no framew
 ```
 
 The app bundles `shared/docs` and `shared/content` as assets (`sourceSets` in
-`app/build.gradle.kts`). The website build copies the same files, so both always ship the same
+`android-app/app/build.gradle.kts`). The website build copies the same files, so both always ship the same
 data.
 
 ## Develop
@@ -120,7 +120,7 @@ scripts/build-web.sh && npx http-server dist/web
 node --test web/tests/*.test.mjs
 
 # Android
-./gradlew assembleDebug            # app/build/outputs/apk/debug/app-debug.apk
+cd android-app && ./gradlew assembleDebug          # android-app/app/build/outputs/apk/debug/app-debug.apk
 ./gradlew testDebugUnitTest        # add -PscreenshotsDir=/tmp/shots to save a PNG per screen
 ```
 
@@ -143,12 +143,12 @@ See [PRIVACY.md](PRIVACY.md) for what each mode does and where it's enforced in 
 
 ### Sync Mode / Firebase setup
 
-`app/google-services.json` is a **placeholder** (valid enough to build; sign-in fails until you
+`android-app/app/google-services.json` is a **placeholder** (valid enough to build; sign-in fails until you
 replace it).
 
 1. Create a Firebase project and register the Android app `com.example.kymcoagility50` (add
    `com.example.kymcoagility50.debug` too for debug builds). Download the real
-   `google-services.json` into `app/`.
+   `google-services.json` into `android-app/app/`.
 2. Enable **Authentication → Google** and **Firestore**.
 3. Firestore rules, so each user only reaches their own logbook:
    ```

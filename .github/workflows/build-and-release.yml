@@ -35,6 +35,8 @@ jobs:
           java-version: '17'
 
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android-app
 
       - uses: actions/setup-node@v4
         with:
@@ -52,11 +54,12 @@ jobs:
         run: node --test web/tests/*.test.mjs
 
       - name: Android unit tests (planner, backup interop, every screen renders)
+        working-directory: android-app
         run: ./gradlew testDebugUnitTest --stacktrace
 
       # Optional real signing key: add repository secrets RELEASE_KEYSTORE_BASE64,
       # RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD. Without them the
-      # release APK is signed with the committed sideload key (app/signing), so updates still install.
+      # release APK is signed with the committed sideload key (android-app/app/signing), so updates still install.
       - name: Decode signing key
         env:
           KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
@@ -71,9 +74,9 @@ jobs:
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
-          ./gradlew assembleRelease --stacktrace
+          (cd android-app && ./gradlew assembleRelease --stacktrace)
           mkdir -p out
-          cp app/build/outputs/apk/release/app-release.apk out/agility-companion.apk
+          cp android-app/app/build/outputs/apk/release/app-release.apk out/agility-companion.apk
 
       - name: Build website
         run: |

@@ -16,7 +16,7 @@ points at the code that enforces it so it isn't just a claim.
   (WorkManager, once a day) and shown as local notifications. They need no network and run the
   same in both modes; turn them off in Settings.
 - Android's own cloud backup and device-to-device transfer are disabled for the whole app
-  (`android:allowBackup="false"`, `app/src/main/res/xml/data_extraction_rules.xml`) — this
+  (`android:allowBackup="false"`, `android-app/app/src/main/res/xml/data_extraction_rules.xml`) — this
   isn't just an in-app promise, it's an OS-level setting.
 
 ## Sync Mode (opt-in)
@@ -53,7 +53,7 @@ points at the code that enforces it so it isn't just a claim.
 - `work/MaintenanceSyncWorker.kt` — the worker itself also checks
   `PrivacyManager.isPrivate()` as its very first line and returns success immediately if
   true, as a second layer in case anything upstream is ever wrong.
-- `app/src/test/java/.../privacy/NetworkGuardTest.kt` — a unit test pinning down that
+- `android-app/app/src/test/java/.../privacy/NetworkGuardTest.kt` — a unit test pinning down that
   `NetworkGuard.guard {}` never executes its block while in Private Mode (the default
   state), and that the attempt is counted rather than silently dropped.
 

@@ -23,19 +23,19 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
 - **Setup once:**
   - JDK 17, Android SDK (compileSdk 35), Node 22, Python 3. The Gradle wrapper (8.7) is
     committed, so there's no separate Gradle install.
-  - Nothing to copy. There is no `.env.example`. `app/google-services.json` is a placeholder
+  - Nothing to copy. There is no `.env.example`. `android-app/app/google-services.json` is a placeholder
     that builds fine (see §6).
 - **Run dev:**
   - Website: `scripts/build-web.sh && npx http-server dist/web`, then open the printed URL.
     The service worker only registers over `https:` (`web/js/app.js:95`), so offline mode
     won't show up on localhost http. That's expected.
-  - Android: `./gradlew assembleDebug` gives you
-    `app/build/outputs/apk/debug/app-debug.apk`. The debug build installs as
+  - Android: `cd android-app && ./gradlew assembleDebug` gives you
+    `android-app/app/build/outputs/apk/debug/app-debug.apk`. The debug build installs as
     `com.example.kymcoagility50.debug`, next to the release one.
 - **Tests:**
   - `node --test web/tests/*.test.mjs` runs 16 tests and passes as of this sync.
   - `python3 -m unittest discover -s scripts/fuel` tests the fuel-price parser.
-  - `./gradlew testDebugUnitTest` runs the Robolectric tests. Add
+  - `./gradlew testDebugUnitTest` (from `android-app/`) runs the Robolectric tests. Add
     `-PscreenshotsDir=/tmp/shots` to save a PNG of every screen.
 - **Change the knowledge base:** edit `scripts/content/build_content.py`, then run
   `python3 scripts/content/build_content.py`. Commit the regenerated JSON.
@@ -45,7 +45,7 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
   `agility-companion-web.zip`. GitHub Pages deploy is optional and only runs when the repo
   variable `DEPLOY_PAGES=true` is set.
 - **Required env vars / secrets:** none for local dev. CI or build-time only:
-  - `APP_VERSION_CODE` and `APP_VERSION_NAME`, read in `app/build.gradle.kts:15-16`.
+  - `APP_VERSION_CODE` and `APP_VERSION_NAME`, read in `android-app/app/build.gradle.kts:15-16`.
   - Optional real signing key: `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`,
     `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD` (repo secrets). The workflow decodes the
     first into `RELEASE_KEYSTORE_PATH`.
@@ -57,11 +57,11 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
 - **Language + runtime:** Kotlin 1.9.24 on JVM 17 (Android minSdk 24, target/compile 35).
   The website is vanilla JavaScript (ES modules, no build step). The content generator is
   Python 3, standard library only. CI uses Node 22.
-- **Android libraries** (versions from `build.gradle.kts` and `app/build.gradle.kts`):
+- **Android libraries** (versions from `android-app/build.gradle.kts` and `android-app/app/build.gradle.kts`):
   - AGP 8.5.2, with KSP for Room.
   - Jetpack Compose BOM 2024.06.00, Material3 1.2.1, Compose compiler 1.5.14.
   - Navigation-Compose 2.7.7.
-  - Room 2.6.1, with exported schemas in `app/schemas/`.
+  - Room 2.6.1, with exported schemas in `android-app/app/schemas/`.
   - WorkManager 2.9.1, DataStore 1.1.1, kotlinx-serialization-json 1.6.3.
   - ML Kit text-recognition 16.0.0, the on-device bundled model.
   - Firebase BOM 33.1.2 (Auth + Firestore) and play-services-auth 21.2.0. These are used in
@@ -71,7 +71,7 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
   you open a manual page (`web/js/views-manual.js:5`). The icons are Lucide SVGs inlined in
   `web/js/icons.js`.
 - **What kind of project:** one repo with two deliverables that share their data:
-  - an Android app (`app/`)
+  - an Android app (`android-app/`)
   - an installable, offline-capable PWA (`web/`)
   - a shared data folder (`shared/`) that both consume
 - **External services:**
@@ -96,7 +96,7 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
 - `shared/fixtures/backup-sample.json` — **the app↔web backup contract**. Both test suites
   load it.
 
-**Android (`app/src/main/java/com/example/kymcoagility50/`)**
+**Android (`android-app/app/src/main/java/com/example/kymcoagility50/`)**
 - `MainActivity.kt` — open this first. It has the whole Compose NavHost, the bottom bar
   (Garage / Service / Manual / Guide / More) and the onboarding gate.
 - `KymcoApp.kt` → `privacy/PrivacyManager.kt` — initialized first thing, before anything
@@ -226,16 +226,16 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
   partial logged as "full" would wreck the L/100 km figure.
 
 **Hard-won fixes**
-- **Committed sideload signing key** (`app/signing/sideload.keystore`, with the passwords in
-  `app/build.gradle.kts`). It is public *on purpose*: every Release must be signed with the
+- **Committed sideload signing key** (`android-app/app/signing/sideload.keystore`, with the passwords in
+  `android-app/app/build.gradle.kts`). It is public *on purpose*: every Release must be signed with the
   same key so it installs as an update. A per-runner debug key forced an uninstall, which
   wiped the user's garage. `.gitignore` has an explicit `!` exception for it. **Do not
   delete it, rotate it, or "secure" it** without a migration plan. Switching keys means users
   have to uninstall.
-- **`app/google-services.json` is a placeholder.** The `google-services` plugin refuses to
+- **`android-app/app/google-services.json` is a placeholder.** The `google-services` plugin refuses to
   build without it. It must include the `.debug` client, or debug builds fail (fixed in
   `ef4bddf`). Sign-in fails until you replace it with a real one.
-- **R8/minify is off** in release builds (`app/build.gradle.kts:47`). Room,
+- **R8/minify is off** in release builds (`android-app/app/build.gradle.kts:47`). Room,
   kotlinx-serialization and Firebase use reflection. `proguard-rules.pro` exists but is
   untested.
 - **`noCompress += "pdf"`**: the manual is ~10 MB of scanned images. `PdfPageRenderer`
@@ -253,7 +253,7 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
   the updater.
 - `NetworkGuard.attemptsWhilePrivate`, a counter that "should always be 0", is the privacy
   proof. It is pinned by `NetworkGuardTest`.
-- Both `app/schemas/.../2.json` and `Migrations.kt` must stay.
+- Both `android-app/app/schemas/.../2.json` and `Migrations.kt` must stay.
 - `rootProject.name = "Owner Manual"` in `settings.gradle.kts` is a leftover from the v0
   manual-reader. It's harmless; renaming it is optional.
 
@@ -275,7 +275,11 @@ _Last synced: 2026-10-11 @ c5e4a69 (+ in-app updater on `claude/exciting-sagan-a
 - **Last shipped (PR achma-learning/kymco-agility-moto#2):** the fuel log built around
   the amount paid. It has 20/30/50/100 MAD chips, a tap-to-fetch national price per litre,
   MAD/L stats, and the weekly `fuel-price.yml`.
-- **Working on now:** the in-app updater (Settings → App updates).
+- **Working on now:** turning the app into **Scooter Companion**, a generic, open-source (MIT)
+  scooter expense tracker optimised for Morocco. Done so far: the v2.0.7 APK is backed up in
+  `achma-learning/moto` (`apk-backup/`), and the Android build moved into `android-app/`
+  (run Gradle from there). `web/` is frozen: bug fixes only. Next: bike profile and
+  onboarding, a spending ledger, new app ID and private signing key.
 - **Next up:**
   - Run the *Fuel price* workflow once so the `data` branch exists (still 404 at this sync).
   - Maybe a price-per-litre trend chart, and the fuel stats on the Garage dashboard.

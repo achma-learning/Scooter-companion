@@ -15,7 +15,7 @@ import java.io.File
 class ServicePlannerTest {
 
     private val content: Content by lazy {
-        val file = listOf("../shared/content/agility50.json", "shared/content/agility50.json").map(::File).first { it.exists() }
+        val file = listOf("../../shared/content/agility50.json", "../shared/content/agility50.json").map(::File).first { it.exists() }
         Json { ignoreUnknownKeys = true }.decodeFromString(Content.serializer(), file.readText())
     }
     private val day0 = Dates.utcMidnight(2026, 0, 1)
