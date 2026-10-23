@@ -62,7 +62,7 @@ android {
     // ships exactly the same data; they're bundled here as flat assets.
     sourceSets {
         getByName("main") {
-            assets.srcDirs("src/main/assets", "../shared/docs", "../shared/content")
+            assets.srcDirs("src/main/assets", "../../shared/docs", "../../shared/content")
         }
     }
 

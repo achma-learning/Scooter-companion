@@ -23,7 +23,7 @@ import java.io.File
 @Config(sdk = [34])
 class BackupInteropTest {
 
-    private val fixture = listOf("../shared/fixtures/backup-sample.json", "shared/fixtures/backup-sample.json")
+    private val fixture = listOf("../../shared/fixtures/backup-sample.json", "../shared/fixtures/backup-sample.json")
         .map(::File).first { it.exists() }.readText()
 
     @Test
