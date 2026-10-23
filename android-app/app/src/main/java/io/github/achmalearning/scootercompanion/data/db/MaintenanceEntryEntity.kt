@@ -23,7 +23,14 @@ data class MaintenanceEntryEntity(
     @ColumnInfo(defaultValue = "") val tasks: String = "",
     val milestoneKm: Int? = null,
     @ColumnInfo(defaultValue = "") val shop: String = "",
+    /** Total paid. When parts or labour are filled in, it is their sum. */
     val cost: Double? = null,
+    val partsCost: Double? = null,
+    val laborCost: Double? = null,
+    /** What was fitted or used, e.g. "Ipone R4000 10W-40" or "Michelin City Grip 2". */
+    @ColumnInfo(defaultValue = "") val product: String = "",
+    /** Name of a custom entry that isn't a planner task, e.g. "New mirror". */
+    @ColumnInfo(defaultValue = "") val title: String = "",
     @ColumnInfo(defaultValue = "0") val stamped: Boolean = false,
     val updatedAt: Long,
     val dirty: Boolean = true,

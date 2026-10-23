@@ -40,6 +40,24 @@ interface GarageDao {
     @Delete
     suspend fun deleteDocument(doc: DocumentEntity)
 
+    @Query("SELECT * FROM insurance_policies ORDER BY startDate DESC")
+    fun observeInsurance(): Flow<List<InsurancePolicyEntity>>
+
+    @Upsert
+    suspend fun upsertInsurance(policy: InsurancePolicyEntity): Long
+
+    @Delete
+    suspend fun deleteInsurance(policy: InsurancePolicyEntity)
+
+    @Query("SELECT * FROM expenses ORDER BY date DESC, id DESC")
+    fun observeExpenses(): Flow<List<ExpenseEntity>>
+
+    @Upsert
+    suspend fun upsertExpense(expense: ExpenseEntity): Long
+
+    @Delete
+    suspend fun deleteExpense(expense: ExpenseEntity)
+
     // --- Backup import (replace-all) ---
 
     @Query("DELETE FROM bike_profile")
@@ -54,6 +72,12 @@ interface GarageDao {
     @Query("DELETE FROM documents")
     suspend fun clearDocuments()
 
+    @Query("DELETE FROM insurance_policies")
+    suspend fun clearInsurance()
+
+    @Query("DELETE FROM expenses")
+    suspend fun clearExpenses()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllOdometer(items: List<OdometerEntity>)
 
@@ -62,4 +86,10 @@ interface GarageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllDocuments(items: List<DocumentEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllInsurance(items: List<InsurancePolicyEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllExpenses(items: List<ExpenseEntity>)
 }

@@ -55,6 +55,11 @@ android {
         getByName("main") {
             assets.srcDirs("src/main/assets", "../../shared/docs", "../../shared/content")
         }
+        // MigrationTestHelper reads the exported schemas as assets. Robolectric only sees the
+        // merged app assets, so they ride in debug builds (a few KB), never in release.
+        getByName("debug") {
+            assets.srcDirs("$projectDir/schemas")
+        }
     }
 
     // Owner manual PDF is large (scanned images); don't let AAPT try to compress it further / keep it accessible as a raw asset.
@@ -142,6 +147,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.13")
     testImplementation("androidx.test:core-ktx:1.6.1")
+    testImplementation("androidx.room:room-testing:2.6.1")
     testImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     testImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

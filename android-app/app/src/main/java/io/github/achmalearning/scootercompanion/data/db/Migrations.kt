@@ -35,3 +35,47 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         )
     }
 }
+
+/**
+ * v2 → v3 (Scooter Companion): the profile gains the scooter's type, purchase and budget
+ * columns, the logbook entry gains parts / labour / product / custom title, and the insurance
+ * and expense tables are added. A v2 database only ever held a Kymco Agility 50 4T (the app
+ * was built for that one scooter), so an existing profile row is filled in as that bike.
+ * SQL copied from the exported schema in app/schemas/.../3.json.
+ */
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `maintenance_entries` ADD COLUMN `partsCost` REAL")
+        db.execSQL("ALTER TABLE `maintenance_entries` ADD COLUMN `laborCost` REAL")
+        db.execSQL("ALTER TABLE `maintenance_entries` ADD COLUMN `product` TEXT NOT NULL DEFAULT ''")
+        db.execSQL("ALTER TABLE `maintenance_entries` ADD COLUMN `title` TEXT NOT NULL DEFAULT ''")
+        listOf(
+            "`brand` TEXT NOT NULL DEFAULT ''",
+            "`model` TEXT NOT NULL DEFAULT ''",
+            "`engineCc` INTEGER NOT NULL DEFAULT 0",
+            "`powertrain` TEXT NOT NULL DEFAULT 'PETROL'",
+            "`fuelSystem` TEXT NOT NULL DEFAULT 'CARBURETOR'",
+            "`cooling` TEXT NOT NULL DEFAULT 'AIR'",
+            "`modelYear` INTEGER",
+            "`boughtUsed` INTEGER NOT NULL DEFAULT 0",
+            "`purchasePrice` REAL",
+            "`newPrice` REAL",
+            "`firstRegistration` INTEGER",
+            "`previousOwners` INTEGER",
+            "`photo` TEXT NOT NULL DEFAULT ''",
+            "`monthlyBudget` REAL",
+            "`region` TEXT NOT NULL DEFAULT 'MA'"
+        ).forEach { db.execSQL("ALTER TABLE `bike_profile` ADD COLUMN $it") }
+        db.execSQL("UPDATE `bike_profile` SET `brand` = 'Kymco', `model` = 'Agility 50 4T', `engineCc` = 50")
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `insurance_policies` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`startDate` INTEGER NOT NULL, `months` INTEGER NOT NULL, `totalPaid` REAL NOT NULL, " +
+                "`insurer` TEXT NOT NULL, `policyNumber` TEXT NOT NULL, `notes` TEXT NOT NULL)"
+        )
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `expenses` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`date` INTEGER NOT NULL, `category` TEXT NOT NULL, `title` TEXT NOT NULL, `amount` REAL NOT NULL, " +
+                "`km` INTEGER, `quantity` REAL, `notes` TEXT NOT NULL)"
+        )
+    }
+}

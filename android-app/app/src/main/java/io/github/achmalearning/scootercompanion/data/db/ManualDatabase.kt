@@ -15,9 +15,11 @@ import androidx.room.TypeConverters
         BikeProfileEntity::class,
         OdometerEntity::class,
         FuelEntity::class,
-        DocumentEntity::class
+        DocumentEntity::class,
+        InsurancePolicyEntity::class,
+        ExpenseEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -38,7 +40,7 @@ abstract class ManualDatabase : RoomDatabase() {
                     context.applicationContext,
                     ManualDatabase::class.java,
                     "scooter_companion.db"
-                ).addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build().also { INSTANCE = it }
             }
         }
     }
