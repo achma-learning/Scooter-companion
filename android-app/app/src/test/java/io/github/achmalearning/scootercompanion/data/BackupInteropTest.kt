@@ -105,7 +105,7 @@ class BackupInteropTest {
         listOf("LXYJCBL01P0000001", "54321-B-40", "JF81E-0001", "RC-2026-0042").forEach { assertFalse("leaked: $it", it in hidden) }
 
         // -PscreenshotsDir=… also keeps a sample report for a human to read.
-        System.getProperty("screenshots.dir").orEmpty().takeIf { it.isNotBlank() }?.let { File(it, "sample-report.txt").writeText(hidden) }
+        System.getProperty("screenshots.dir").orEmpty().takeIf { it.isNotBlank() }?.let { File(it).mkdirs(); File(it, "sample-report.txt").writeText(hidden) }
         val shown = TextReport.build(snap, container.contentRepository.content, hideIds = false)
         assertTrue("LXYJCBL01P0000001" in shown && "RC-2026-0042" in shown)
     }

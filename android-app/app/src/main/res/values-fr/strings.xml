@@ -433,4 +433,33 @@
     <string name="wal_name">Nom</string>
     <string name="wal_number">Numéro</string>
     <string name="wal_expiry">Date d\'expiration</string>
+    <string name="nav_money">Dépenses</string>
+    <string name="money_title">Suivi des dépenses</string>
+    <string name="money_sub">Tout ce que vous avez dépensé pour votre scooter, mois par mois.</string>
+    <string name="money_add">Ajouter</string>
+    <string name="money_add_title">Qu\'avez-vous payé ?</string>
+    <string name="money_add_fuel">Plein de carburant</string>
+    <string name="money_add_service">Entretien ou réparation</string>
+    <string name="money_add_insurance">Contrat d\'assurance</string>
+    <string name="money_add_expense">Accessoire, équipement ou autre</string>
+    <string name="money_add_fine">Amende</string>
+    <string name="money_last_12">12 derniers mois</string>
+    <string name="money_chart_hint">Touchez un mois pour n\'afficher que ses dépenses.</string>
+    <string name="money_showing_month">Seulement %1$s · touchez à nouveau la barre pour tout voir</string>
+    <string name="money_month_total">%1$s · %2$s</string>
+    <string name="money_empty">Rien dans cette liste pour l\'instant. Touchez Ajouter pour noter ce que vous payez.</string>
+    <string name="money_purchase_label">Achat</string>
+    <string name="ins_monthly">Coût mensuel</string>
+    <string name="ins_now_per_month">actuellement, par mois</string>
+    <string name="ins_now_per_day">par jour</string>
+    <string name="ins_avg_month">moyenne par mois</string>
+    <string name="ins_paid_year">payé en %1$d</string>
+    <string name="ins_chart_title">Coût de l\'assurance par mois</string>
+    <string name="ins_chart_hint">Chaque contrat est réparti sur les mois qu\'il couvre. Un trou = pas de couverture ce mois-là.</string>
+    <string name="ins_typical_month">habituel %1$s</string>
+    <string name="ins_bar_detail">%1$s : %2$s par mois</string>
+    <string name="ins_years">Payé par an</string>
+    <string name="fuel_monthly">Carburant par mois</string>
+    <string name="fuel_bar_detail">%1$s : %2$s</string>
+    <string name="more_manual_sub">Manuel et passeport de l\'Agility, avec recherche</string>
 </resources>

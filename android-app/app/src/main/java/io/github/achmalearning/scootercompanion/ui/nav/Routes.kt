@@ -5,6 +5,7 @@ import io.github.achmalearning.scootercompanion.data.model.PdfSource
 sealed class Routes(val route: String) {
     // Bottom-bar tabs
     data object Garage : Routes("garage")
+    data object Money : Routes("money")
     data object Service : Routes("service")
     data object Manual : Routes("manual")
     data object Guide : Routes("guide")
@@ -31,7 +32,6 @@ sealed class Routes(val route: String) {
     data object Sos : Routes("sos")
     data object Settings : Routes("settings")
     data object Insurance : Routes("insurance")
-    data object Expenses : Routes("expenses")
     data object Recommendations : Routes("recommendations")
     data object Stats : Routes("stats")
 

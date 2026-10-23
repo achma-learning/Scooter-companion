@@ -39,6 +39,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.achmalearning.scootercompanion.domain.ChartGroup
+import io.github.achmalearning.scootercompanion.ui.charts.MonthBarChart
+import io.github.achmalearning.scootercompanion.ui.charts.chartColors
+import io.github.achmalearning.scootercompanion.ui.screens.money.utc
 import io.github.achmalearning.scootercompanion.R
 import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.fuel.FuelPriceClient
@@ -110,6 +114,7 @@ fun FuelScreen(onBack: () -> Unit) {
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 10.dp)
                 )
             }
+            if (s.fuel.any { it.cost != null }) item { FuelMonthly(s.fuel, s.today) }
             if (s.fuel.isEmpty()) item {
                 EmptyState(Icons.Filled.LocalGasStation, stringResource(R.string.fuel_empty_title), stringResource(R.string.fuel_empty_text))
             }
@@ -150,7 +155,7 @@ internal fun decimalText(v: Double, scale: Int = 2): String = BigDecimal(v).setS
  * 200 dh for a maxi-scooter); "Full tank" marks the fill as full for the consumption figure.
  */
 @Composable
-private fun FuelDialog(
+internal fun FuelDialog(
     e: FuelEntity,
     defaultPrice: Double?,
     amounts: List<Double>,
@@ -260,4 +265,40 @@ private fun FuelDialog(
             }
         }
     )
+}
+
+/** What fuel cost each of the last 12 months, as bars; tap one for its total. */
+@Composable
+private fun FuelMonthly(fuel: List<FuelEntity>, today: Long) {
+    val nowKey = Dates.monthKey(today)
+    val keys = (nowKey - 11..nowKey).toList()
+    val totals = remember(fuel, nowKey) {
+        val byMonth = fuel.groupBy { Dates.monthKey(it.date) }
+        keys.map { k -> byMonth[k].orEmpty().sumOf { it.cost ?: 0.0 } }
+    }
+    val monthShort = remember { utc("MMM") }
+    val monthLong = remember { utc("MMMM yyyy") }
+    var selected by remember { mutableStateOf<Int?>(null) }
+    val avg = totals.filter { it > 0 }.takeIf { it.isNotEmpty() }?.average()
+
+    Panel(modifier = Modifier.padding(top = 12.dp, bottom = 6.dp)) {
+        Column(Modifier.padding(12.dp)) {
+            Text(stringResource(R.string.fuel_monthly), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            MonthBarChart(
+                labels = keys.map { monthShort.format(Dates.monthStart(it)) },
+                values = totals,
+                color = chartColors().of(ChartGroup.ENERGY),
+                reference = avg,
+                referenceLabel = stringResource(R.string.stats_average),
+                selected = selected,
+                onSelect = { selected = it }
+            )
+            selected?.let { i ->
+                Text(
+                    stringResource(R.string.fuel_bar_detail, monthLong.format(Dates.monthStart(keys[i])), formatMoney(totals[i])),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
 }

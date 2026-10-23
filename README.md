@@ -25,11 +25,15 @@ from the [Marrakech maintenance wiki](https://achma-learning.github.io/kymco-agi
   Ipone R4000, Michelin City Grip 2), or any custom job.
 - **Insurance**: contracts of 1, 3, 6, 12 or any number of months with the amount you actually
   paid. Approximate prices for Morocco are only a hint. A reminder every day once fewer than
-  20 days of cover remain, until you enter the renewal.
-- **Expenses**: accessories, riding gear, fines (150 / 400 / 700 DH and the reason), parking,
-  washing, papers, charging, anything else.
+  20 days of cover remain, until you enter the renewal. Insurance as a monthly cost: what
+  cover costs now per month and per day, the average, the total per year, and a bar per month
+  against the typical price.
+- **Expense tracker** (its own tab): every payment in one list, month by month, whatever
+  screen it was logged in (fuel, service, insurance, purchase), plus accessories, riding gear,
+  fines (150 / 400 / 700 DH and the reason), parking, washing, papers, charging, anything else.
+  A chart of the last 12 months, filters by group, tap a month or a payment to open it.
 - **Statistics**: spending per month against your target, running total, where the money goes,
-  price per litre, consumption, a spending calendar, and plain-language insights. The home
+  price per litre, consumption, fuel spending per month, a spending calendar, and plain-language insights. The home
   screen shows this month against the target and warns before you go over. A report of last
   month arrives on the 1st.
 - **Recommendations**: City Grip 2 tyres, a top case sized for your scooter (29 / 33 / 35 L),
