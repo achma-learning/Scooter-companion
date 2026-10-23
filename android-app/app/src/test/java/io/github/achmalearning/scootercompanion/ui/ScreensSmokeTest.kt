@@ -18,7 +18,6 @@ import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.db.MaintenanceEntryEntity
 import io.github.achmalearning.scootercompanion.data.model.PdfSource
 import io.github.achmalearning.scootercompanion.domain.Dates
-import io.github.achmalearning.scootercompanion.ui.screens.garage.BikeProfileScreen
 import io.github.achmalearning.scootercompanion.ui.screens.garage.FuelScreen
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageNav
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageScreen
@@ -41,6 +40,8 @@ import io.github.achmalearning.scootercompanion.ui.screens.home.ManualHubScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreNav
 import io.github.achmalearning.scootercompanion.ui.screens.more.MoreScreen
 import io.github.achmalearning.scootercompanion.ui.screens.more.SosScreen
+import io.github.achmalearning.scootercompanion.ui.screens.onboarding.OnboardingScreen
+import io.github.achmalearning.scootercompanion.ui.screens.profile.BikeProfileScreen
 import io.github.achmalearning.scootercompanion.ui.screens.service.LogServiceScreen
 import io.github.achmalearning.scootercompanion.ui.screens.service.ServiceScreen
 import io.github.achmalearning.scootercompanion.ui.screens.service.TaskDetailScreen
@@ -74,7 +75,10 @@ class ScreensSmokeTest {
         val today = Dates.today()
         val bought = Dates.addMonths(today, -11)
         c.garageRepository.saveProfile(
-            BikeProfileEntity(nickname = "Zitoun", plate = "12345-A-40", vin = "RFBKN10EM0000001", purchaseDate = bought, purchaseKm = 0, dealer = "YOUKA Moto")
+            BikeProfileEntity(
+                nickname = "Zitoun", plate = "12345-A-40", vin = "RFBKN10EM0000001", purchaseDate = bought, purchaseKm = 0, dealer = "YOUKA Moto",
+                brand = "Kymco", model = "Agility 50 4T", engineCc = 50, purchasePrice = 15000.0, monthlyBudget = 400.0
+            )
         )
         fun entry(km: Int, monthsAgo: Int, tasks: String, milestone: Int?, stamped: Boolean, shop: String, cost: Double?) =
             MaintenanceEntryEntity(km = km, date = Dates.addMonths(today, -monthsAgo), note = "", tasks = tasks, milestoneKm = milestone,
@@ -117,7 +121,8 @@ class ScreensSmokeTest {
         "21-gear" to { GearScreen(noop) },
         "22-more" to { MoreScreen(MoreNav(noop, noop, noop, noop, noop, noop)) },
         "23-sos" to { SosScreen(noop, noop) },
-        "24-settings" to { SettingsScreen(noop) }
+        "24-settings" to { SettingsScreen(noop) },
+        "25-onboarding" to { OnboardingScreen(onDone = noop) }
     )
 
     @Test

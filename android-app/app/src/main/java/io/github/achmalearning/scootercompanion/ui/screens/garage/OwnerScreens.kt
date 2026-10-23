@@ -53,7 +53,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
 import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.fuel.FuelPriceClient
@@ -66,7 +65,6 @@ import io.github.achmalearning.scootercompanion.ui.components.Callout
 import io.github.achmalearning.scootercompanion.ui.components.DateField
 import io.github.achmalearning.scootercompanion.ui.components.EmptyState
 import io.github.achmalearning.scootercompanion.ui.components.IconBadge
-import io.github.achmalearning.scootercompanion.ui.components.InfoRow
 import io.github.achmalearning.scootercompanion.ui.components.NumberField
 import io.github.achmalearning.scootercompanion.ui.components.Panel
 import io.github.achmalearning.scootercompanion.ui.components.ScreenPadding
@@ -451,55 +449,3 @@ fun WalletScreen(onBack: () -> Unit) {
 
 // ------------------------------------------------------------------------------ Profile
 
-@Composable
-fun BikeProfileScreen(onBack: () -> Unit) {
-    val context = LocalContext.current
-    val vm = appViewModel { GarageViewModel(context, it) }
-    val s = vm.state.collectAsStateWithLifecycle().value ?: return
-    val p = s.profile
-    var nickname by remember { mutableStateOf(p.nickname) }
-    var plate by remember { mutableStateOf(p.plate) }
-    var vin by remember { mutableStateOf(p.vin) }
-    var engineNo by remember { mutableStateOf(p.engineNo) }
-    var color by remember { mutableStateOf(p.color) }
-    var purchaseDate by remember { mutableStateOf(p.purchaseDate) }
-    var purchaseKm by remember { mutableStateOf(p.purchaseKm.toString()) }
-    var dealer by remember { mutableStateOf(p.dealer) }
-    var warranty by remember { mutableStateOf(p.warrantyMonths.toString()) }
-
-    Scaffold(topBar = { BackTopBar("My scooter", onBack) }) { padding ->
-        LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            item { OutlinedTextField(nickname, { nickname = it }, label = { Text("Nickname") }, placeholder = { Text("My Agility") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-            item { OutlinedTextField(plate, { plate = it }, label = { Text("Plate number") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-            item { OutlinedTextField(vin, { vin = it }, label = { Text("Chassis number (VIN)") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-            item { OutlinedTextField(engineNo, { engineNo = it }, label = { Text("Engine number") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-            item { OutlinedTextField(color, { color = it }, label = { Text("Colour") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-            item { DateField(purchaseDate, { purchaseDate = it }, "Purchase date", clearable = true) }
-            item {
-                NumberField(purchaseKm, { purchaseKm = it }, "Km at purchase", suffix = "km")
-                Text("0 for a new scooter. Reminders count from here until you log services.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            item {
-                OutlinedTextField(dealer, { dealer = it }, label = { Text("Selling dealer") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 6.dp)) {
-                    items(vm.content.shops) { shop -> FilterChip(selected = dealer == shop.name, onClick = { dealer = shop.name }, label = { Text(shop.name) }) }
-                }
-            }
-            item { NumberField(warranty, { warranty = it }, "Warranty length", suffix = "months") }
-            item {
-                VSpace(8.dp)
-                Button(onClick = {
-                    vm.saveProfile(
-                        BikeProfileEntity(
-                            nickname = nickname.trim(), plate = plate.trim(), vin = vin.trim(), engineNo = engineNo.trim(), color = color.trim(),
-                            purchaseDate = purchaseDate, purchaseKm = purchaseKm.toIntOrNull() ?: 0, dealer = dealer.trim(),
-                            warrantyMonths = warranty.toIntOrNull() ?: 24
-                        )
-                    )
-                    onBack()
-                }, modifier = Modifier.fillMaxWidth()) { Text("Save") }
-            }
-            item { InfoRow("Model", "${vm.content.bike.model} (${vm.content.bike.code})") }
-        }
-    }
-}

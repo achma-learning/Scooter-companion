@@ -1,7 +1,7 @@
 package io.github.achmalearning.scootercompanion
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -43,7 +43,7 @@ import io.github.achmalearning.scootercompanion.privacy.PrivacyManager
 import io.github.achmalearning.scootercompanion.ui.nav.Routes
 import io.github.achmalearning.scootercompanion.ui.screens.bookmarks.BookmarksScreen
 import io.github.achmalearning.scootercompanion.ui.screens.contents.ContentsScreen
-import io.github.achmalearning.scootercompanion.ui.screens.garage.BikeProfileScreen
+import io.github.achmalearning.scootercompanion.ui.screens.profile.BikeProfileScreen
 import io.github.achmalearning.scootercompanion.ui.screens.garage.FuelScreen
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageNav
 import io.github.achmalearning.scootercompanion.ui.screens.garage.GarageScreen
@@ -78,7 +78,7 @@ import io.github.achmalearning.scootercompanion.ui.theme.ScooterTheme
 import io.github.achmalearning.scootercompanion.work.ReminderWorker
 import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -116,7 +116,7 @@ private fun AppRoot() {
 
     when {
         showSplash -> SplashScreen(onFinished = { showSplash = false })
-        !onboarded -> OnboardingScreen(onStart = { scope.launch { PrivacyManager.completeOnboarding() } })
+        !onboarded -> OnboardingScreen(onDone = { scope.launch { PrivacyManager.completeOnboarding() } })
         else -> MainNav()
     }
 }

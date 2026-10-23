@@ -21,6 +21,8 @@ class GarageViewModel(private val context: Context, private val container: AppCo
 
     val content: Content = container.contentRepository.content
 
+    fun region(id: String) = container.regionRepository.pack(id)
+
     val state: StateFlow<GarageSnapshot?> = container.garageRepository.snapshot
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 

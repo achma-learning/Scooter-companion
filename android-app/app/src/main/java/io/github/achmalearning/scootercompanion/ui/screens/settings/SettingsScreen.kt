@@ -36,7 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import io.github.achmalearning.scootercompanion.data.repository.ThemeMode
+import io.github.achmalearning.scootercompanion.R
 import io.github.achmalearning.scootercompanion.ui.common.appViewModel
+import io.github.achmalearning.scootercompanion.ui.screens.onboarding.LanguageChips
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun SettingsScreen(onBack: () -> Unit) {
@@ -59,6 +62,12 @@ fun SettingsScreen(onBack: () -> Unit) {
 
     Scaffold(topBar = { BackTopBar("Settings & backup", onBack) }) { padding ->
     LazyColumn(Modifier.fillMaxWidth().padding(padding).padding(horizontal = 16.dp)) {
+        item {
+            Text(stringResource(R.string.language), style = MaterialTheme.typography.titleMedium)
+            LanguageChips(withSystem = true)
+            Divider(Modifier.padding(vertical = 12.dp))
+        }
+
         item {
             AppUpdatesSection(vm)
             Divider(Modifier.padding(vertical = 12.dp))
