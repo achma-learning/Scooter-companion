@@ -1,5 +1,7 @@
 package io.github.achmalearning.scootercompanion.ui.screens.garage
 
+import androidx.compose.ui.res.stringResource
+import io.github.achmalearning.scootercompanion.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -264,7 +266,7 @@ fun TaskRow(st: TaskStatus, onClick: () -> Unit) {
     Panel(onClick = onClick, modifier = Modifier.padding(vertical = 4.dp)) {
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(st.task.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                Text(st.task.localName(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
                 StatusPill(statusLabel(st.status), color)
             }
             VSpace(6.dp)
@@ -273,7 +275,7 @@ fun TaskRow(st: TaskStatus, onClick: () -> Unit) {
             Row {
                 Text(dueText(st.kmLeft, st.daysLeft), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
                 st.dueKm?.let {
-                    Text("at ${formatKm(it)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+                    Text(stringResource(R.string.due_at_km, formatKm(it)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
                 }
             }
         }

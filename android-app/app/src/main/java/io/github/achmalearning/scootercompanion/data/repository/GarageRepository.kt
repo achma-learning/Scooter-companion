@@ -15,6 +15,7 @@ import io.github.achmalearning.scootercompanion.data.backup.BackupOdometer
 import io.github.achmalearning.scootercompanion.data.backup.BackupPreRide
 import io.github.achmalearning.scootercompanion.data.backup.BackupService
 import io.github.achmalearning.scootercompanion.data.content.Content
+import io.github.achmalearning.scootercompanion.data.content.Task
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
 import io.github.achmalearning.scootercompanion.data.db.ExpenseEntity
@@ -35,6 +36,7 @@ import io.github.achmalearning.scootercompanion.domain.FuelSummary
 import io.github.achmalearning.scootercompanion.domain.Insurance
 import io.github.achmalearning.scootercompanion.domain.InsurancePolicy
 import io.github.achmalearning.scootercompanion.domain.LedgerStats
+import io.github.achmalearning.scootercompanion.domain.MaintenancePlan
 import io.github.achmalearning.scootercompanion.domain.MilestoneStatus
 import io.github.achmalearning.scootercompanion.domain.ServicePlanner
 import io.github.achmalearning.scootercompanion.domain.ServiceRecord
@@ -67,6 +69,10 @@ data class GarageSnapshot(
     val expenses: List<ExpenseEntity>,
     val statuses: List<TaskStatus>,
     val milestones: List<MilestoneStatus>,
+    /** The maintenance tasks that apply to this scooter, intervals resolved for its class. */
+    val tasks: List<Task>,
+    /** The Kymco Agility 50 4T: its own schedule, dealer passport and manual. */
+    val isAgility: Boolean,
     val health: Int,
     val fuelSummary: FuelSummary,
     val lastPreRide: Long?,
@@ -127,8 +133,11 @@ class GarageRepository(
         val currentKm = ServicePlanner.currentKm(
             profile.purchaseKm, entries.map { it.km }, odometer.map { it.km }, fuel.map { it.km }
         )
+        val spec = VehicleSpec.parse(profile.powertrain, profile.engineCc, profile.fuelSystem, profile.cooling)
+        val agility = MaintenancePlan.isAgility50(profile.brand, profile.model, profile.engineCc)
+        val tasks = MaintenancePlan.tasksFor(content, spec, agility)
         val statuses = ServicePlanner.statuses(
-            content.tasks, records, currentKm, today, profile.purchaseKm, profile.purchaseDate
+            tasks, records, currentKm, today, profile.purchaseKm, profile.purchaseDate
         )
         val spends = spendsOf(profile, entries, fuel, insurance, expenses)
         val ownedSince = profile.purchaseDate ?: spends.minOfOrNull { it.date }
@@ -143,7 +152,9 @@ class GarageRepository(
             insurance = insurance,
             expenses = expenses,
             statuses = statuses,
-            milestones = ServicePlanner.milestones(content.milestones, records, currentKm),
+            milestones = ServicePlanner.milestones(MaintenancePlan.milestonesFor(content, agility), records, currentKm),
+            tasks = tasks,
+            isAgility = agility,
             health = ServicePlanner.healthScore(statuses),
             fuelSummary = FuelStats.summarize(fuel.map { FuelFill(it.date, it.km, it.liters, it.cost, it.full) }),
             lastPreRide = preRide,
