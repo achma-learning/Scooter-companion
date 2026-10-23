@@ -83,13 +83,13 @@ fun SettingsScreen(onBack: () -> Unit) {
         }
 
         item {
-            Text("Backup & website", style = MaterialTheme.typography.titleMedium)
+            Text("Save file", style = MaterialTheme.typography.titleMedium)
             Text(
-                "Export your garage (bike, services, passport stamps, fuel, documents) to a JSON file. The website imports the same file, and vice-versa.",
+                "Export everything (scooter, services, fuel, insurance, expenses, documents) to one file. Import it on another phone to carry on there. Agility Companion backups import too.",
                 style = MaterialTheme.typography.bodySmall
             )
             Row(Modifier.padding(vertical = 8.dp)) {
-                Button(onClick = { exportLauncher.launch("agility-garage-${Dates.toIso(Dates.today())}.json") }) { Text("Export") }
+                Button(onClick = { exportLauncher.launch("scooter-companion-${Dates.toIso(Dates.today())}.json") }) { Text("Export") }
                 Text(" ")
                 OutlinedButton(onClick = { importLauncher.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }) { Text("Import…") }
             }
@@ -136,8 +136,8 @@ fun SettingsScreen(onBack: () -> Unit) {
     confirmImport?.let { uri ->
         AlertDialog(
             onDismissRequest = { confirmImport = null },
-            title = { Text("Replace garage with backup?") },
-            text = { Text("Your current bike profile, services, fuel log and documents on this device will be replaced by the file's content.") },
+            title = { Text("Replace everything with this file?") },
+            text = { Text("Your scooter, services, fuel log, insurance, expenses and documents on this phone will be replaced by the file's content.") },
             confirmButton = { TextButton(onClick = { vm.importFrom(uri); confirmImport = null }) { Text("Replace") } },
             dismissButton = { TextButton(onClick = { confirmImport = null }) { Text("Cancel") } }
         )
@@ -147,7 +147,7 @@ fun SettingsScreen(onBack: () -> Unit) {
         AlertDialog(
             onDismissRequest = { confirmWipe = false },
             title = { Text("Erase all garage data?") },
-            text = { Text("Deletes the bike profile, every logged service, fuel fill-up and document from this device. Export a backup first if unsure.") },
+            text = { Text("Deletes the scooter profile and photo, every service, fill-up, insurance contract, expense and document from this phone. Export a save file first if unsure.") },
             confirmButton = { TextButton(onClick = { vm.wipeGarage(); confirmWipe = false }) { Text("Erase") } },
             dismissButton = { TextButton(onClick = { confirmWipe = false }) { Text("Cancel") } }
         )

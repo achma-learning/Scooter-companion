@@ -93,7 +93,7 @@ class SettingsViewModel(
                 withContext(Dispatchers.IO) {
                     context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(json.toByteArray()) }
                 }
-                "Backup saved — import it on the website to continue there."
+                "Save file written. Import it in Scooter Companion on any phone."
             }.getOrElse { "Export failed: ${it.message}" }
         }
     }

@@ -7,8 +7,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.withTransaction
 import io.github.achmalearning.scootercompanion.data.backup.BackupBike
 import io.github.achmalearning.scootercompanion.data.backup.BackupDocument
+import io.github.achmalearning.scootercompanion.data.backup.BackupExpense
 import io.github.achmalearning.scootercompanion.data.backup.BackupFile
 import io.github.achmalearning.scootercompanion.data.backup.BackupFuel
+import io.github.achmalearning.scootercompanion.data.backup.BackupInsurance
 import io.github.achmalearning.scootercompanion.data.backup.BackupOdometer
 import io.github.achmalearning.scootercompanion.data.backup.BackupPreRide
 import io.github.achmalearning.scootercompanion.data.backup.BackupService
@@ -89,6 +91,7 @@ class GarageRepository(
     private val logDao = db.maintenanceEntryDao()
     private val PRE_RIDE_KEY = longPreferencesKey("last_pre_ride")
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = true; encodeDefaults = true }
+    val photos = PhotoStore(context)
 
     val lastPreRide: Flow<Long?> = context.garageStore.data.map { it[PRE_RIDE_KEY] }
 
@@ -176,37 +179,73 @@ class GarageRepository(
         val file = BackupFile(
             exportedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
                 .apply { timeZone = TimeZone.getTimeZone("UTC") }.format(Date()),
-            bike = BackupBike(p.nickname, p.plate, p.vin, p.engineNo, p.color, p.purchaseDate?.let(Dates::toIso), p.purchaseKm, p.dealer, p.warrantyMonths),
+            bike = BackupBike(
+                nickname = p.nickname, plate = p.plate, vin = p.vin, engineNo = p.engineNo, color = p.color,
+                purchaseDate = p.purchaseDate?.let(Dates::toIso), purchaseKm = p.purchaseKm, dealer = p.dealer,
+                warrantyMonths = p.warrantyMonths, brand = p.brand, model = p.model, engineCc = p.engineCc,
+                powertrain = p.powertrain, fuelSystem = p.fuelSystem, cooling = p.cooling, modelYear = p.modelYear,
+                boughtUsed = p.boughtUsed, purchasePrice = p.purchasePrice, newPrice = p.newPrice,
+                firstRegistration = p.firstRegistration?.let(Dates::toIso), previousOwners = p.previousOwners,
+                monthlyBudget = p.monthlyBudget, region = p.region,
+                photoJpeg = if (p.photo.isNotBlank()) photos.toBase64() else ""
+            ),
             odometer = s.odometer.map { BackupOdometer(Dates.toIso(it.date), it.km) },
             services = s.entries.map {
-                BackupService(Dates.toIso(Dates.startOfDay(it.date)), it.km, it.taskIds.toList(), it.milestoneKm, it.shop, it.cost, it.stamped, it.note)
+                BackupService(
+                    Dates.toIso(Dates.startOfDay(it.date)), it.km, it.taskIds.toList(), it.milestoneKm, it.shop, it.cost,
+                    it.stamped, it.note, it.partsCost, it.laborCost, it.product, it.title
+                )
             },
             fuel = s.fuel.map { BackupFuel(Dates.toIso(it.date), it.km, it.liters, it.cost, it.full) },
             documents = s.documents.map { BackupDocument(it.type, it.title, it.number, it.expiry?.let(Dates::toIso), it.notes) },
-            preRide = BackupPreRide(s.lastPreRide?.let(Dates::toIso))
+            preRide = BackupPreRide(s.lastPreRide?.let(Dates::toIso)),
+            insurance = s.insurance.map { BackupInsurance(Dates.toIso(it.startDate), it.months, it.totalPaid, it.insurer, it.policyNumber, it.notes) },
+            expenses = s.expenses.map { BackupExpense(Dates.toIso(it.date), it.category, it.title, it.amount, it.km, it.quantity, it.notes) }
         )
         return json.encodeToString(BackupFile.serializer(), file)
     }
 
-    /** Replaces the whole garage with the backup's content. Returns a short summary. */
+    /**
+     * Replaces the whole garage with the backup's content. Reads Scooter Companion files and
+     * Agility Companion ones (which only ever described a Kymco Agility 50 4T). Returns a
+     * short summary.
+     */
     suspend fun importJson(text: String, maintenance: MaintenanceRepository): String {
         val file = json.decodeFromString(BackupFile.serializer(), text)
-        require(file.format == BackupFile.FORMAT) { "Not an Agility Companion backup" }
+        require(file.format == BackupFile.FORMAT || file.format == BackupFile.LEGACY_FORMAT) { "Not a Scooter Companion backup" }
+        val b = file.bike.let {
+            if (file.format == BackupFile.LEGACY_FORMAT && it.brand.isBlank()) it.copy(brand = "Kymco", model = "Agility 50 4T", engineCc = 50) else it
+        }
+        val photo = photos.restore(b.photoJpeg)
         db.withTransaction {
-            dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments()
-            val b = file.bike
+            dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses()
             dao.upsertProfile(
-                BikeProfileEntity(1, b.nickname, b.plate, b.vin, b.engineNo, b.color, Dates.fromIso(b.purchaseDate), b.purchaseKm, b.dealer, b.warrantyMonths)
+                BikeProfileEntity(
+                    id = 1, nickname = b.nickname, plate = b.plate, vin = b.vin, engineNo = b.engineNo, color = b.color,
+                    purchaseDate = Dates.fromIso(b.purchaseDate), purchaseKm = b.purchaseKm, dealer = b.dealer,
+                    warrantyMonths = b.warrantyMonths, brand = b.brand, model = b.model, engineCc = b.engineCc,
+                    powertrain = b.powertrain, fuelSystem = b.fuelSystem, cooling = b.cooling, modelYear = b.modelYear,
+                    boughtUsed = b.boughtUsed, purchasePrice = b.purchasePrice, newPrice = b.newPrice,
+                    firstRegistration = Dates.fromIso(b.firstRegistration), previousOwners = b.previousOwners,
+                    photo = photo, monthlyBudget = b.monthlyBudget, region = b.region
+                )
             )
             dao.insertAllOdometer(file.odometer.mapNotNull { o -> Dates.fromIso(o.date)?.let { OdometerEntity(date = it, km = o.km) } })
             dao.insertAllFuel(file.fuel.mapNotNull { f -> Dates.fromIso(f.date)?.let { FuelEntity(date = it, km = f.km, liters = f.liters, cost = f.cost, full = f.full) } })
             dao.insertAllDocuments(file.documents.map { DocumentEntity(type = it.type, title = it.title, number = it.number, expiry = Dates.fromIso(it.expiry), notes = it.notes) })
+            dao.insertAllInsurance(file.insurance.mapNotNull { i ->
+                Dates.fromIso(i.start)?.let { InsurancePolicyEntity(startDate = it, months = i.months, totalPaid = i.totalPaid, insurer = i.insurer, policyNumber = i.policyNumber, notes = i.notes) }
+            })
+            dao.insertAllExpenses(file.expenses.mapNotNull { x ->
+                Dates.fromIso(x.date)?.let { ExpenseEntity(date = it, category = x.category, title = x.title, amount = x.amount, km = x.km, quantity = x.quantity, notes = x.notes) }
+            })
         }
         maintenance.replaceAll(file.services.mapNotNull { s ->
             Dates.fromIso(s.date)?.let { day ->
                 MaintenanceEntryEntity(
                     km = s.km, date = day, note = s.notes, tasks = s.tasks.joinToString(","), milestoneKm = s.milestone,
-                    shop = s.shop, cost = s.cost, stamped = s.stamped, updatedAt = System.currentTimeMillis(), dirty = true
+                    shop = s.shop, cost = s.cost, partsCost = s.partsCost, laborCost = s.laborCost, product = s.product,
+                    title = s.title, stamped = s.stamped, updatedAt = System.currentTimeMillis(), dirty = false
                 )
             }
         })
@@ -214,11 +253,13 @@ class GarageRepository(
             val last = Dates.fromIso(file.preRide.last)
             if (last != null) prefs[PRE_RIDE_KEY] = last else prefs.remove(PRE_RIDE_KEY)
         }
-        return "${file.services.size} services, ${file.fuel.size} fill-ups, ${file.documents.size} documents imported"
+        return "${file.services.size} services, ${file.fuel.size} fill-ups, ${file.insurance.size} insurance contracts, " +
+            "${file.expenses.size} expenses imported"
     }
 
     suspend fun wipeGarage() {
-        db.withTransaction { dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments() }
+        db.withTransaction { dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses() }
+        photos.delete()
         context.garageStore.edit { it.remove(PRE_RIDE_KEY) }
     }
 }
