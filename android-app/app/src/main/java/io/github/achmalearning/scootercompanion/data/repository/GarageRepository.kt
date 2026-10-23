@@ -15,19 +15,29 @@ import io.github.achmalearning.scootercompanion.data.backup.BackupService
 import io.github.achmalearning.scootercompanion.data.content.Content
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
 import io.github.achmalearning.scootercompanion.data.db.DocumentEntity
+import io.github.achmalearning.scootercompanion.data.db.ExpenseEntity
+import io.github.achmalearning.scootercompanion.data.db.InsurancePolicyEntity
 import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.db.MaintenanceEntryEntity
 import io.github.achmalearning.scootercompanion.data.db.ManualDatabase
 import io.github.achmalearning.scootercompanion.data.db.OdometerEntity
 import io.github.achmalearning.scootercompanion.data.db.taskIds
+import io.github.achmalearning.scootercompanion.domain.Coverage
 import io.github.achmalearning.scootercompanion.domain.Dates
+import io.github.achmalearning.scootercompanion.domain.ExpenseLedger
 import io.github.achmalearning.scootercompanion.domain.FuelFill
 import io.github.achmalearning.scootercompanion.domain.FuelStats
 import io.github.achmalearning.scootercompanion.domain.FuelSummary
+import io.github.achmalearning.scootercompanion.domain.Insurance
+import io.github.achmalearning.scootercompanion.domain.InsurancePolicy
+import io.github.achmalearning.scootercompanion.domain.LedgerStats
 import io.github.achmalearning.scootercompanion.domain.MilestoneStatus
 import io.github.achmalearning.scootercompanion.domain.ServicePlanner
 import io.github.achmalearning.scootercompanion.domain.ServiceRecord
+import io.github.achmalearning.scootercompanion.domain.Spend
+import io.github.achmalearning.scootercompanion.domain.SpendCategory
 import io.github.achmalearning.scootercompanion.domain.TaskStatus
+import io.github.achmalearning.scootercompanion.domain.VehicleSpec
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -49,20 +59,26 @@ data class GarageSnapshot(
     val odometer: List<OdometerEntity>,
     val fuel: List<FuelEntity>,
     val documents: List<DocumentEntity>,
+    val insurance: List<InsurancePolicyEntity>,
+    val expenses: List<ExpenseEntity>,
     val statuses: List<TaskStatus>,
     val milestones: List<MilestoneStatus>,
     val health: Int,
     val fuelSummary: FuelSummary,
     val lastPreRide: Long?,
-    val today: Long
+    val today: Long,
+    /** Every payment from every module, oldest first. */
+    val spends: List<Spend>,
+    val ledger: LedgerStats,
+    val coverage: Coverage
 ) {
     val warrantyEnd: Long? get() = profile.purchaseDate?.let { Dates.addMonths(it, profile.warrantyMonths) }
+    val spec: VehicleSpec get() = VehicleSpec.parse(profile.powertrain, profile.engineCc, profile.fuelSystem, profile.cooling)
 }
 
 /**
- * The owner's side of the app: bike profile, odometer, fuel log, documents, pre-ride check.
- * All local-only, in both modes — the logbook (MaintenanceRepository) is still the only data
- * Sync Mode ever uploads.
+ * The owner's side of the app: scooter profile, odometer, fuel log, documents, insurance,
+ * expenses, pre-ride check, and the spending ledger built from all of them. Local-only.
  */
 class GarageRepository(
     private val context: Context,
@@ -78,9 +94,10 @@ class GarageRepository(
 
     val snapshot: Flow<GarageSnapshot> = combine(
         combine(dao.observeProfile(), logDao.observeAll(), dao.observeOdometer(), ::Triple),
-        combine(dao.observeFuel(), dao.observeDocuments(), lastPreRide, ::Triple)
-    ) { (profile, entries, odometer), (fuel, documents, preRide) ->
-        build(profile, entries, odometer, fuel, documents, preRide)
+        combine(dao.observeFuel(), dao.observeDocuments(), lastPreRide, ::Triple),
+        combine(dao.observeInsurance(), dao.observeExpenses(), ::Pair)
+    ) { (profile, entries, odometer), (fuel, documents, preRide), (insurance, expenses) ->
+        build(profile, entries, odometer, fuel, documents, preRide, insurance, expenses)
     }
 
     private fun build(
@@ -89,7 +106,9 @@ class GarageRepository(
         odometer: List<OdometerEntity>,
         fuel: List<FuelEntity>,
         documents: List<DocumentEntity>,
-        preRide: Long?
+        preRide: Long?,
+        insurance: List<InsurancePolicyEntity> = emptyList(),
+        expenses: List<ExpenseEntity> = emptyList()
     ): GarageSnapshot {
         val content = contentProvider()
         val profile = profileOrNull ?: BikeProfileEntity()
@@ -101,6 +120,8 @@ class GarageRepository(
         val statuses = ServicePlanner.statuses(
             content.tasks, records, currentKm, today, profile.purchaseKm, profile.purchaseDate
         )
+        val spends = spendsOf(profile, entries, fuel, insurance, expenses)
+        val ownedSince = profile.purchaseDate ?: spends.minOfOrNull { it.date }
         return GarageSnapshot(
             profile = profile,
             hasProfile = profileOrNull != null,
@@ -109,12 +130,19 @@ class GarageRepository(
             odometer = odometer,
             fuel = fuel,
             documents = documents,
+            insurance = insurance,
+            expenses = expenses,
             statuses = statuses,
             milestones = ServicePlanner.milestones(content.milestones, records, currentKm),
             health = ServicePlanner.healthScore(statuses),
             fuelSummary = FuelStats.summarize(fuel.map { FuelFill(it.date, it.km, it.liters, it.cost, it.full) }),
             lastPreRide = preRide,
-            today = today
+            today = today,
+            spends = spends,
+            ledger = ExpenseLedger.stats(
+                spends, today, ownedSince, profile.monthlyBudget, kmDriven = currentKm - profile.purchaseKm
+            ),
+            coverage = Insurance.coverage(insurance.map { it.toPolicy() }, today)
         )
     }
 
@@ -129,6 +157,12 @@ class GarageRepository(
 
     suspend fun saveDocument(doc: DocumentEntity) = dao.upsertDocument(doc)
     suspend fun deleteDocument(doc: DocumentEntity) = dao.deleteDocument(doc)
+
+    suspend fun saveInsurance(policy: InsurancePolicyEntity) = dao.upsertInsurance(policy)
+    suspend fun deleteInsurance(policy: InsurancePolicyEntity) = dao.deleteInsurance(policy)
+
+    suspend fun saveExpense(expense: ExpenseEntity) = dao.upsertExpense(expense)
+    suspend fun deleteExpense(expense: ExpenseEntity) = dao.deleteExpense(expense)
 
     suspend fun markPreRideDone(day: Long = Dates.today()) {
         context.garageStore.edit { it[PRE_RIDE_KEY] = day }
@@ -192,3 +226,28 @@ class GarageRepository(
 fun MaintenanceEntryEntity.toRecord() = ServiceRecord(
     date = Dates.startOfDay(date), km = km, tasks = taskIds, milestoneKm = milestoneKm, stamped = stamped, shop = shop
 )
+
+fun InsurancePolicyEntity.toPolicy() = InsurancePolicy(startDate, months, totalPaid)
+
+/** Flattens every module into one list of payments; the ledger only ever reads this. */
+fun spendsOf(
+    profile: BikeProfileEntity,
+    entries: List<MaintenanceEntryEntity>,
+    fuel: List<FuelEntity>,
+    insurance: List<InsurancePolicyEntity>,
+    expenses: List<ExpenseEntity>
+): List<Spend> = buildList {
+    val firstDay = (entries.map { it.date } + fuel.map { it.date } + insurance.map { it.startDate } + expenses.map { it.date })
+        .minOrNull()
+    profile.purchasePrice?.takeIf { it > 0 }?.let { price ->
+        // A price without a date counts from the first thing logged, so totals stay right.
+        val day = profile.purchaseDate ?: firstDay ?: Dates.today()
+        add(Spend(day, SpendCategory.PURCHASE, price, listOf(profile.brand, profile.model).filter { it.isNotBlank() }.joinToString(" ")))
+    }
+    fuel.forEach { f -> f.cost?.takeIf { it > 0 }?.let { add(Spend(f.date, SpendCategory.FUEL, it)) } }
+    entries.forEach { e ->
+        e.cost?.takeIf { it > 0 }?.let { add(Spend(Dates.startOfDay(e.date), SpendCategory.MAINTENANCE, it, e.title.ifBlank { e.product })) }
+    }
+    insurance.forEach { p -> if (p.totalPaid > 0) add(Spend(p.startDate, SpendCategory.INSURANCE, p.totalPaid, p.insurer)) }
+    expenses.forEach { x -> if (x.amount > 0) add(Spend(x.date, ExpenseLedger.categoryOf(x.category), x.amount, x.title)) }
+}.sortedBy { it.date }

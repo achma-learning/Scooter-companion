@@ -35,6 +35,21 @@ object Dates {
 
     fun month(dayMillis: Long): Int = Calendar.getInstance(UTC).apply { timeInMillis = dayMillis }.get(Calendar.MONTH) + 1
 
+    fun year(dayMillis: Long): Int = Calendar.getInstance(UTC).apply { timeInMillis = dayMillis }.get(Calendar.YEAR)
+
+    fun dayOfMonth(dayMillis: Long): Int = Calendar.getInstance(UTC).apply { timeInMillis = dayMillis }.get(Calendar.DAY_OF_MONTH)
+
+    /** A calendar month as one comparable number: year × 12 + month (0-based). */
+    fun monthKey(dayMillis: Long): Int = year(dayMillis) * 12 + month(dayMillis) - 1
+
+    /** First day of the month [key] (see [monthKey]), as UTC midnight. */
+    fun monthStart(key: Int): Long = utcMidnight(Math.floorDiv(key, 12), Math.floorMod(key, 12), 1)
+
+    fun daysInMonth(key: Int): Int = daysBetween(monthStart(key), monthStart(key + 1))
+
+    /** "2026-10" for the month [key]. */
+    fun monthIso(key: Int): String = "%04d-%02d".format(Locale.US, Math.floorDiv(key, 12), Math.floorMod(key, 12) + 1)
+
     fun toIso(dayMillis: Long): String = formatter("yyyy-MM-dd").format(dayMillis)
 
     fun fromIso(iso: String?): Long? = iso?.takeIf { it.length >= 10 }?.let {
