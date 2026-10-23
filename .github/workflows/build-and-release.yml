@@ -1,9 +1,10 @@
 name: Build & release
 
 # Every push to main (and every v* tag) publishes a GitHub Release with:
-#   agility-companion.apk      — the Android app (install on the phone)
-#   agility-companion-web.zip  — the website, ready to upload to any static host
-# Pull requests build and test the same things and attach them as workflow artifacts.
+#   scooter-companion.apk      — the Android app, signed with the private release key
+#   agility-companion-web.zip  — the frozen Agility Companion website
+# Releases need the signing secrets (see README "Releases"). Without them, and on pull
+# requests, the run still tests everything and uploads a debug APK as a workflow artifact.
 
 on:
   push:
@@ -23,9 +24,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      signed: ${{ steps.key.outputs.signed }}
     env:
       APP_VERSION_CODE: ${{ github.run_number }}
-      APP_VERSION_NAME: 2.0.${{ github.run_number }}
+      APP_VERSION_NAME: 3.0.${{ github.run_number }}
     steps:
       - uses: actions/checkout@v4
 
@@ -57,18 +60,25 @@ jobs:
         working-directory: android-app
         run: ./gradlew testDebugUnitTest --stacktrace
 
-      # Optional real signing key: add repository secrets RELEASE_KEYSTORE_BASE64,
-      # RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD. Without them the
-      # release APK is signed with the committed sideload key (android-app/app/signing), so updates still install.
+      # The private release key: repository secrets RELEASE_KEYSTORE_BASE64,
+      # RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS and RELEASE_KEY_PASSWORD. Every release
+      # must be signed with the same key, or phones refuse to install it as an update.
       - name: Decode signing key
+        id: key
         env:
           KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
-        if: env.KEYSTORE_B64 != ''
         run: |
-          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
-          echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No release signing key in repository secrets: building a debug APK only, no GitHub Release."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Build release APK
+        if: steps.key.outputs.signed == 'true'
         env:
           RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
@@ -76,7 +86,14 @@ jobs:
         run: |
           (cd android-app && ./gradlew assembleRelease --stacktrace)
           mkdir -p out
-          cp android-app/app/build/outputs/apk/release/app-release.apk out/agility-companion.apk
+          cp android-app/app/build/outputs/apk/release/app-release.apk out/scooter-companion.apk
+
+      - name: Build debug APK
+        if: steps.key.outputs.signed != 'true'
+        run: |
+          (cd android-app && ./gradlew assembleDebug --stacktrace)
+          mkdir -p out
+          cp android-app/app/build/outputs/apk/debug/app-debug.apk out/scooter-companion-debug.apk
 
       - name: Build website
         run: |
@@ -85,7 +102,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: agility-companion
+          name: scooter-companion
           path: out/
 
       - uses: actions/upload-pages-artifact@v3
@@ -95,31 +112,31 @@ jobs:
 
   release:
     needs: build
-    if: github.event_name == 'push' || inputs.release
+    if: needs.build.outputs.signed == 'true' && (github.event_name == 'push' || inputs.release)
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: agility-companion
+          name: scooter-companion
           path: out
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v2.0.{0}', github.run_number) }}
-          name: Agility Companion ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('2.0.{0}', github.run_number) }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v3.0.{0}', github.run_number) }}
+          name: Scooter Companion ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('3.0.{0}', github.run_number) }}
           target_commitish: ${{ github.sha }}
           make_latest: true
           files: |
-            out/agility-companion.apk
+            out/scooter-companion.apk
             out/agility-companion-web.zip
           body: |
-            **Android app** — download `agility-companion.apk` on your phone and open it (allow "install unknown apps" once).
-            **Website** — unzip `agility-companion-web.zip` and upload the files to any static host (GitHub Pages, Netlify…).
-
-            Move your garage between the two with Settings → Export / Import.
+            **Android app**: download `scooter-companion.apk` on your phone and open it (allow "install unknown apps" once).
             Already installed? Settings → App updates → Check for updates.
+            Coming from Agility Companion? Export a backup there (Settings → Export), then import it in Scooter Companion.
+
+            **Website** (frozen, Agility Companion): unzip `agility-companion-web.zip` and upload the files to any static host.
 
             <!-- versionCode: ${{ github.run_number }} -->
 

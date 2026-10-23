@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.Kymco" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Scooter" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.Kymco.Splash" parent="Theme.Kymco">
+    <style name="Theme.Scooter.Splash" parent="Theme.Scooter">
         <item name="android:windowBackground">@color/splash_background</item>
     </style>
 </resources>
