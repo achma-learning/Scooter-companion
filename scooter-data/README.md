@@ -36,7 +36,7 @@ a model works offline. PDFs are never bundled: the app downloads one only when t
   "verified": false,                    // optional: figures from spec databases, not the maker
   "figures": {                          // numbers the app compares between models
     "powerKw": 9.6, "powerRpm": 8250, "torqueNm": 12, "torqueRpm": 6500,
-    "weightKg": 138, "weightKind": "kerb",   // dry | kerb | wet, as the maker states it
+    "weightKg": 138, "weightKind": "kerb",   // dry | kerb | wet | unstated, as the maker states it
     "seatMm": 799, "tankL": 7, "wheelbaseMm": 1350, "consumptionL100": 2.2, "topSpeedKmh": 98
   },
   "specs": [                            // shown in this order

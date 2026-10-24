@@ -51,6 +51,11 @@ class ModelCatalogTest {
         assertEquals("sym/fiddle-v-125", match("SYM", "Fiddle 125", 125))
         assertEquals("yamaha/neos-50", match("Yamaha", "Neo's", 50))
         assertEquals("cfmoto/150sc", match("CFMOTO", "150 SC", 149))
+        assertEquals("kymco/super-dink-gt-125", match("Kymco", "Superdink 125", 125))
+        assertEquals("kymco/agility-s-125", match("Kymco", "Agility S 125", 125))
+        assertEquals("kymco/agility-nx-125", match("KYMCO", "agility nx", 125))
+        assertEquals("kymco/agility-50-4t", match("Kymco", "Agility 50 4T", 50))
+        assertEquals("bmw/c-400-gt", match("BMW", "C400GT", 350))
     }
 
     @Test fun aDifferentEngineSizeRulesAModelOut() {

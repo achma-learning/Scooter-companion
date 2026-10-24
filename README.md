@@ -36,7 +36,7 @@ from the [Marrakech maintenance wiki](https://achma-learning.github.io/kymco-agi
   price per litre, consumption, fuel spending per month, a spending calendar, and plain-language insights. The home
   screen shows this month against the target and warns before you go over. A report of last
   month arrives on the 1st.
-- **Your model's data**: 41 scooters (Kymco, SYM, Honda, Yamaha, BMW, CFMOTO) from the makers'
+- **Your model's data**: 47 scooters (Kymco, SYM, Honda, Yamaha, BMW, CFMOTO) from the makers'
   own spec sheets, in [`scooter-data/`](scooter-data/). Pick yours and the app fills in the
   engine, loads its specs (oil, tyres and pressures, spark plug, brakes) and, when the maker
   publishes it, its maintenance schedule. Manuals download on demand, never bundled.

@@ -51,8 +51,8 @@ def problems(path: pathlib.Path, task_ids: set) -> list:
         if key not in FIGURES:
             out.append(f'figures: unknown "{key}" (known: {", ".join(sorted(FIGURES))})')
         elif key == "weightKind":
-            if value not in ("dry", "kerb", "wet"):
-                out.append('figures.weightKind must be "dry", "kerb" or "wet"')
+            if value not in ("dry", "kerb", "wet", "unstated"):
+                out.append('figures.weightKind must be "dry", "kerb", "wet" or "unstated" (the maker doesn\'t say)')
         elif not isinstance(value, (int, float)) or value <= 0:
             out.append(f"figures.{key} must be a positive number")
     if "weightKg" in m.get("figures", {}) and "weightKind" not in m["figures"]:

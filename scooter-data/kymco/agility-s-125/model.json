@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "kymco/agility-s-125",
+  "brand": "Kymco",
+  "model": "Agility S 125",
+  "aliases": [
+    "Agility S",
+    "Agility S 125",
+    "Agility S125",
+    "Agility 125 S"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.2,
+    "powerRpm": 8500,
+    "weightKg": 133,
+    "weightKind": "unstated",
+    "seatMm": 800,
+    "tankL": 7.0,
+    "torqueNm": 10.6,
+    "torqueRpm": 6500
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, electronic fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, CBS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Agility S 125 specifications",
+      "url": "https://www.kymco.es/scooters/agility-s-125"
+    }
+  ]
+}

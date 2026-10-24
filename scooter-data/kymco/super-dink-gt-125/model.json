@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "kymco/super-dink-gt-125",
+  "brand": "Kymco",
+  "model": "Super Dink GT 125",
+  "aliases": [
+    "Super Dink",
+    "Superdink",
+    "Super Dink GT",
+    "Super Dink 125",
+    "Superdink 125",
+    "Super Dink GT 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.5,
+    "powerRpm": 9000,
+    "weightKg": 172,
+    "weightKind": "unstated",
+    "seatMm": 838,
+    "tankL": 12.5
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, electronic fuel injection, 4 valves"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, 2-piston caliper, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Super Dink GT 125 specifications",
+      "url": "https://www.kymco.es/scooters/super-dink-gt-125"
+    }
+  ]
+}

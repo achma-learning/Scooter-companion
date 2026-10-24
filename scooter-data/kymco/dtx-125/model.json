@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "kymco/dtx-125",
+  "brand": "Kymco",
+  "model": "DTX 125",
+  "aliases": [
+    "DTX",
+    "DTX 125",
+    "DT X 125",
+    "DT X125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.6,
+    "powerRpm": 9000,
+    "weightKg": 179,
+    "weightKind": "unstated",
+    "seatMm": 800,
+    "tankL": 12.5,
+    "torqueNm": 10.9,
+    "torqueRpm": 7750
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, electronic fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/80-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "150/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 3-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, 2-piston caliper, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: DTX 125 specifications",
+      "url": "https://www.kymco.es/scooters/dtx-125"
+    }
+  ]
+}
