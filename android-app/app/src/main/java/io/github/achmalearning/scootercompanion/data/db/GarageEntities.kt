@@ -104,3 +104,15 @@ data class ExpenseEntity(
     val quantity: Double? = null,
     val notes: String = ""
 )
+
+/**
+ * The owner's own interval for one maintenance task (e.g. engine oil every 1,500 km in a
+ * Marrakech summer). It replaces the manufacturer's interval and the app's default; deleting
+ * the row goes back to them. Null km or months: that task isn't tracked that way.
+ */
+@Entity(tableName = "task_intervals")
+data class TaskIntervalEntity(
+    @PrimaryKey val taskId: String,
+    val intervalKm: Int? = null,
+    val intervalMonths: Int? = null
+)

@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sym/fiddle-v-125",
+  "brand": "SYM",
+  "model": "Fiddle V 125 L/C",
+  "aliases": [
+    "Fiddle V",
+    "Fiddle 5",
+    "Fiddle 125",
+    "Fiddle V 125",
+    "Fiddle 125 LC",
+    "Fiddle V 125 LC"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 8500,
+    "torqueNm": 11.5,
+    "torqueRpm": 6500,
+    "weightKg": 129,
+    "weightKind": "kerb",
+    "seatMm": 780,
+    "tankL": 7.0,
+    "wheelbaseMm": 1290
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø226 mm, ABS (CBS on some versions)"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø220 mm"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 7 L tank"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Fiddle 125 technical specifications (sym-global.com)",
+      "url": "https://www.sym-global.com/fiddle125"
+    },
+    {
+      "title": "SYM France: Fiddle V 125 LC ABS E5+",
+      "url": "https://www.symfrance.com/fr/models/fiddle-v-125-lc-abs--e5.html"
+    }
+  ]
+}

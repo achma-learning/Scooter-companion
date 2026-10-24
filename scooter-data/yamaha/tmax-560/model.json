@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "id": "yamaha/tmax-560",
+  "brand": "Yamaha",
+  "model": "TMAX 560",
+  "years": "2020-",
+  "aliases": [
+    "TMAX",
+    "T-MAX",
+    "TMAX 560",
+    "T-MAX 560",
+    "TMAX560"
+  ],
+  "engine": {
+    "cc": 562,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 35.0,
+    "powerRpm": 7500,
+    "torqueNm": 55.7,
+    "torqueRpm": 5250,
+    "weightKg": 220,
+    "weightKind": "wet",
+    "seatMm": 800,
+    "tankL": 15.0,
+    "wheelbaseMm": 1575,
+    "consumptionL100": 4.8
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "562 cc, 4-stroke DOHC 4-valve parallel twin, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70R15M/C 56H (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "160/60R15M/C 67H (tubeless)"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic dual disc Ø267 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Hydraulic disc Ø282 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Yamaha Motor Europe: TMAX Tech MAX factsheet (2024)",
+      "url": "https://cdn2.yamaha-motor.eu/prod/product-assets/2024/XP500ADX/Factsheets/2024-XP500ADX_en-GB.pdf"
+    }
+  ]
+}

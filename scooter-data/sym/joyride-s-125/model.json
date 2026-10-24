@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "id": "sym/joyride-s-125",
+  "brand": "SYM",
+  "model": "Joyride S 125",
+  "aliases": [
+    "Joyride S",
+    "Joyride S 125",
+    "Joyride 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 10.2,
+    "powerRpm": 9000,
+    "torqueNm": 11.2,
+    "torqueRpm": 7000,
+    "weightKg": 160,
+    "weightKind": "kerb",
+    "seatMm": 760,
+    "tankL": 7.6,
+    "wheelbaseMm": 1430,
+    "topSpeedKmh": 99
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "124 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/90-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø240 mm, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø200 mm, CBS"
+    },
+    {
+      "key": "engineOil",
+      "value": "API SH, SAE 10W-30 or 10W-40 or better (SYM Genuine SYMOIL)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.8 L at a change, 1.0 L total"
+    },
+    {
+      "key": "gearOil",
+      "value": "SYM Genuine SYMOIL gear oil, 0.10 L at a change (0.11 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "SYM radiator agent, 50% concentration; radiator 0.78 L + surge tank 0.42 L"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "CPR8EA-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "pressureFront",
+      "value": "1.8 kgf/cm² (1.77 bar, 25 psi)"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.5 kgf/cm² (2.45 bar, 36 psi)"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 or DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTX9-BS / GTX9-BS, 12 V 8 Ah, sealed maintenance-free"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded, octane 92 or higher (spec table), max 10% ethanol, 7.6 L tank"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 5000,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 10000,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "air-filter-clean": {
+      "km": 5000,
+      "months": 3
+    },
+    "air-filter-replace": {
+      "km": 10000,
+      "months": 6
+    },
+    "plug-replace": {
+      "km": 15000,
+      "months": 12
+    },
+    "throttle-body": {
+      "km": 10000,
+      "months": 6
+    },
+    "gear-oil": {
+      "km": 10000,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "brake-fluid": {
+      "km": 30000,
+      "months": 24
+    },
+    "cvt-inspect": {
+      "km": 10000,
+      "months": 6
+    },
+    "belt": {
+      "km": 15000,
+      "months": 12
+    },
+    "rollers": {
+      "km": 15000,
+      "months": 12
+    },
+    "clutch": {
+      "km": 10000,
+      "months": 6
+    },
+    "valves": {
+      "km": 10000,
+      "months": 6
+    },
+    "coolant-level": {
+      "km": 1000,
+      "months": 1
+    },
+    "coolant-replace": {
+      "km": 15000,
+      "months": 12
+    },
+    "radiator-clean": {
+      "km": 1000,
+      "months": 1
+    },
+    "brake-pads": {
+      "km": 1000,
+      "months": 1
+    },
+    "tyre-pressure": {
+      "km": 1000,
+      "months": 1
+    },
+    "battery": {
+      "km": 1000,
+      "months": 1
+    },
+    "throttle-cable": {
+      "km": 1000,
+      "months": 1
+    },
+    "bolts": {
+      "km": 1000,
+      "months": 1
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual Joyride S 125/200 (LF12W4/LF18W3)",
+        "fr": "Manuel du propriétaire Joyride S 125/200 (LF12W4/LF18W3, en anglais)",
+        "ar": "دليل المالك Joyride S 125/200 (LF12W4/LF18W3، بالإنجليزية)"
+      },
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~166/product~185/JoyrideE5MANUAL.pdf",
+      "bytes": 3410729,
+      "lang": "en"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Joyride owner's manual (LF12W4/LF18W3): oil and gear oil PDF p.16, brake fluid p.18, coolant p.24, maintenance schedule p.28, specifications p.29",
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~166/product~185/JoyrideE5MANUAL.pdf"
+    },
+    {
+      "title": "SYM Joyride S technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/joyride-s"
+    }
+  ]
+}

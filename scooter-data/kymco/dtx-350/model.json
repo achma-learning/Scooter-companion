@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "id": "kymco/dtx-350",
+  "brand": "Kymco",
+  "model": "DTX 350",
+  "aliases": [
+    "DTX 350",
+    "DT X 350",
+    "DT X350",
+    "DTX 350i",
+    "DT X 350i",
+    "DTX 360",
+    "DTX 360 320",
+    "DT X360"
+  ],
+  "engine": {
+    "cc": 350,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 20.4,
+    "powerRpm": 7250,
+    "torqueNm": 29.0,
+    "torqueRpm": 5750,
+    "weightKg": 194,
+    "weightKind": "kerb",
+    "seatMm": 800,
+    "tankL": 12.5,
+    "consumptionL100": 3.8
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "321 cc, 4-stroke single, 4 valves, liquid-cooled, fuel injection, Euro 5+"
+    },
+    {
+      "key": "power",
+      "value": "20.4 kW (27.72 CV) @ 7,250 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/80-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "150/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 3-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø220 mm, 2-piston caliper, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: DTX 350 specifications",
+      "url": "https://www.kymco.es/scooters/dtx-350-euro5-plus"
+    },
+    {
+      "title": "Kymco Deutschland: DT X 350i ABS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/dt-x-350i-abs"
+    }
+  ]
+}

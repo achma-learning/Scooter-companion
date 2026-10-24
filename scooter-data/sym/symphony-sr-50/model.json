@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-sr-50",
+  "brand": "SYM",
+  "model": "Symphony SR 50",
+  "years": "2014-",
+  "verified": false,
+  "aliases": [
+    "Symphony SR",
+    "Symphony SR50"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "CARBURETOR",
+    "cooling": "AIR"
+  },
+  "figures": {},
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.5 cc, 4-stroke single, air-cooled, carburettor (CV)"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/70-16"
+    }
+  ],
+  "note": {
+    "en": "SYM now lists only the Symphony SR 125. Spec databases disagree on the SR 50's power, weight and tank by year: only the figures they all agree on are here.",
+    "fr": "SYM ne présente plus que la Symphony SR 125. Les bases de données se contredisent sur la puissance, le poids et le réservoir de la SR 50 selon l'année : seuls les chiffres communs figurent ici.",
+    "ar": "لم تعد SYM تعرض سوى Symphony SR 125. تختلف قواعد البيانات في قوة SR 50 ووزنها وخزانها حسب السنة: هنا فقط الأرقام المتفق عليها."
+  },
+  "sources": [
+    {
+      "title": "1000PS: Sym Symphony SR 50 technical data",
+      "url": "https://www.1000ps.com/en-gb/model/7717/sym-symphony-sr-50"
+    },
+    {
+      "title": "moto-data.net: SYM Symphony S 50 / SR 50 (2014)",
+      "url": "https://www.moto-data.net/sym/symphony-s-50-sr-50-2014"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "kymco/skytown-50",
+  "brand": "Kymco",
+  "model": "Skytown 50",
+  "aliases": [
+    "Skytown 50",
+    "Sky Town 50",
+    "Skytown 50i",
+    "Sky Town 50i"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.4,
+    "powerRpm": 7000,
+    "torqueNm": 3.3,
+    "torqueRpm": 6000,
+    "weightKg": 124,
+    "weightKind": "kerb",
+    "seatMm": 765,
+    "tankL": 7.0,
+    "wheelbaseMm": 1290,
+    "consumptionL100": 2.3
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "50 cc, 4-stroke single, 2 valves, air-cooled, fuel injection, Euro 5+"
+    },
+    {
+      "key": "power",
+      "value": "3.3 cv (2.4 kW) @ 7,000 rpm (Kymco Germany: 2.4 kW @ 7,500 rpm)"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø220 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco France: Skytown 50 technical data",
+      "url": "https://www.kymco.fr/fr/scooters/skytown-50/"
+    },
+    {
+      "title": "Kymco Deutschland: Sky Town 50i (kW figure, brake sizes) technical data",
+      "url": "https://www.kymco.de/roller/50ccm/sky-town-50i"
+    }
+  ]
+}

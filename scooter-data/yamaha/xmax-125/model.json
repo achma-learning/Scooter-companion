@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "yamaha/xmax-125",
+  "brand": "Yamaha",
+  "model": "XMAX 125",
+  "aliases": [
+    "XMAX 125",
+    "X-MAX 125",
+    "XMAX125",
+    "XMAX",
+    "X-MAX"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 8000,
+    "torqueNm": 11.2,
+    "torqueRpm": 6000,
+    "weightKg": 167,
+    "weightKind": "wet",
+    "seatMm": 800,
+    "tankL": 13.2,
+    "wheelbaseMm": 1570,
+    "consumptionL100": 2.4
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic disc Ø267 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Hydraulic disc Ø245 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Yamaha Motor Europe: XMAX 125 factsheet (2025)",
+      "url": "https://cdn2.yamaha-motor.eu/prod/product-assets/2025/XMAX125A/Factsheets/2025-XMAX125A_en-GB.pdf"
+    }
+  ]
+}

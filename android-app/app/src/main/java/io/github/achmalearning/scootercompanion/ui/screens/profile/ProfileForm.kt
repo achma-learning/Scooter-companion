@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.R
 import io.github.achmalearning.scootercompanion.data.db.BikeProfileEntity
+import io.github.achmalearning.scootercompanion.data.models.ScooterModel
 import io.github.achmalearning.scootercompanion.data.region.RegionPack
 import io.github.achmalearning.scootercompanion.data.region.UsedMarket
 import io.github.achmalearning.scootercompanion.domain.Cooling
@@ -92,6 +93,16 @@ class ProfileDraft(private val base: BikeProfileEntity) {
 
     /** The wizard's first step needs brand, model and (for petrol) the engine size. */
     val typeValid: Boolean get() = brand.isNotBlank() && model.isNotBlank() && (electric || ccValue != null)
+
+    /** A model from scooter-data: its name and engine, so the schedule and specs follow. */
+    fun applyModel(m: ScooterModel) {
+        brand = m.brand
+        model = m.model
+        powertrain = enumOr(m.engine.powertrain, Powertrain.PETROL)
+        if (m.engine.cc > 0) cc = m.engine.cc.toString()
+        fuelSystem = enumOr(m.engine.fuelSystem, FuelSystem.CARBURETOR)
+        cooling = enumOr(m.engine.cooling, Cooling.AIR)
+    }
 
     /** New and used scooters have different usual warranties; follow the switch unless edited. */
     fun setUsed(used: Boolean) {
@@ -179,6 +190,18 @@ fun ScooterTypeSection(d: ProfileDraft, region: RegionPack) {
             d.model, { d.model = it }, label = { Text(stringResource(R.string.model)) },
             placeholder = { Text(stringResource(R.string.model_placeholder)) }, singleLine = true, modifier = Modifier.fillMaxWidth()
         )
+        // Models scooter-data knows for this brand: one tap fills in the engine.
+        val context = LocalContext.current
+        val catalog = remember { AppContainer.getInstance(context).modelCatalog }
+        val known = catalog.forBrand(d.brand)
+        val matched = catalog.match(d.brand, d.model, d.ccValue ?: 0)
+        if (known.isNotEmpty()) {
+            FieldLabel(stringResource(R.string.model_pick))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                known.forEach { m -> FilterChip(selected = matched?.id == m.id, onClick = { d.applyModel(m) }, label = { Text(m.model) }) }
+            }
+        }
+        if (matched != null) Text(stringResource(R.string.model_known), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
 
         if (!d.electric) {
             NumberField(d.cc, { d.cc = it.take(4) }, stringResource(R.string.engine_cc), suffix = stringResource(R.string.unit_cc))

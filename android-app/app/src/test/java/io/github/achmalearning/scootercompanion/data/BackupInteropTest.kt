@@ -3,6 +3,7 @@ package io.github.achmalearning.scootercompanion.data
 import androidx.test.core.app.ApplicationProvider
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.backup.BackupFile
+import io.github.achmalearning.scootercompanion.data.backup.BackupInterval
 import io.github.achmalearning.scootercompanion.data.export.TextReport
 import io.github.achmalearning.scootercompanion.domain.CoverageState
 import io.github.achmalearning.scootercompanion.domain.Cooling
@@ -92,6 +93,14 @@ class BackupInteropTest {
         assertEquals(original.insurance, exported.insurance)
         assertEquals(original.expenses.sortedBy { it.date }, exported.expenses.sortedBy { it.date })
         assertEquals(original.preRide, exported.preRide)
+
+        // The owner's own intervals travel with the save file.
+        container.garageRepository.setInterval("engine-oil", 1500, null)
+        val withIntervals = container.garageRepository.exportJson()
+        assertEquals(listOf(BackupInterval("engine-oil", 1500, null)), json.decodeFromString(BackupFile.serializer(), withIntervals).intervals)
+        container.garageRepository.importJson(withIntervals, container.maintenanceRepository)
+        assertEquals(1500, container.garageRepository.current().intervals["engine-oil"]?.intervalKm)
+        assertEquals(1500, container.garageRepository.current().tasks.first { it.id == "engine-oil" }.intervalKm)
     }
 
     @Test

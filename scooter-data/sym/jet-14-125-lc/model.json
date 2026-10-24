@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "sym/jet-14-125-lc",
+  "brand": "SYM",
+  "model": "Jet 14 Evo 125 L/C",
+  "aliases": [
+    "Jet 14 LC",
+    "Jet14 LC",
+    "Jet 14 125 LC",
+    "Jet 14 Evo LC",
+    "Jet 14 Evo 125 LC",
+    "Jet 14 125 L/C",
+    "J14 125 Evo LC"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.3,
+    "powerRpm": 8000,
+    "weightKg": 136,
+    "weightKind": "kerb",
+    "seatMm": 790,
+    "tankL": 7.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/90-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø220 mm, ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 7.2 L tank"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM France: Jet 14 Evo 125 LC ABS E5+",
+      "url": "https://www.symfrance.com/fr/models/j14-125-evo-lc-abs-e5.html"
+    }
+  ]
+}

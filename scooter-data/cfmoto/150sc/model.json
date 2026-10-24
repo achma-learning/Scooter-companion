@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "id": "cfmoto/150sc",
+  "brand": "CFMOTO",
+  "model": "150SC",
+  "years": "2024-",
+  "aliases": [
+    "150SC",
+    "150 SC",
+    "SC150",
+    "150 Scooter"
+  ],
+  "engine": {
+    "cc": 149,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 10.5,
+    "powerRpm": 8250,
+    "torqueNm": 14.2,
+    "torqueRpm": 6500,
+    "weightKg": 135,
+    "weightKind": "kerb",
+    "seatMm": 765,
+    "tankL": 8.5,
+    "wheelbaseMm": 1315
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "149 cc, 4-stroke SOHC 2-valve single, liquid-cooled, Bosch fuel injection, CVT"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-14M/C 50P"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13M/C 63P"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic single disc, dual-channel ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Hydraulic single disc, dual-channel ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "8.5 L tank; CFMOTO quotes 2.5-2.7 L/100 km"
+    }
+  ],
+  "sources": [
+    {
+      "title": "CFMOTO South Africa: 150SC specifications",
+      "url": "https://www.cfmoto.co.za/150sc/"
+    }
+  ]
+}

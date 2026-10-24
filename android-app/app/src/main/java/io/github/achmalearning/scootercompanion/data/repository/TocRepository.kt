@@ -1,6 +1,7 @@
 package io.github.achmalearning.scootercompanion.data.repository
 
 import android.content.Context
+import io.github.achmalearning.scootercompanion.data.model.AGILITY_DOCS
 import io.github.achmalearning.scootercompanion.data.model.TocDocument
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,7 +13,7 @@ class TocRepository(private val context: Context) {
 
     suspend fun load(): TocDocument = withContext(Dispatchers.IO) {
         cached ?: run {
-            val text = context.assets.open("toc.json").bufferedReader().use { it.readText() }
+            val text = context.assets.open("$AGILITY_DOCS/toc.json").bufferedReader().use { it.readText() }
             json.decodeFromString(TocDocument.serializer(), text).also { cached = it }
         }
     }

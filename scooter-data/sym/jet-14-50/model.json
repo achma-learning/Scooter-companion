@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "id": "sym/jet-14-50",
+  "brand": "SYM",
+  "model": "Jet 14 50",
+  "aliases": [
+    "Jet 14",
+    "Jet14",
+    "Jet 14 50",
+    "Jet14 50"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.2,
+    "powerRpm": 8000,
+    "weightKg": 119,
+    "weightKind": "kerb",
+    "seatMm": 775,
+    "tankL": 7.5
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.5 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/90-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø130 mm"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 7.5 L tank"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM France: Jet 14 50 AC E5+",
+      "url": "https://www.symfrance.com/fr/models/jet-14-50-ac-euro-5.html"
+    }
+  ]
+}

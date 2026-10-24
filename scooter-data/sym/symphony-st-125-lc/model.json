@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-st-125-lc",
+  "brand": "SYM",
+  "model": "Symphony ST 125 L/C",
+  "years": "2021-",
+  "aliases": [
+    "Symphony ST 125 LC",
+    "Symphony ST 125 L/C",
+    "Symphony ST LC",
+    "Symphony ST 125 EFI LC",
+    "Symphony ST 125 EFI L/C",
+    "Symphony ST 125 Liquid"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.3,
+    "powerRpm": 8000,
+    "torqueNm": 11.5,
+    "torqueRpm": 6500,
+    "tankL": 7.0,
+    "wheelbaseMm": 1385,
+    "weightKg": 132,
+    "weightKind": "kerb",
+    "seatMm": 792
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "power",
+      "value": "9.3 kW @ 8,000 rpm, 11.5 Nm @ 6,500 rpm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded, 7 L tank"
+    }
+  ],
+  "note": {
+    "en": "SYM doesn't publish this model's owner's manual online: oil grade and quantity, spark plug and service intervals are in the booklet that came with your scooter. Until you enter them, the app uses its usual 125 cc liquid-cooled schedule; change any interval from its service page.",
+    "fr": "SYM ne publie pas en ligne le manuel de ce modèle : huile (grade et quantité), bougie et intervalles d'entretien se trouvent dans le livret fourni avec votre scooter. En attendant, l'app suit son plan habituel 125 cc à refroidissement liquide ; modifiez chaque intervalle depuis sa page d'entretien.",
+    "ar": "لا تنشر SYM دليل هذا الطراز على الإنترنت: نوع الزيت وكميته وشمعة الإشعال ومواعيد الصيانة موجودة في الكتيّب المرفق بسكوترك. إلى أن تُدخلها، يتبع التطبيق برنامجه المعتاد لمحركات 125 cc المبرّدة بالسائل؛ يمكنك تغيير أي موعد من صفحة الصيانة الخاصة به."
+  },
+  "sources": [
+    {
+      "title": "SYM France: Symphony ST 125 LC ABS E5+",
+      "url": "https://www.symfrance.com/fr/models/symphony-st-125-lc-abs-euro-5.html"
+    },
+    {
+      "title": "SYM Symphony ST technical specifications, 125cc liquid-cooled (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony-st?engine=125-250"
+    }
+  ]
+}

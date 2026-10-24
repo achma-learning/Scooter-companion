@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-st-200",
+  "brand": "SYM",
+  "model": "Symphony ST 200",
+  "aliases": [
+    "Symphony ST 200i",
+    "Symphony ST200"
+  ],
+  "engine": {
+    "cc": 169,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 7500,
+    "torqueNm": 12.5,
+    "torqueRpm": 6000,
+    "tankL": 7.0,
+    "wheelbaseMm": 1385
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "169 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Symphony ST technical specifications, 200cc (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony-st"
+    }
+  ]
+}

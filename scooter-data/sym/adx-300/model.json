@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "id": "sym/adx-300",
+  "brand": "SYM",
+  "model": "ADX 300",
+  "years": "2024-",
+  "aliases": [
+    "ADX 300",
+    "ADX300",
+    "ADX"
+  ],
+  "engine": {
+    "cc": 278,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 19.0,
+    "powerRpm": 8000,
+    "torqueNm": 26.0,
+    "torqueRpm": 6000,
+    "tankL": 16.0,
+    "wheelbaseMm": 1510,
+    "weightKg": 200,
+    "weightKind": "kerb",
+    "seatMm": 790
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "278.3 cc, 4-stroke SOHC single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 16 L tank"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM France: ADX 300 ABS TCS E5+",
+      "url": "https://www.symfrance.com/fr/models/adx-300.html"
+    },
+    {
+      "title": "SYM ADX 300 technical specifications, 300cc (sym-global.com)",
+      "url": "https://www.sym-global.com/adx-300"
+    }
+  ]
+}

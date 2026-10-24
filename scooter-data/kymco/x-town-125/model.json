@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "kymco/x-town-125",
+  "brand": "Kymco",
+  "model": "X-Town 125i",
+  "aliases": [
+    "X-Town",
+    "X-Town 125",
+    "X-Town 125i",
+    "XTown 125",
+    "X Town 125",
+    "X.Town 125",
+    "X.Town 125i",
+    "Xtown 125i"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "seatMm": 785,
+    "tankL": 12.5,
+    "wheelbaseMm": 1545
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "124.8 cc, 4-stroke single, OHC 4 valves, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "power",
+      "value": "9.5 kW (12.9 cv) @ 9,000 rpm on the Euro 5 version (Kymco France); Kymco UK lists 11 kW (15 hp) @ 9,000 rpm and 11.6 Nm @ 7,000 rpm"
+    },
+    {
+      "key": "Weight",
+      "value": "183 kg (Kymco France); 185 kg dry (Kymco UK)"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/80-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "150/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø280 mm, CBS (Kymco UK)"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco France: X.Town 125i technical data",
+      "url": "https://www.kymco.fr/fr/scooters/x-town-125i/"
+    },
+    {
+      "title": "Kymco UK: X-Town 125 specification",
+      "url": "https://www.kymco.co.uk/scooters-and-motorcycles-range/125cc/x-town-125"
+    }
+  ]
+}

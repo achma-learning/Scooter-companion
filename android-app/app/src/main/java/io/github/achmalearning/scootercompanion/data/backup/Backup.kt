@@ -22,7 +22,9 @@ data class BackupFile(
     val documents: List<BackupDocument> = emptyList(),
     val preRide: BackupPreRide = BackupPreRide(),
     val insurance: List<BackupInsurance> = emptyList(),
-    val expenses: List<BackupExpense> = emptyList()
+    val expenses: List<BackupExpense> = emptyList(),
+    /** The owner's own maintenance intervals (added in 3.0.2x; older files have none). */
+    val intervals: List<BackupInterval> = emptyList()
 ) {
     companion object {
         const val FORMAT = "scooter-companion"
@@ -107,3 +109,5 @@ data class BackupExpense(
     val quantity: Double? = null,
     val notes: String = ""
 )
+
+@Serializable data class BackupInterval(val task: String, val km: Int? = null, val months: Int? = null)
