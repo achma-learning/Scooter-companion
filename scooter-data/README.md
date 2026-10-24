@@ -31,7 +31,7 @@ a model works offline. PDFs are never bundled: the app downloads one only when t
     "cc": 125,                          // 0 for electric
     "powertrain": "PETROL",             // PETROL | ELECTRIC
     "fuelSystem": "INJECTION",          // CARBURETOR | INJECTION
-    "cooling": "LIQUID"                 // AIR | LIQUID
+    "cooling": "LIQUID"                 // AIR | LIQUID (electric: leave both out)
   },
   "verified": false,                    // optional: figures from spec databases, not the maker
   "figures": {                          // numbers the app compares between models

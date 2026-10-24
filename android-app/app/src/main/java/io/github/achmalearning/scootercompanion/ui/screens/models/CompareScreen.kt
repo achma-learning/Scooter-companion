@@ -145,6 +145,7 @@ private fun CompareTable(models: List<ScooterModel>, colors: List<Color>) {
     val liquid = stringResource(R.string.compare_liquid)
     val carb = stringResource(R.string.compare_carb)
     val inj = stringResource(R.string.compare_inj)
+    val electric = stringResource(R.string.type_electric)
     val best = stringResource(R.string.compare_best)
 
     Panel(modifier = Modifier.padding(top = 10.dp)) {
@@ -160,7 +161,8 @@ private fun CompareTable(models: List<ScooterModel>, colors: List<Color>) {
                 }
             }
             TextRow(stringResource(R.string.compare_engine), models) { m ->
-                "${m.engine.cc} cc\n" + listOf(if (m.engine.cooling == "LIQUID") liquid else air, if (m.engine.fuelSystem == "INJECTION") inj else carb).joinToString(", ")
+                if (m.engine.powertrain == "ELECTRIC") electric
+                else "${m.engine.cc} cc\n" + listOf(if (m.engine.cooling == "LIQUID") liquid else air, if (m.engine.fuelSystem == "INJECTION") inj else carb).joinToString(", ")
             }
             metrics.forEach { metric ->
                 val values = models.map(metric.value)

@@ -5,7 +5,8 @@
   "model": "Forza 125",
   "aliases": [
     "Forza 125",
-    "Forza125"
+    "Forza125",
+    "NSS125"
   ],
   "engine": {
     "cc": 125,
@@ -32,16 +33,40 @@
       "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
     },
     {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
       "key": "engineOilQty",
-      "value": "0.9 L total capacity"
+      "value": "0.8 L at a change (0.9 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.12 L at a change (0.14 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 0.50 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.80-0.90 mm"
     },
     {
       "key": "tyreFront",
-      "value": "120/70-15MC 56P"
+      "value": "120/70-15M/C 56P (Michelin) or 56S (Pirelli), tubeless"
     },
     {
       "key": "tyreRear",
-      "value": "140/70-14MC 68P"
+      "value": "140/70-14M/C 68P (Michelin) or 68S (Pirelli), reinforced, tubeless"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.25 bar (33 psi), solo or two-up"
     },
     {
       "key": "brakeFront",
@@ -50,12 +75,79 @@
     {
       "key": "brakeRear",
       "value": "240 mm disc, ABS"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ8V, 12 V 7 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 95 RON or higher (E10 accepted), 11.7 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,700 ± 100 rpm"
     }
   ],
   "sources": [
     {
+      "title": "Honda Forza 125 (NSS125AD) Owner's Manual 2025: maintenance schedule p.110-111, specifications p.183-184",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSS125AD/2025/NSS125AD_OM_32K40L60_eng_WEB.pdf"
+    },
+    {
       "title": "Honda UK: Forza 125 specifications",
       "url": "https://www.honda.co.uk/motorcycles/range/scooter/forza-125/specifications-and-price.html"
+    }
+  ],
+  "code": "NSS125AD",
+  "schedule": {
+    "engine-oil": {
+      "km": 6000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 12000
+    },
+    "air-filter-replace": {
+      "km": 18000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 6000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual Forza 125 (NSS125AD, 2025) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire Forza 125 (NSS125AD, 2025) (Honda Motor Europe)",
+        "ar": "دليل المالك Forza 125 (NSS125AD, 2025) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSS125AD/2025/NSS125AD_OM_32K40L60_eng_WEB.pdf",
+      "bytes": 6850658,
+      "lang": "en"
     }
   ]
 }

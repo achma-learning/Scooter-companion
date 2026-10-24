@@ -18,7 +18,10 @@
     "torqueNm": 3.0,
     "torqueRpm": 6000,
     "tankL": 7.0,
-    "wheelbaseMm": 1350
+    "wheelbaseMm": 1350,
+    "weightKg": 118,
+    "weightKind": "kerb",
+    "seatMm": 792
   },
   "specs": [
     {
@@ -35,6 +38,10 @@
     }
   ],
   "sources": [
+    {
+      "title": "SYM France: Symphony 50 ST E5+",
+      "url": "https://www.symfrance.com/fr/models/symphony-st-50-euro-5.html"
+    },
     {
       "title": "SYM Symphony ST technical specifications, 50cc (sym-global.com)",
       "url": "https://www.sym-global.com/symphony-st"

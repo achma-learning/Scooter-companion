@@ -40,7 +40,11 @@ def problems(path: pathlib.Path, task_ids: set) -> list:
     engine = m.get("engine", {})
     if not isinstance(engine.get("cc"), int) or engine["cc"] < 0:
         out.append("engine.cc must be a whole number (0 for electric)")
+    electric = engine.get("powertrain") == "ELECTRIC"
     for field, allowed in ENUMS.items():
+        # An electric scooter has no fuel system and may not say how its motor is cooled.
+        if electric and field != "powertrain" and field not in engine:
+            continue
         if engine.get(field) not in allowed:
             out.append(f"engine.{field} must be one of {sorted(allowed)}")
     if engine.get("powertrain") == "PETROL" and engine.get("cc", 0) <= 0:

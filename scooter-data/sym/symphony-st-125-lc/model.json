@@ -24,7 +24,10 @@
     "torqueNm": 11.5,
     "torqueRpm": 6500,
     "tankL": 7.0,
-    "wheelbaseMm": 1385
+    "wheelbaseMm": 1385,
+    "weightKg": 132,
+    "weightKind": "kerb",
+    "seatMm": 792
   },
   "specs": [
     {
@@ -54,6 +57,10 @@
     "ar": "لا تنشر SYM دليل هذا الطراز على الإنترنت: نوع الزيت وكميته وشمعة الإشعال ومواعيد الصيانة موجودة في الكتيّب المرفق بسكوترك. إلى أن تُدخلها، يتبع التطبيق برنامجه المعتاد لمحركات 125 cc المبرّدة بالسائل؛ يمكنك تغيير أي موعد من صفحة الصيانة الخاصة به."
   },
   "sources": [
+    {
+      "title": "SYM France: Symphony ST 125 LC ABS E5+",
+      "url": "https://www.symfrance.com/fr/models/symphony-st-125-lc-abs-euro-5.html"
+    },
     {
       "title": "SYM Symphony ST technical specifications, 125cc liquid-cooled (sym-global.com)",
       "url": "https://www.sym-global.com/symphony-st?engine=125-250"
