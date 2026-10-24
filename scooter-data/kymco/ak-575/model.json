@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "kymco/ak-575",
+  "brand": "Kymco",
+  "model": "AK 575",
+  "aliases": [
+    "AK 575",
+    "AK575",
+    "AK 575i",
+    "AK 575 Premium",
+    "AK 575i Premium"
+  ],
+  "engine": {
+    "cc": 575,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 38.5,
+    "powerRpm": 7000,
+    "weightKg": 238,
+    "weightKind": "kerb",
+    "seatMm": 790,
+    "tankL": 14.5,
+    "consumptionL100": 4.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "574 cc, 4-stroke parallel twin, 4 valves per cylinder, liquid-cooled, fuel injection, Euro 5+"
+    },
+    {
+      "key": "power",
+      "value": "38.5 kW (52.3 PS) @ 7,000 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "160/60-15"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Twin wave discs Ø270 mm, Brembo radial 4-piston calipers, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Wave disc Ø260 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: AK 575i ABS Premium technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/kymco-ak-575i-abs-premium"
+    }
+  ]
+}

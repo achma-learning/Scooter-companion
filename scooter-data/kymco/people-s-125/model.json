@@ -23,7 +23,9 @@
     "seatMm": 800,
     "tankL": 6.2,
     "torqueNm": 10.0,
-    "torqueRpm": 6500
+    "torqueRpm": 6500,
+    "wheelbaseMm": 1390,
+    "consumptionL100": 2.7
   },
   "specs": [
     {
@@ -51,6 +53,10 @@
     {
       "title": "Kymco España: People S 125 specifications",
       "url": "https://www.kymco.es/scooters/people-s-125"
+    },
+    {
+      "title": "Kymco France: People S 125 (wheelbase, consumption) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/people-s-125/"
     }
   ]
 }

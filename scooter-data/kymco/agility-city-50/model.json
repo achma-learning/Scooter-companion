@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "id": "kymco/agility-city-50",
+  "brand": "Kymco",
+  "model": "Agility City 50",
+  "aliases": [
+    "Agility City 50",
+    "Agility City",
+    "Agility 50 City",
+    "Agility 16+ 50",
+    "Agility 50 16+",
+    "Agility 16 50",
+    "Agility 50 16"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.4,
+    "powerRpm": 7000,
+    "torqueNm": 3.5,
+    "torqueRpm": 6000,
+    "weightKg": 120,
+    "weightKind": "unstated",
+    "seatMm": 815,
+    "tankL": 7.0,
+    "wheelbaseMm": 1340,
+    "consumptionL100": 2.4
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "50 cc, 4-stroke single, fan-cooled, Synerject electronic fuel injection, Euro 5"
+    },
+    {
+      "key": "power",
+      "value": "2.4 kW (3.2 CV) @ 7,000 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 1-piston caliper"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø127.5 mm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Agility City 50 specifications",
+      "url": "https://www.kymco.es/scooters/agility-city-50"
+    },
+    {
+      "title": "Kymco France: Agility 50 16+ technical data (wheelbase, consumption)",
+      "url": "https://www.kymco.fr/fr/scooters/agility-50-16/"
+    }
+  ]
+}

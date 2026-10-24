@@ -9,7 +9,11 @@
     "Super Dink GT",
     "Super Dink 125",
     "Superdink 125",
-    "Super Dink GT 125"
+    "Super Dink GT 125",
+    "Downtown GT",
+    "Downtown GT 125",
+    "Downtown GT 125i",
+    "Downtown GT 125i ABS"
   ],
   "engine": {
     "cc": 125,
@@ -21,9 +25,13 @@
     "powerKw": 9.5,
     "powerRpm": 9000,
     "weightKg": 172,
-    "weightKind": "unstated",
+    "weightKind": "kerb",
     "seatMm": 838,
-    "tankL": 12.5
+    "tankL": 12.5,
+    "wheelbaseMm": 1555,
+    "consumptionL100": 2.7,
+    "torqueNm": 11.0,
+    "torqueRpm": 7000
   },
   "specs": [
     {
@@ -51,6 +59,14 @@
     {
       "title": "Kymco España: Super Dink GT 125 specifications",
       "url": "https://www.kymco.es/scooters/super-dink-gt-125"
+    },
+    {
+      "title": "Kymco Deutschland: Downtown GT 125i ABS (same scooter; kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/downtown-gt-125i-abs"
+    },
+    {
+      "title": "Kymco France: Downtown GT 125 (same scooter; torque, wheelbase, consumption) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/downtown-gt-125/"
     }
   ]
 }

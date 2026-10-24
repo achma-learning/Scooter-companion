@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "kymco/xciting-vs-400",
+  "brand": "Kymco",
+  "model": "Xciting VS 400",
+  "aliases": [
+    "Xciting VS",
+    "Xciting VS 400",
+    "Xciting VS 400i",
+    "Xciting 400 VS",
+    "Xciting VS400"
+  ],
+  "engine": {
+    "cc": 400,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 24.5,
+    "powerRpm": 7250,
+    "torqueNm": 37.0,
+    "torqueRpm": 5750,
+    "weightKg": 213,
+    "weightKind": "kerb",
+    "seatMm": 805,
+    "tankL": 12.5,
+    "consumptionL100": 4.1
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "400 cc, 4-stroke single, liquid-cooled, fuel injection, Euro 5+, traction control"
+    },
+    {
+      "key": "power",
+      "value": "24.5 kW (33.32 CV) @ 7,250 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "150/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Twin discs Ø280 mm, 4-piston calipers, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, ABS, mechanical parking brake"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Xciting VS 400 specifications",
+      "url": "https://www.kymco.es/scooters/xciting-vs-400-euro5-plus"
+    },
+    {
+      "title": "Kymco Deutschland: Xciting VS 400i ABS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/xciting-vs-400i-abs"
+    }
+  ]
+}

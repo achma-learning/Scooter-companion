@@ -91,6 +91,27 @@ def problems(path: pathlib.Path, task_ids: set) -> list:
     return out
 
 
+def norm(name: str) -> str:
+    return "".join(ch for ch in name.lower() if ch.isalnum())
+
+
+def alias_clashes(files) -> list:
+    """Same brand, engine sizes the app would accept for both (within 20 %), and a shared name."""
+    models = [json.loads(p.read_text(encoding="utf-8")) for p in files]
+    out = []
+    for i, a in enumerate(models):
+        for b in models[i + 1:]:
+            if a["brand"].lower() != b["brand"].lower():
+                continue
+            ca, cb = a["engine"]["cc"], b["engine"]["cc"]
+            if ca > 0 and cb > 0 and abs(ca - cb) > min(ca, cb) // 5:
+                continue
+            shared = {norm(n) for n in [a["model"]] + a.get("aliases", [])} & {norm(n) for n in [b["model"]] + b.get("aliases", [])}
+            if shared:
+                out.append(f'{a["id"]} and {b["id"]}: {", ".join(sorted(shared))}')
+    return out
+
+
 def main() -> int:
     content = json.loads(CONTENT.read_text(encoding="utf-8"))
     task_ids = {t["id"] for t in content["genericTasks"]}
@@ -107,6 +128,12 @@ def main() -> int:
                 print(f"  - {e}")
             return 1
         ids[path.parent.relative_to(DATA).as_posix()] = path
+    clashes = alias_clashes(files)
+    if clashes:
+        print("Two models answer to the same name (the app couldn't tell them apart):")
+        for c in clashes:
+            print(f"  - {c}")
+        return 1
     stray = [p for p in DATA.rglob("model.json") if p not in files]
     if stray:
         print("model.json must sit exactly two folders deep (brand/model):", *stray, sep="\n  ")

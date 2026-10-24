@@ -7,7 +7,9 @@
     "Agility S",
     "Agility S 125",
     "Agility S125",
-    "Agility 125 S"
+    "Agility 125 S",
+    "Agility S 125i",
+    "Agility S 125i CBS"
   ],
   "engine": {
     "cc": 125,
@@ -19,11 +21,13 @@
     "powerKw": 8.2,
     "powerRpm": 8500,
     "weightKg": 133,
-    "weightKind": "unstated",
+    "weightKind": "kerb",
     "seatMm": 800,
     "tankL": 7.0,
     "torqueNm": 10.6,
-    "torqueRpm": 6500
+    "torqueRpm": 6500,
+    "wheelbaseMm": 1390,
+    "consumptionL100": 2.1
   },
   "specs": [
     {
@@ -51,6 +55,14 @@
     {
       "title": "Kymco España: Agility S 125 specifications",
       "url": "https://www.kymco.es/scooters/agility-s-125"
+    },
+    {
+      "title": "Kymco Deutschland: Agility S 125i CBS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/agility-s-125i-cbs"
+    },
+    {
+      "title": "Kymco France: Agility S 125 (wheelbase, consumption) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/agility-s-125/"
     }
   ]
 }

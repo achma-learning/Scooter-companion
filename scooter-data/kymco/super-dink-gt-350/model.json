@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "kymco/super-dink-gt-350",
+  "brand": "Kymco",
+  "model": "Super Dink GT 350",
+  "aliases": [
+    "Super Dink 350",
+    "Superdink 350",
+    "Super Dink GT 350",
+    "Super Dink GT 350 TCS",
+    "Downtown GT 350",
+    "Downtown GT 350i",
+    "Downtown GT 350i TCS",
+    "Downtown TCS 350i"
+  ],
+  "engine": {
+    "cc": 350,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.0,
+    "powerRpm": 7500,
+    "weightKg": 185,
+    "weightKind": "kerb",
+    "seatMm": 825,
+    "tankL": 12.5,
+    "consumptionL100": 3.5
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "321 cc, 4-stroke single, 4 valves, liquid-cooled, fuel injection, Euro 5+, TCS, keyless"
+    },
+    {
+      "key": "power",
+      "value": "21 kW (28.16 CV) @ 7,500 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, 2-piston caliper, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Super Dink GT 350 specifications",
+      "url": "https://www.kymco.es/scooters/super-dink-gt-350"
+    },
+    {
+      "title": "Kymco Deutschland: Downtown GT 350i TCS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/downtown-gt-350i-tcs"
+    }
+  ]
+}

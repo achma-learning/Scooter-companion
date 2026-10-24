@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "id": "kymco/agility-carry-50",
+  "brand": "Kymco",
+  "model": "Agility Carry 50i",
+  "aliases": [
+    "Agility Carry",
+    "Agility Carry 50",
+    "Agility Carry 50i",
+    "Agility 50 Carry"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.4,
+    "powerRpm": 7000,
+    "weightKg": 105,
+    "weightKind": "kerb",
+    "seatMm": 780,
+    "tankL": 5.5,
+    "consumptionL100": 2.0
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "50 cc, 4-stroke single, 2 valves, fan-cooled, fuel injection, Euro 5"
+    },
+    {
+      "key": "power",
+      "value": "2.4 kW (3.3 PS) @ 7,000 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø180 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: Agility Carry 50i technical data",
+      "url": "https://www.kymco.de/roller/50ccm/agility-carry-50"
+    }
+  ]
+}

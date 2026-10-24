@@ -6,7 +6,9 @@
   "aliases": [
     "Agility NX",
     "Agility NX 125",
-    "AgilityNX 125"
+    "AgilityNX 125",
+    "Agility NX 125i",
+    "Agility NX 125i ABS"
   ],
   "engine": {
     "cc": 125,
@@ -18,11 +20,12 @@
     "powerKw": 8.1,
     "powerRpm": 8000,
     "weightKg": 132,
-    "weightKind": "unstated",
+    "weightKind": "kerb",
     "seatMm": 813,
     "tankL": 7.0,
     "torqueNm": 10.5,
-    "torqueRpm": 6500
+    "torqueRpm": 6500,
+    "consumptionL100": 2.2
   },
   "specs": [
     {
@@ -50,6 +53,10 @@
     {
       "title": "Kymco España: Agility NX 125 specifications",
       "url": "https://www.kymco.es/scooters/agility-nx-125"
+    },
+    {
+      "title": "Kymco Deutschland: Agility NX 125i ABS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/agility-nx-125i-abs"
     }
   ]
 }

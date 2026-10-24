@@ -7,7 +7,10 @@
     "DTX",
     "DTX 125",
     "DT X 125",
-    "DT X125"
+    "DT X125",
+    "DTX 360 125",
+    "DT X 125i",
+    "DTX 125i"
   ],
   "engine": {
     "cc": 125,
@@ -23,7 +26,8 @@
     "seatMm": 800,
     "tankL": 12.5,
     "torqueNm": 10.9,
-    "torqueRpm": 7750
+    "torqueRpm": 7750,
+    "wheelbaseMm": 1550
   },
   "specs": [
     {
@@ -51,6 +55,10 @@
     {
       "title": "Kymco España: DTX 125 specifications",
       "url": "https://www.kymco.es/scooters/dtx-125"
+    },
+    {
+      "title": "Kymco UK: DTX 360 125 specification (wheelbase)",
+      "url": "https://www.kymco.co.uk/scooters-and-motorcycles-range/dtx-360/dtx-360-125"
     }
   ]
 }
