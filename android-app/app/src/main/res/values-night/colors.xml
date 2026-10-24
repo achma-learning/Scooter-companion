@@ -1,0 +1,9 @@
+<resources>
+    <color name="widget_surface">#171A20</color>
+    <color name="widget_ink">#E6E8EE</color>
+    <color name="widget_muted">#AEB3BD</color>
+    <color name="widget_track">#2A2E37</color>
+    <color name="widget_ok">#3DBE76</color>
+    <color name="widget_soon">#F0A42A</color>
+    <color name="widget_due">#FF5A62</color>
+</resources>

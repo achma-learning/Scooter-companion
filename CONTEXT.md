@@ -208,11 +208,17 @@ Android tests → signed release or debug artifact → Release), `fuel-price.yml
 - **Expense tracker PR:** Expenses tab in the bottom bar listing every payment from every
   module; insurance as a monthly cost (now per month / per day, average, paid per year, bars
   per month against the typical price); fuel spending per month on the fuel log.
+- **Home-screen widget** (`widget/ScooterWidget.kt`, `res/layout/widget_scooter.xml`): plain
+  RemoteViews, no extra library. Redrawn from `GarageRepository.snapshot` while the app runs
+  (`ScooterWidget.watch` from MainActivity), by ReminderWorker once a day and by the launcher
+  every 12 h. Three progress bars (ok / soon / due) because RemoteViews can't recolour one
+  before Android 12. `formatMoney` / `formatKm` add a left-to-right mark in Arabic so
+  "400 DH" doesn't show as "DH 400".
 - **Still English only:** the Agility-only screens (passport, manual reader, guide hub and its
   content: troubleshooting, how-tos, specs, parts, seasons). They come from the Agility
   knowledge base; translating them means adding fields to `build_content.py`.
 - **Ideas next:** more region packs (via CONTRIBUTING), per-task interval overrides by the
-  owner, a home-screen widget for "this month vs target".
+  owner.
 
 ## 8. Update Protocol (Verbatim)
 > **For the AI Assistant:** When asked to "Update CONTEXT.md":

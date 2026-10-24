@@ -465,4 +465,9 @@
     <string name="fuel_monthly">Fuel spending per month</string>
     <string name="fuel_bar_detail">%1$s: %2$s</string>
     <string name="more_manual_sub">The Agility\'s owner\'s manual and passport, searchable</string>
+    <string name="widget_name">Month &amp; insurance</string>
+    <string name="widget_description">This month\'s spending against your target, days of insurance left and the next service.</string>
+    <string name="widget_projected">about %1$s by month end</string>
+    <string name="widget_service">%1$s: %2$s</string>
+    <string name="widget_add_scooter">Open the app to add your scooter.</string>
 </resources>

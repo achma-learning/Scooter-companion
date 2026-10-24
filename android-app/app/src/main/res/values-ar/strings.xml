@@ -462,4 +462,9 @@
     <string name="fuel_monthly">مصاريف الوقود الشهرية</string>
     <string name="fuel_bar_detail">%1$s: %2$s</string>
     <string name="more_manual_sub">دليل وجواز Agility مع البحث</string>
+    <string name="widget_name">الشهر والتأمين</string>
+    <string name="widget_description">مصاريف هذا الشهر مقارنةً بهدفك، وأيام التأمين المتبقية، والصيانة القادمة.</string>
+    <string name="widget_projected">حوالي %1$s في نهاية الشهر</string>
+    <string name="widget_service">%1$s: %2$s</string>
+    <string name="widget_add_scooter">افتح التطبيق لإضافة سكوترك.</string>
 </resources>
