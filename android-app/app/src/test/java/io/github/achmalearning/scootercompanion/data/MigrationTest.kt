@@ -3,6 +3,7 @@ package io.github.achmalearning.scootercompanion.data
 import androidx.room.testing.MigrationTestHelper
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.achmalearning.scootercompanion.data.db.MIGRATION_2_3
+import io.github.achmalearning.scootercompanion.data.db.MIGRATION_3_4
 import io.github.achmalearning.scootercompanion.data.db.ManualDatabase
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -63,4 +64,18 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun v3ToV4AddsTheOwnersIntervalsAndKeepsEverything() {
+        helper.createDatabase(dbName, 3).use { db ->
+            db.execSQL("INSERT INTO bike_profile (id, nickname, plate, vin, engineNo, color, purchaseKm, dealer, warrantyMonths, brand, model, engineCc) " +
+                "VALUES (1, 'Zitoun', '', '', '', '', 0, '', 24, 'Honda', 'SH125i', 125)")
+            db.execSQL("INSERT INTO expenses (date, category, title, amount, notes) VALUES (1700000000000, 'GEAR', 'Helmet', 650.0, '')")
+        }
+        helper.runMigrationsAndValidate(dbName, 4, true, MIGRATION_3_4).use { db ->
+            db.query("SELECT model FROM bike_profile").use { it.moveToFirst(); assertEquals("SH125i", it.getString(0)) }
+            db.query("SELECT COUNT(*) FROM expenses").use { it.moveToFirst(); assertEquals(1, it.getInt(0)) }
+            db.execSQL("INSERT INTO task_intervals (taskId, intervalKm, intervalMonths) VALUES ('engine-oil', 1500, NULL)")
+            db.query("SELECT intervalKm FROM task_intervals").use { it.moveToFirst(); assertEquals(1500, it.getInt(0)) }
+        }
+    }
 }

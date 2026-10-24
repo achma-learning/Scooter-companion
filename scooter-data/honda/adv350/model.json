@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "id": "honda/adv350",
+  "brand": "Honda",
+  "model": "ADV350",
+  "aliases": [
+    "ADV 350",
+    "ADV350"
+  ],
+  "engine": {
+    "cc": 330,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.5,
+    "powerRpm": 7500,
+    "torqueNm": 31.5,
+    "torqueRpm": 5250,
+    "weightKg": 186,
+    "weightKind": "kerb",
+    "seatMm": 795,
+    "tankL": 11.7,
+    "wheelbaseMm": 1520,
+    "consumptionL100": 3.4,
+    "topSpeedKmh": 133
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "330 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.8 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15MC 56P"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14MC 62P"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston Nissin caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, 1-piston Nissin caliper, ABS"
+    },
+    {
+      "key": "battery",
+      "value": "AGM YTZ10, 12 V 8.6 Ah"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: ADV350 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/adv350/specification-and-price.html"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "id": "yamaha/nmax-125",
+  "brand": "Yamaha",
+  "model": "NMAX 125",
+  "years": "2021-",
+  "aliases": [
+    "NMAX",
+    "N-MAX",
+    "NMAX 125",
+    "N-MAX 125",
+    "NMAX125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 8000,
+    "torqueNm": 11.2,
+    "torqueRpm": 6000,
+    "weightKg": 131,
+    "weightKind": "wet",
+    "seatMm": 765,
+    "tankL": 7.1,
+    "wheelbaseMm": 1340,
+    "consumptionL100": 2.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-13M/C 48P (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13M/C 63P (tubeless)"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic single disc, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Hydraulic single disc, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Yamaha Motor Europe: NMAX 125 factsheet (2022)",
+      "url": "https://cdn2.yamaha-motor.eu/prod/product-assets/2022/G125YM/Factsheets/2022-G125YM_en-GB.pdf"
+    }
+  ]
+}

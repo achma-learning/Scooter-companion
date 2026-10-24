@@ -50,6 +50,8 @@ import io.github.achmalearning.scootercompanion.ui.screens.money.MoneyTab
 import io.github.achmalearning.scootercompanion.ui.screens.money.InsuranceScreen
 import io.github.achmalearning.scootercompanion.ui.screens.money.RecommendationsScreen
 import io.github.achmalearning.scootercompanion.ui.screens.stats.StatsScreen
+import io.github.achmalearning.scootercompanion.ui.screens.models.CompareScreen
+import io.github.achmalearning.scootercompanion.ui.screens.models.ModelScreen
 import io.github.achmalearning.scootercompanion.data.db.ExpenseEntity
 import io.github.achmalearning.scootercompanion.data.db.InsurancePolicyEntity
 import io.github.achmalearning.scootercompanion.ui.screens.profile.BikeProfileScreen
@@ -140,7 +142,9 @@ class ScreensSmokeTest {
         "26-insurance" to { InsuranceScreen(noop) },
         "27-expenses" to { MoneyTab(MoneyNav({}, noop, noop, noop)) },
         "28-recommendations" to { RecommendationsScreen(noop) {} },
-        "29-stats" to { StatsScreen() }
+        "29-stats" to { StatsScreen() },
+        "30-model" to { ModelScreen(noop, {}, noop) },
+        "31-compare" to { CompareScreen(noop, listOf("kymco/agility-50-4t", "honda/sh125i", "yamaha/nmax-125")) }
     )
 
     /** A liquid-cooled, injected 125 bought used: generic tasks, no passport, coolant checks. */
@@ -162,7 +166,8 @@ class ScreensSmokeTest {
             "g3-log-service" to { LogServiceScreen(null, null, null, noop) },
             "g4-checklist" to { ChecklistScreen(noop) },
             "g5-more" to { MoreScreen(MoreNav(noop, noop, noop, noop, noop, noop)) },
-            "g6-profile" to { BikeProfileScreen(noop) }
+            "g6-profile" to { BikeProfileScreen(noop) },
+            "g7-model" to { ModelScreen(noop, {}, noop) }
         )
         var index by mutableStateOf(0)
         compose.setContent {

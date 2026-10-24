@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "sym/jet-x-125",
+  "brand": "SYM",
+  "model": "Jet X 125",
+  "aliases": [
+    "Jet X",
+    "JetX",
+    "Jet X 125",
+    "JetX 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.3,
+    "powerRpm": 8000,
+    "torqueNm": 11.5,
+    "torqueRpm": 6500,
+    "seatMm": 780,
+    "tankL": 7.5,
+    "wheelbaseMm": 1350,
+    "weightKg": 140,
+    "weightKind": "kerb"
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/90-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, CBS or ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø220 mm, CBS or ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Jet X technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/jetx"
+    },
+    {
+      "title": "SYM France: Jet X 125 ABS TCS E5+",
+      "url": "https://www.symfrance.com/fr/models/jet-x-125-abs-tcs-e5.html"
+    }
+  ]
+}

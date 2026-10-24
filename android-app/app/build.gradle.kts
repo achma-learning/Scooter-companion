@@ -5,6 +5,14 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+// Every model's data (specs, schedule, search indexes, covers) ships in the APK; its PDFs never
+// do: the app downloads one when the owner taps Download (data/models/ModelDocs.kt).
+val scooterDataAssets = layout.buildDirectory.dir("generated/scooterData")
+val syncScooterData by tasks.registering(Sync::class) {
+    from(rootDir.resolve("../scooter-data")) { exclude("**/*.pdf", "README.md") }
+    into(scooterDataAssets.map { it.dir("scooter-data") })
+}
+
 android {
     namespace = "io.github.achmalearning.scootercompanion"
     compileSdk = 35
@@ -49,22 +57,18 @@ android {
         }
     }
 
-    // The PDFs, OCR indexes and the Agility 50 knowledge base live in /shared so the website
-    // ships exactly the same data; they're bundled here as flat assets.
+    // The Agility 50 knowledge base and the region packs live in /shared so the website ships
+    // exactly the same data; they're bundled here as flat assets. /scooter-data (one folder per
+    // scooter model) is bundled under "scooter-data/" without its PDFs, see syncScooterData.
     sourceSets {
         getByName("main") {
-            assets.srcDirs("src/main/assets", "../../shared/docs", "../../shared/content", "../../shared/assets")
+            assets.srcDirs("src/main/assets", "../../shared/content", "../../shared/assets", scooterDataAssets)
         }
         // MigrationTestHelper reads the exported schemas as assets. Robolectric only sees the
         // merged app assets, so they ride in debug builds (a few KB), never in release.
         getByName("debug") {
             assets.srcDirs("$projectDir/schemas")
         }
-    }
-
-    // Owner manual PDF is large (scanned images); don't let AAPT try to compress it further / keep it accessible as a raw asset.
-    androidResources {
-        noCompress += "pdf"
     }
 
     compileOptions {
@@ -157,3 +161,5 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }
+
+tasks.named("preBuild") { dependsOn(syncScooterData) }

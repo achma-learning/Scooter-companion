@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "honda/forza-350",
+  "brand": "Honda",
+  "model": "Forza 350",
+  "aliases": [
+    "Forza 350",
+    "Forza350",
+    "Forza 300"
+  ],
+  "engine": {
+    "cc": 330,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.5,
+    "powerRpm": 7500,
+    "torqueNm": 31.5,
+    "torqueRpm": 5250,
+    "weightKg": 186,
+    "weightKind": "kerb",
+    "seatMm": 780,
+    "tankL": 11.7,
+    "wheelbaseMm": 1510,
+    "consumptionL100": 3.4,
+    "topSpeedKmh": 137
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "330 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.8 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15MC 56P"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70R14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston Nissin caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, ABS"
+    },
+    {
+      "key": "battery",
+      "value": "MF-WET, 12 V 9.1 Ah"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: Forza 350 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/forza-350/specifications-and-price.html"
+    }
+  ]
+}

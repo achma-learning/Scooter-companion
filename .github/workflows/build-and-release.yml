@@ -50,6 +50,9 @@ jobs:
           python3 scripts/content/build_content.py
           git diff --exit-code shared/content/agility50.json
 
+      - name: Check scooter-data models
+        run: python3 scripts/scooter_data/check.py
+
       - name: Fuel-price parser tests
         run: python3 -m unittest discover -s scripts/fuel
 

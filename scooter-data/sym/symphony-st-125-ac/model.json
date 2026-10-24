@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-st-125-ac",
+  "brand": "SYM",
+  "model": "Symphony ST 125 A/C",
+  "aliases": [
+    "Symphony ST 125",
+    "Symphony ST 125i",
+    "Symphony ST 125 AC",
+    "Symphony ST 125 A/C",
+    "Symphony ST 125 EFI",
+    "Symphony ST 125 Air"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.4,
+    "powerRpm": 8500,
+    "torqueNm": 10.3,
+    "torqueRpm": 6500,
+    "tankL": 7.0,
+    "wheelbaseMm": 1365
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30 or better (SYM Genuine 4X)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.80 L at a change, 0.95 L total"
+    },
+    {
+      "key": "gearOil",
+      "value": "SAE 85W-140, 170 ml"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 kg/cm² (about 2.0 bar)"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.00 kg/cm² solo, 2.25 kg/cm² two-up"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Symphony ST technical specifications, 125cc air-cooled (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony-st"
+    },
+    {
+      "title": "SYM Symphony ST 50/125i/200i owner's manual (XB12W2-EU): oil and tyre pressures",
+      "url": "https://www.manualslib.com/manual/3282529/Sym-Symphony-St-Xb05w4-Eu-Series.html"
+    }
+  ]
+}

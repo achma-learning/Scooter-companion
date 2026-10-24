@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "honda/sh350i",
+  "brand": "Honda",
+  "model": "SH350i",
+  "aliases": [
+    "SH 350",
+    "SH350",
+    "SH 350i"
+  ],
+  "engine": {
+    "cc": 330,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.5,
+    "powerRpm": 7500,
+    "torqueNm": 31.5,
+    "torqueRpm": 5250,
+    "weightKg": 172,
+    "weightKind": "kerb",
+    "seatMm": 805,
+    "tankL": 9.1,
+    "wheelbaseMm": 1450,
+    "consumptionL100": 3.4,
+    "topSpeedKmh": 134
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "330 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.85 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70R16M/C 52S"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70R16M/C 61S"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "256 mm disc, 1-piston caliper, ABS"
+    },
+    {
+      "key": "battery",
+      "value": "AGM YTZ10, 12 V 8.6 Ah"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: SH350i specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/sh350i/specifications.html"
+    }
+  ]
+}

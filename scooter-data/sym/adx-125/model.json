@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "id": "sym/adx-125",
+  "brand": "SYM",
+  "model": "ADX 125",
+  "aliases": [
+    "ADX 125",
+    "ADX125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 7500,
+    "torqueNm": 11.5,
+    "torqueRpm": 7000,
+    "weightKg": 153,
+    "weightKind": "kerb",
+    "seatMm": 810,
+    "tankL": 13.0,
+    "wheelbaseMm": 1390
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø230 mm, ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 13 L tank (15 L on SYM France)"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM ADX 125 technical specifications (sym-global.com)",
+      "url": "https://www.sym-global.com/adx-125"
+    },
+    {
+      "title": "SYM France: ADX 125 ABS TCS E5+",
+      "url": "https://www.symfrance.com/fr/models/adx-125-abs-e5_.html"
+    }
+  ]
+}

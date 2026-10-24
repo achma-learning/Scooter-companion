@@ -9,8 +9,8 @@ it does with your data, and points at the code that enforces it.
   contracts, expenses, documents, bookmarks and settings are stored only in the app's private
   storage: the Room database `scooter_companion.db`, DataStore preferences, and one JPEG
   (`scooter-photo.jpg`) if you chose a photo.
-- The app never goes online by itself. The only network requests are the two downloads
-  **you** start with a tap, described below.
+- The app never goes online by itself. The only network requests are the downloads **you**
+  start with a tap, described below: today's fuel price, app updates, and a scooter manual.
 - Reminders (services due, expiring documents) are computed on the phone by `ReminderWorker`
   (WorkManager, once a day) and shown as local notifications. You can turn them off in
   Settings.
@@ -23,8 +23,8 @@ it does with your data, and points at the code that enforces it.
 
 ## How this is enforced in code
 
-- There is no networking library, analytics SDK or cloud SDK in the app. The two downloads
-  below use plain `HttpURLConnection` and Android's DownloadManager.
+- There is no networking library, analytics SDK or cloud SDK in the app. The downloads below
+  use plain `HttpURLConnection` and Android's DownloadManager.
 - `privacy/NetworkGuard.kt`: every network call goes through `NetworkGuard.userRequested {}`,
   which is called only from click handlers, never from a worker, app start or a
   `LaunchedEffect`. `NetworkGuardTest` pins its behaviour.
@@ -46,6 +46,18 @@ GitHub sees your IP address, as any website would.
 
 - Android: `data/fuel/FuelPriceClient.kt`, through `NetworkGuard.userRequested {}`.
 - Don't want it? Don't tap it; type the price from the pump instead.
+
+## Scooter manuals (only when you tap)
+
+The app ships the specifications and maintenance schedules of the scooters in
+[`scooter-data/`](scooter-data/), but none of their PDFs. On **More → Specs & documents** (and
+in the Agility manual reader), **Download** fetches one PDF: from this repository's
+`scooter-data` folder on `raw.githubusercontent.com` (the Agility 50 manual and passport,
+checked against their SHA-256), or from the manufacturer's own website (e.g. Honda's owner's
+manual on `honda.co.uk`). It is a plain GET; the site sees your IP address. The file is kept in
+the app's private storage until you remove it.
+
+- `data/models/ModelDocs.kt`, through `NetworkGuard.userRequested {}`.
 
 ## Check for updates (only when you tap)
 

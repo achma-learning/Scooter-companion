@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "sym/adx-300",
+  "brand": "SYM",
+  "model": "ADX 300",
+  "years": "2024-",
+  "aliases": [
+    "ADX 300",
+    "ADX300",
+    "ADX"
+  ],
+  "engine": {
+    "cc": 278,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 19.0,
+    "powerRpm": 8000,
+    "torqueNm": 26.0,
+    "torqueRpm": 6000,
+    "tankL": 16.0,
+    "wheelbaseMm": 1510
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "278.3 cc, 4-stroke SOHC single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM ADX 300 technical specifications, 300cc (sym-global.com)",
+      "url": "https://www.sym-global.com/adx-300"
+    }
+  ]
+}

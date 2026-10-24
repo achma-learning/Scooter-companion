@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sym/orbit-iii-50",
+  "brand": "SYM",
+  "model": "Orbit III 50",
+  "aliases": [
+    "Orbit III",
+    "Orbit 3",
+    "Orbit III 50",
+    "Orbit 3 50",
+    "Orbit III 50 E5"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.2,
+    "powerRpm": 8000,
+    "torqueNm": 3.0,
+    "torqueRpm": 6000,
+    "weightKg": 107,
+    "weightKind": "kerb",
+    "seatMm": 765,
+    "tankL": 6.2,
+    "wheelbaseMm": 1290,
+    "topSpeedKmh": 45
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.5 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø226 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 6.2 L tank (5.7 L on SYM France)"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Orbit III technical specifications, 50cc (sym-global.com)",
+      "url": "https://www.sym-global.com/orbitiii"
+    },
+    {
+      "title": "SYM France: Orbit III 50 E5+",
+      "url": "https://www.symfrance.com/fr/models/orbit-iii-50-euro-5.html"
+    }
+  ]
+}

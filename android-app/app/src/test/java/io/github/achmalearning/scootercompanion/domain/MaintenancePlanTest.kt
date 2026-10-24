@@ -78,4 +78,29 @@ class MaintenancePlanTest {
         assertEquals(4000, oil.dueKm)
         assertEquals(DueStatus.SOON, oil.status)
     }
+
+    @Test fun theOwnersIntervalBeatsTheMakersWhichBeatsTheApps() {
+        val spec = VehicleSpec(cc = 125, fuelSystem = FuelSystem.INJECTION, cooling = Cooling.LIQUID)
+        val app = MaintenancePlan.tasksFor(content, spec, agility = false).first { it.id == "engine-oil" }
+        assertEquals(3000, app.intervalKm)
+        val maker = mapOf("engine-oil" to Interval(6000, 12, listOf(1000)))
+        val withMaker = MaintenancePlan.tasksFor(content, spec, false, maker).first { it.id == "engine-oil" }
+        assertEquals(6000, withMaker.intervalKm)
+        assertEquals(12, withMaker.intervalMonths)
+        assertEquals(listOf(1000), withMaker.breakInKm)
+        val owner = mapOf("engine-oil" to Interval(1500, null))
+        val withOwner = MaintenancePlan.tasksFor(content, spec, false, maker, owner).first { it.id == "engine-oil" }
+        assertEquals(1500, withOwner.intervalKm)
+        assertEquals(null, withOwner.intervalMonths)
+        // Tasks neither names keep the app's interval for the engine size.
+        assertEquals(task(spec, "brake-pads").intervalKm, MaintenancePlan.tasksFor(content, spec, false, maker, owner).first { it.id == "brake-pads" }.intervalKm)
+    }
+
+    @Test fun theOwnerCanChangeAnAgilityInterval() {
+        val tasks = MaintenancePlan.tasksFor(content, VehicleSpec(cc = 50), agility = true, owner = mapOf("engine-oil" to Interval(1500, null)))
+        val oil = tasks.first { it.id == "engine-oil" }
+        assertEquals(1500, oil.intervalKm)
+        assertEquals("", oil.label)
+        assertTrue(oil.breakInKm.all { it < 1500 })
+    }
 }

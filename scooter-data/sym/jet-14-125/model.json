@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "id": "sym/jet-14-125",
+  "brand": "SYM",
+  "model": "Jet 14 125",
+  "aliases": [
+    "Jet 14",
+    "Jet14",
+    "Jet 14 125",
+    "Jet14 125",
+    "Jet 14 Evo",
+    "Jet14 Evo"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.4,
+    "powerRpm": 8500,
+    "torqueNm": 10.3,
+    "torqueRpm": 6500,
+    "tankL": 7.2,
+    "wheelbaseMm": 1370,
+    "weightKg": 130,
+    "weightKind": "kerb",
+    "seatMm": 790
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "124.6 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/90-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø130 mm, CBS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Jet 14 technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/jet14evo"
+    },
+    {
+      "title": "SYM France: Jet 14 Evo 125 AC CBS E5+",
+      "url": "https://www.symfrance.com/fr/models/jet-14-evo-125--ac-cbs.html"
+    }
+  ]
+}

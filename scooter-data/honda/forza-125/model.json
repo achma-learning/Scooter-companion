@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "honda/forza-125",
+  "brand": "Honda",
+  "model": "Forza 125",
+  "aliases": [
+    "Forza 125",
+    "Forza125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 10.7,
+    "powerRpm": 8750,
+    "torqueNm": 12.3,
+    "torqueRpm": 6500,
+    "weightKg": 164,
+    "weightKind": "kerb",
+    "seatMm": 780,
+    "tankL": 11.7,
+    "wheelbaseMm": 1510,
+    "consumptionL100": 2.4,
+    "topSpeedKmh": 108
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.9 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15MC 56P"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14MC 68P"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston Nissin caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: Forza 125 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/forza-125/specifications-and-price.html"
+    }
+  ]
+}

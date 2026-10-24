@@ -17,7 +17,12 @@ data class ReaderUiState(
     val currentPage: Int = 1,
     val isBookmarked: Boolean = false,
     val loading: Boolean = true,
-    val error: String? = null
+    val error: String? = null,
+    /** The PDF isn't on the phone yet: the screen offers to download it. */
+    val needsDownload: Boolean = false,
+    val downloadBytes: Long = 0,
+    /** 0..1 while downloading, null otherwise. */
+    val downloadProgress: Float? = null
 )
 
 class ReaderViewModel(
@@ -27,23 +32,41 @@ class ReaderViewModel(
     startPage: Int
 ) : ViewModel() {
 
-    private val renderer = PdfPageRenderer(context, source)
-    private val _state = MutableStateFlow(ReaderUiState(currentPage = startPage))
+    private val doc = container.agilityDoc(source)
+    private val renderer = PdfPageRenderer(container.modelDocs.file(doc.first, doc.second))
+    private val _state = MutableStateFlow(ReaderUiState(currentPage = startPage, downloadBytes = doc.second.bytes))
     val state: StateFlow<ReaderUiState> = _state.asStateFlow()
 
     init {
+        viewModelScope.launch { load() }
+    }
+
+    private suspend fun load() {
+        try {
+            renderer.open()
+            _state.value = _state.value.copy(
+                pageCount = renderer.pageCount,
+                loading = false,
+                needsDownload = false,
+                error = null,
+                isBookmarked = container.libraryRepository.isBookmarked(source, _state.value.currentPage)
+            )
+            container.libraryRepository.recordViewed(source, _state.value.currentPage)
+        } catch (e: PdfPageRenderer.NotDownloaded) {
+            _state.value = _state.value.copy(loading = false, needsDownload = true)
+        } catch (e: Exception) {
+            _state.value = _state.value.copy(loading = false, error = e.message ?: "Could not open PDF")
+        }
+    }
+
+    /** From the Download button only (the app never goes online by itself). */
+    fun download() {
+        if (_state.value.downloadProgress != null) return
+        _state.value = _state.value.copy(downloadProgress = 0f, error = null)
         viewModelScope.launch {
-            try {
-                renderer.open()
-                _state.value = _state.value.copy(
-                    pageCount = renderer.pageCount,
-                    loading = false,
-                    isBookmarked = container.libraryRepository.isBookmarked(source, _state.value.currentPage)
-                )
-                container.libraryRepository.recordViewed(source, _state.value.currentPage)
-            } catch (e: Exception) {
-                _state.value = _state.value.copy(loading = false, error = e.message ?: "Could not open PDF")
-            }
+            container.modelDocs.download(doc.first, doc.second) { p -> _state.value = _state.value.copy(downloadProgress = p) }
+                .onSuccess { _state.value = _state.value.copy(downloadProgress = null); load() }
+                .onFailure { e -> _state.value = _state.value.copy(downloadProgress = null, error = e.message ?: "Download failed") }
         }
     }
 

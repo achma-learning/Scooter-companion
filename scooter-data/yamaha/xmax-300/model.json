@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "yamaha/xmax-300",
+  "brand": "Yamaha",
+  "model": "XMAX 300",
+  "aliases": [
+    "XMAX",
+    "X-MAX",
+    "XMAX 300",
+    "X-MAX 300",
+    "XMAX300"
+  ],
+  "engine": {
+    "cc": 292,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 20.6,
+    "powerRpm": 7250,
+    "torqueNm": 29.0,
+    "torqueRpm": 5750,
+    "weightKg": 183,
+    "weightKind": "wet",
+    "seatMm": 795,
+    "tankL": 13.2,
+    "wheelbaseMm": 1540,
+    "consumptionL100": 3.0
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "292 cc, 4-stroke SOHC 4-valve single, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic disc Ø267 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Hydraulic disc Ø245 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Yamaha Motor Europe: XMAX 300 factsheet (2025)",
+      "url": "https://cdn2.yamaha-motor.eu/prod/product-assets/2025/XMAX300A/Factsheets/2025-XMAX300A_en-GB.pdf"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "id": "sym/joyride-s-125",
+  "brand": "SYM",
+  "model": "Joyride S 125",
+  "aliases": [
+    "Joyride S",
+    "Joyride S 125",
+    "Joyride 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 10.2,
+    "powerRpm": 9000,
+    "torqueNm": 11.2,
+    "torqueRpm": 7000,
+    "weightKg": 160,
+    "weightKind": "kerb",
+    "seatMm": 760,
+    "tankL": 7.6,
+    "wheelbaseMm": 1430,
+    "topSpeedKmh": 99
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "124 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/90-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø240 mm, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø200 mm, CBS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Joyride S technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/joyride-s"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "id": "honda/x-adv-750",
+  "brand": "Honda",
+  "model": "X-ADV 750",
+  "years": "2021-",
+  "aliases": [
+    "X-ADV",
+    "XADV",
+    "X ADV",
+    "X-ADV 750",
+    "XADV 750",
+    "XADV750"
+  ],
+  "engine": {
+    "cc": 745,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 43.1,
+    "powerRpm": 6750,
+    "torqueNm": 69.0,
+    "torqueRpm": 4750,
+    "weightKg": 237,
+    "weightKind": "kerb",
+    "seatMm": 820,
+    "tankL": 13.2,
+    "wheelbaseMm": 1590,
+    "consumptionL100": 3.6,
+    "topSpeedKmh": 168
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "745 cc, 4-stroke SOHC 8-valve parallel twin, liquid-cooled, PGM-FI"
+    },
+    {
+      "key": "transmission",
+      "value": "6-speed DCT (dual clutch), chain final drive"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "4 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70R17 M/C 58H (spoked wheel)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "160/60R15 M/C 67H (spoked wheel)"
+    },
+    {
+      "key": "brakeFront",
+      "value": "296 mm floating dual discs, radial 4-piston calipers, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, 1-piston caliper, ABS"
+    },
+    {
+      "key": "battery",
+      "value": "AGM"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: X-ADV specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/adventure/x-adv/specifications.html"
+    }
+  ]
+}

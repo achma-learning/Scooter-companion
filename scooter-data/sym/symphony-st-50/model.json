@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-st-50",
+  "brand": "SYM",
+  "model": "Symphony ST 50",
+  "aliases": [
+    "Symphony ST50"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.2,
+    "powerRpm": 8000,
+    "torqueNm": 3.0,
+    "torqueRpm": 6000,
+    "tankL": 7.0,
+    "wheelbaseMm": 1350
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/70-16"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Symphony ST technical specifications, 50cc (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony-st"
+    }
+  ]
+}

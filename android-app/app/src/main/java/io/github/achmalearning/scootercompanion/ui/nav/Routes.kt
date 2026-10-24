@@ -34,6 +34,8 @@ sealed class Routes(val route: String) {
     data object Insurance : Routes("insurance")
     data object Recommendations : Routes("recommendations")
     data object Stats : Routes("stats")
+    data object Model : Routes("model")
+    data object Compare : Routes("compare")
 
     // Guide
     data object Checklist : Routes("checklist")

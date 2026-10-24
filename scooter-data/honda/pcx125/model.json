@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "honda/pcx125",
+  "brand": "Honda",
+  "model": "PCX125",
+  "aliases": [
+    "PCX",
+    "PCX 125",
+    "PCX125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.2,
+    "powerRpm": 8750,
+    "torqueNm": 11.7,
+    "torqueRpm": 6500,
+    "weightKg": 134,
+    "weightKind": "kerb",
+    "seatMm": 763,
+    "tankL": 8.1,
+    "wheelbaseMm": 1315,
+    "consumptionL100": 2.1,
+    "topSpeedKmh": 98
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.9 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-14M/C 50P"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13M/C 63P"
+    },
+    {
+      "key": "brakeFront",
+      "value": "220 mm disc, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "220 mm disc, 1-piston caliper"
+    },
+    {
+      "key": "battery",
+      "value": "AGM, 12 V 7 Ah"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: PCX125 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/pcx-125/specifications.html"
+    }
+  ]
+}

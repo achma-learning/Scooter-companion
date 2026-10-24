@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "yamaha/neos-50",
+  "brand": "Yamaha",
+  "model": "Neo's 4 50",
+  "years": "2014-2020",
+  "aliases": [
+    "Neo's",
+    "Neos",
+    "Neo's 4",
+    "Neos 4",
+    "Neo's 50",
+    "Neos 50",
+    "NEO'S 50"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 2.3,
+    "powerRpm": 7000,
+    "torqueNm": 3.15,
+    "torqueRpm": 7000,
+    "weightKg": 95,
+    "weightKind": "wet",
+    "seatMm": 790,
+    "tankL": 5.4,
+    "wheelbaseMm": 1275
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49 cc, 4-stroke single, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø190 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    },
+    {
+      "key": "fuel",
+      "value": "5.4 L tank"
+    }
+  ],
+  "note": {
+    "en": "The petrol Neo's (Neo's 4). Yamaha now sells an electric NEO's instead, which isn't in the catalogue yet.",
+    "fr": "Le Neo's à essence (Neo's 4). Yamaha vend désormais un NEO's électrique, pas encore dans le catalogue.",
+    "ar": "Neo's بالبنزين (Neo's 4). تبيع ياماها الآن NEO's كهربائيًا، غير موجود في الدليل بعد."
+  },
+  "sources": [
+    {
+      "title": "Yamaha Motor Europe: Neo's 4 factsheet (2018, Italian)",
+      "url": "https://cdn2.yamaha-motor.eu/prod/product-assets/2018/NEO50F/Factsheets/2018-NEO50F_it-IT.pdf"
+    }
+  ]
+}

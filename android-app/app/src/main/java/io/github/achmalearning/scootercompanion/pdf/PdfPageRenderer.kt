@@ -1,11 +1,9 @@
 package io.github.achmalearning.scootercompanion.pdf
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
 import android.util.LruCache
-import io.github.achmalearning.scootercompanion.data.model.PdfSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -13,14 +11,15 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
- * Wraps android.graphics.pdf.PdfRenderer for one of the two bundled asset PDFs. PdfRenderer
- * requires a real file descriptor, so the asset is copied to internal storage once on first
- * use (cheap — a few MB) and re-used after that.
+ * Wraps android.graphics.pdf.PdfRenderer for one of the Agility PDFs, once downloaded (see
+ * data/models/ModelDocs.kt). [open] throws [NotDownloaded] until then.
  *
  * Not thread-safe by itself; all page rendering is serialized through [mutex] because
  * PdfRenderer.openPage() cannot be called concurrently on the same renderer instance.
  */
-class PdfPageRenderer(private val context: Context, private val source: PdfSource) {
+class PdfPageRenderer(private val file: File) {
+
+    class NotDownloaded : Exception("Not downloaded yet")
 
     private val mutex = Mutex()
     private var renderer: PdfRenderer? = null
@@ -33,13 +32,8 @@ class PdfPageRenderer(private val context: Context, private val source: PdfSourc
     suspend fun open() = withContext(Dispatchers.IO) {
         mutex.withLock {
             if (renderer != null) return@withLock
-            val localFile = File(context.filesDir, source.assetName)
-            if (!localFile.exists() || localFile.length() == 0L) {
-                context.assets.open(source.assetName).use { input ->
-                    localFile.outputStream().use { output -> input.copyTo(output) }
-                }
-            }
-            fd = ParcelFileDescriptor.open(localFile, ParcelFileDescriptor.MODE_READ_ONLY)
+            if (!file.isFile || file.length() == 0L) throw NotDownloaded()
+            fd = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
             renderer = PdfRenderer(fd!!)
         }
     }

@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "id": "honda/sh125i",
+  "brand": "Honda",
+  "model": "SH125i",
+  "years": "2020-",
+  "code": "SH125AD",
+  "aliases": [
+    "SH 125",
+    "SH125",
+    "SH 125i",
+    "SH125i",
+    "SH125 i"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.6,
+    "powerRpm": 8250,
+    "torqueNm": 12.0,
+    "torqueRpm": 6500,
+    "weightKg": 138,
+    "weightKind": "kerb",
+    "seatMm": 799,
+    "tankL": 7.0,
+    "wheelbaseMm": 1350,
+    "consumptionL100": 2.2,
+    "topSpeedKmh": 98
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke, liquid-cooled, PGM-FI injection, Idling Stop"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SG or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.8 L at a change, 0.9 L when the strainer screen is cleaned"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.12 L at a change (0.14 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 0.47 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16M/C 50P (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-16M/C 60P (tubeless)"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.25 bar (33 psi), solo or two-up"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 or DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ8V, 12 V 7 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 95 RON or higher (E10 accepted), 7.0 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,700 ± 100 rpm"
+    },
+    {
+      "key": "brakeFront",
+      "value": "240 mm disc, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, 1-piston caliper, ABS"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 6000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 12000
+    },
+    "air-filter-replace": {
+      "km": 18000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 6000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual SH125i/SH150i (Honda UK)",
+        "fr": "Manuel du propriétaire SH125i/SH150i (Honda UK)",
+        "ar": "دليل المالك SH125i/SH150i (هوندا المملكة المتحدة)"
+      },
+      "url": "https://www.honda.co.uk/motorcycles/my-bike/honda-motorcycles-owners-manuals/_jcr_content/par1/textcolumnwithimagem/textColumn/richtextdownload_90f/file.res/SH125_SH150%2021YM%20Owners%20Manual.pdf",
+      "bytes": 8120272,
+      "lang": "en"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda SH125i/SH150i Owner's Manual (2020): maintenance schedule p.76-78, specifications p.152-153",
+      "url": "https://www.honda.co.uk/motorcycles/my-bike/honda-motorcycles-owners-manuals/_jcr_content/par1/textcolumnwithimagem/textColumn/richtextdownload_90f/file.res/SH125_SH150%2021YM%20Owners%20Manual.pdf"
+    },
+    {
+      "title": "Honda UK: SH125i specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/sh125i/specifications-and-price.html"
+    }
+  ]
+}
