@@ -5,22 +5,44 @@ import io.github.achmalearning.scootercompanion.data.content.Content
 import io.github.achmalearning.scootercompanion.data.content.Milestone
 import io.github.achmalearning.scootercompanion.data.content.Task
 
+/** An interval set by the owner or the manufacturer: null km or months = not tracked that way. */
+data class Interval(val km: Int?, val months: Int?, val breakInKm: List<Int>? = null)
+
 /**
  * Which maintenance tasks and passport milestones apply to the owner's scooter.
  *
  * The Kymco Agility 50 4T keeps its own detailed schedule (the Marrakech wiki, the dealer
  * passport). Every other scooter gets the generic list, filtered by the profile (carburettor
  * or injection, air or liquid cooling, petrol or electric) with the km interval of its engine
- * class.
+ * class, then the manufacturer's intervals when scooter-data knows the model. Last, the
+ * owner's own intervals win over both.
  */
 object MaintenancePlan {
 
     fun isAgility50(brand: String, model: String, cc: Int): Boolean =
         brand.trim().equals("Kymco", ignoreCase = true) && model.contains("agility", ignoreCase = true) && cc in 1..50
 
-    fun tasksFor(content: Content, spec: VehicleSpec, agility: Boolean): List<Task> =
-        if (agility || content.genericTasks.isEmpty()) content.tasks
+    fun tasksFor(
+        content: Content,
+        spec: VehicleSpec,
+        agility: Boolean,
+        manufacturer: Map<String, Interval> = emptyMap(),
+        owner: Map<String, Interval> = emptyMap()
+    ): List<Task> {
+        val base = if (agility || content.genericTasks.isEmpty()) content.tasks
         else content.genericTasks.filter { applies(it, spec) }.map { resolve(it, spec.engineClass) }
+            .map { t -> manufacturer[t.id]?.let { withInterval(t, it) } ?: t }
+        return base.map { t -> owner[t.id]?.let { withInterval(t, it) } ?: t }
+    }
+
+    /** [task] following [interval] instead of its own; its written label no longer applies. */
+    fun withInterval(task: Task, interval: Interval): Task = task.copy(
+        intervalKm = interval.km,
+        intervalMonths = interval.months,
+        intervalDays = null,
+        breakInKm = interval.breakInKm ?: task.breakInKm.filter { b -> interval.km == null || b < interval.km },
+        label = ""
+    )
 
     fun milestonesFor(content: Content, agility: Boolean): List<Milestone> =
         if (agility) content.milestones else emptyList()

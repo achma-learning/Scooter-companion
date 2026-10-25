@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "id": "honda/vision-110",
+  "brand": "Honda",
+  "model": "Vision 110",
+  "code": "NSC110",
+  "aliases": [
+    "Vision",
+    "Vision 110",
+    "Vision110",
+    "NSC110"
+  ],
+  "engine": {
+    "cc": 110,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 6.4,
+    "powerRpm": 7500,
+    "torqueNm": 9.0,
+    "torqueRpm": 5750,
+    "weightKg": 100,
+    "weightKind": "kerb",
+    "seatMm": 785,
+    "tankL": 4.9,
+    "wheelbaseMm": 1280,
+    "consumptionL100": 1.9,
+    "topSpeedKmh": 89
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "109 cc, 4-stroke 2-valve OHC single, air-cooled, PGM-FI injection"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.65 L at a change, also 0.65 L when the strainer screen is cleaned (0.8 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.07 L at a change (0.09 L after disassembly)"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK MR7C-9N, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "80/90-16M/C 43P (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "90/90-14M/C 46P (tubeless)"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.25 bar (33 psi), solo or two-up"
+    },
+    {
+      "key": "brakeFront",
+      "value": "220 mm disc, 1-piston caliper"
+    },
+    {
+      "key": "brakeRear",
+      "value": "130 mm drum"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 or DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "GTZ6V, 12 V 5 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 91 RON or higher (E10 accepted), 4.9 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,700 ± 100 rpm"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 6000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 12000
+    },
+    "air-filter-replace": {
+      "km": 18000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 6000
+    },
+    "belt": {
+      "km": 24000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual Vision 110 (NSC110, 2025) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire Vision 110 (NSC110, 2025) (Honda Motor Europe)",
+        "ar": "دليل المالك Vision 110 (NSC110, 2025) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSC110/2025/NSC110S_32K2CA20_eng_WEB.pdf",
+      "bytes": 6566003,
+      "lang": "en"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda Vision 110 (NSC110) Owner's Manual 2025, ED/E (European) type: maintenance schedule p.67-68, specifications p.141, 145-146",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSC110/2025/NSC110S_32K2CA20_eng_WEB.pdf"
+    },
+    {
+      "title": "Honda UK: Vision 110 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/vision-110/specifications.html"
+    }
+  ]
+}

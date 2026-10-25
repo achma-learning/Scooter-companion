@@ -11,7 +11,7 @@ mkdir -p "$OUT/data" "$OUT/docs"
 cp -R "$ROOT/web/." "$OUT/"
 rm -rf "$OUT/tests" "$OUT/package.json"
 cp "$ROOT/shared/content/agility50.json" "$OUT/data/"
-cp "$ROOT/shared/docs/"* "$OUT/docs/"
+cp "$ROOT/scooter-data/kymco/agility-50-4t/docs/"* "$OUT/docs/"
 
 # Stamp the service-worker cache version so each deploy refreshes offline copies.
 VERSION="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || date +%s)-$(date +%Y%m%d%H%M)"

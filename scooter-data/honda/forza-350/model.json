@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "id": "honda/forza-350",
+  "brand": "Honda",
+  "model": "Forza 350",
+  "aliases": [
+    "Forza 350",
+    "Forza350",
+    "Forza 300"
+  ],
+  "engine": {
+    "cc": 330,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.5,
+    "powerRpm": 7500,
+    "torqueNm": 31.5,
+    "torqueRpm": 5250,
+    "weightKg": 186,
+    "weightKind": "kerb",
+    "seatMm": 780,
+    "tankL": 11.7,
+    "wheelbaseMm": 1510,
+    "consumptionL100": 3.4,
+    "topSpeedKmh": 137
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "330 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.3 L at a change, 1.5 L with a new oil filter (1.8 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.17 L at a change (0.20 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 1.01 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15M/C 56S (Pirelli) or 56P (Michelin), tubeless"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14M/C 68S (Pirelli) or 68P (Michelin), reinforced, tubeless"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.25 bar (33 psi), solo or two-up"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston Nissin caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, ABS"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ10, 12 V 8.6 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 95 RON or higher (E10 accepted), 11.7 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,500 ± 100 rpm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda Forza 250/350 (NSS250A/NSS350A) Owner's Manual 2025: maintenance schedule p.107-108, specifications p.182-183",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSS250A_350A/2025/FORZA%20250350%20%28NSS250A-350A%29_32K1BF300_web.pdf"
+    },
+    {
+      "title": "Honda UK: Forza 350 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/forza-350/specifications-and-price.html"
+    }
+  ],
+  "code": "NSS350A",
+  "schedule": {
+    "engine-oil": {
+      "km": 12000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 24000,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "air-filter-replace": {
+      "km": 24000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 24000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "cvt-foam": {
+      "km": 12000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual Forza 250/350 (NSS250A/NSS350A, 2025) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire Forza 250/350 (NSS250A/NSS350A, 2025) (Honda Motor Europe)",
+        "ar": "دليل المالك Forza 250/350 (NSS250A/NSS350A, 2025) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/NSS250A_350A/2025/FORZA%20250350%20%28NSS250A-350A%29_32K1BF300_web.pdf",
+      "bytes": 9636668,
+      "lang": "en"
+    }
+  ]
+}

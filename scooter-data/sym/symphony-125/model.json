@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-125",
+  "brand": "SYM",
+  "model": "Symphony 125",
+  "aliases": [
+    "Symphony",
+    "Symphony 125",
+    "Symphony S 125",
+    "Symphony S125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.4,
+    "powerRpm": 8500,
+    "torqueNm": 10.3,
+    "torqueRpm": 6500,
+    "tankL": 5.2,
+    "wheelbaseMm": 1360
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/70-16"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Symphony technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony"
+    }
+  ]
+}

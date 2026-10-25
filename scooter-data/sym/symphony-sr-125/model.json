@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "id": "sym/symphony-sr-125",
+  "brand": "SYM",
+  "model": "Symphony SR 125",
+  "aliases": [
+    "Symphony SR",
+    "Symphony SR 125",
+    "Symphony SR125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.4,
+    "powerRpm": 8500,
+    "torqueNm": 10.3,
+    "torqueRpm": 6500,
+    "tankL": 5.4,
+    "wheelbaseMm": 1355
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "110/70-16"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM Symphony SR technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/symphony-sr"
+    }
+  ]
+}

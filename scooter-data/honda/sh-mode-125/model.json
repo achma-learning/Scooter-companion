@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "id": "honda/sh-mode-125",
+  "brand": "Honda",
+  "model": "SH Mode 125",
+  "code": "FSH125",
+  "aliases": [
+    "SH Mode",
+    "SH Mode 125",
+    "SHMode",
+    "SH-Mode",
+    "SH Mode125",
+    "SH-Mode 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 8.7,
+    "powerRpm": 8500,
+    "torqueNm": 12.0,
+    "torqueRpm": 5000,
+    "weightKg": 118,
+    "weightKind": "kerb",
+    "seatMm": 765,
+    "tankL": 5.6,
+    "wheelbaseMm": 1305,
+    "consumptionL100": 2.1,
+    "topSpeedKmh": 93
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI injection, Idling Stop"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.8 L at a change, 0.85 L when the strainer screen is cleaned (0.9 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.12 L at a change (0.14 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 0.37 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.80-0.90 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "80/90-16M/C 43P (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "100/90-14M/C 57P (tubeless)"
+    },
+    {
+      "key": "pressureFront",
+      "value": "1.75 bar (25 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.00 bar (29 psi) solo, 2.50 bar (36 psi) two-up"
+    },
+    {
+      "key": "brakeFront",
+      "value": "220 mm disc, 1-piston Nissin caliper, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "130 mm drum, CBS"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 or DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ8V, 12 V 7 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 95 RON or higher (E10 accepted), 5.6 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,700 ± 100 rpm"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 6000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 12000
+    },
+    "air-filter-replace": {
+      "km": 18000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 6000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual SH Mode 125 (FSH125, 2024) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire SH Mode 125 (FSH125, 2024) (Honda Motor Europe)",
+        "ar": "دليل المالك SH Mode 125 (FSH125, 2024) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/FSH125%20%28SH%20MODE%20125%29/2024/FSH125%20OM%2032K1NB11_eng_WEB.pdf",
+      "bytes": 6238127,
+      "lang": "en"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda SH Mode 125 (FSH125) Owner's Manual 2024, II E/II ED (European) type: maintenance schedule p.76-77, specifications p.148-149",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/FSH125%20%28SH%20MODE%20125%29/2024/FSH125%20OM%2032K1NB11_eng_WEB.pdf"
+    },
+    {
+      "title": "Honda UK: SH Mode 125 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/sh-mode-125/specifications.html"
+    }
+  ]
+}

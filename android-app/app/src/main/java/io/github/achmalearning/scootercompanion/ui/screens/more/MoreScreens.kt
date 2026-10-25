@@ -11,6 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.CompareArrows
+import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Map
@@ -63,7 +65,9 @@ data class MoreNav(
     val recommendations: () -> Unit = {},
     val stats: () -> Unit = {},
     val guide: () -> Unit = {},
-    val manual: () -> Unit = {}
+    val manual: () -> Unit = {},
+    val model: () -> Unit = {},
+    val compare: () -> Unit = {}
 )
 
 @Composable
@@ -84,6 +88,8 @@ fun MoreScreen(nav: MoreNav) {
         item { NavRow(Icons.Filled.ThumbUp, stringResource(R.string.rec_title), stringResource(R.string.more_rec_sub), onClick = nav.recommendations) }
         item { SectionTitle(stringResource(R.string.more_ownership)) }
         item { NavRow(Icons.Filled.Edit, stringResource(R.string.my_scooter), stringResource(R.string.more_profile_sub), onClick = nav.profile) }
+        item { NavRow(Icons.Filled.Description, stringResource(R.string.model_title), stringResource(R.string.model_sub), onClick = nav.model) }
+        item { NavRow(Icons.Filled.CompareArrows, stringResource(R.string.compare_title), stringResource(R.string.compare_sub), onClick = nav.compare) }
         if (agility) item { NavRow(Icons.Filled.MenuBook, stringResource(R.string.nav_manual), stringResource(R.string.more_manual_sub), onClick = nav.manual) }
         if (agility) item { NavRow(Icons.Filled.Verified, stringResource(R.string.more_passport), stringResource(R.string.more_passport_sub), onClick = nav.passport) }
         item { NavRow(Icons.Filled.Badge, stringResource(R.string.more_wallet), stringResource(R.string.more_wallet_sub), onClick = nav.wallet) }

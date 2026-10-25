@@ -41,6 +41,8 @@ import io.github.achmalearning.scootercompanion.data.repository.AppSettings
 import io.github.achmalearning.scootercompanion.data.repository.ThemeMode
 import io.github.achmalearning.scootercompanion.privacy.PrivacyManager
 import io.github.achmalearning.scootercompanion.ui.nav.Routes
+import io.github.achmalearning.scootercompanion.ui.screens.models.CompareScreen
+import io.github.achmalearning.scootercompanion.ui.screens.models.ModelScreen
 import io.github.achmalearning.scootercompanion.widget.ScooterWidget
 import io.github.achmalearning.scootercompanion.ui.screens.bookmarks.BookmarksScreen
 import io.github.achmalearning.scootercompanion.ui.screens.contents.ContentsScreen
@@ -231,6 +233,8 @@ private fun MainNav() {
                         insurance = { open(Routes.Insurance.route) },
                         expenses = { nav.switchTab(Routes.Money.route) },
                         manual = { nav.switchTab(Routes.Manual.route) },
+                        model = { open(Routes.Model.route) },
+                        compare = { open(Routes.Compare.route) },
                         recommendations = { open(Routes.Recommendations.route) },
                         stats = { nav.switchTab(Routes.Stats.route) },
                         guide = { open(if (agility) Routes.Guide.route else Routes.Checklist.route) }
@@ -291,6 +295,8 @@ private fun MainNav() {
             composable(Routes.Fuel.route) { FuelScreen(onBack = back) }
             composable(Routes.Wallet.route) { WalletScreen(onBack = back) }
             composable(Routes.Profile.route) { BikeProfileScreen(onBack = back) }
+            composable(Routes.Model.route) { ModelScreen(onBack = back, openAgilityDoc = { openReader(it, 1) }, openCompare = { open(Routes.Compare.route) }) }
+            composable(Routes.Compare.route) { CompareScreen(onBack = back) }
             composable(Routes.Sos.route) { SosScreen(onBack = back, openInsurance = { open(Routes.Insurance.route) }) }
             composable(Routes.Insurance.route) { InsuranceScreen(onBack = back) }
             composable(Routes.Money.route) {

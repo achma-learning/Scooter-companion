@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "id": "bmw/c-400-gt",
+  "brand": "BMW",
+  "model": "C 400 GT",
+  "years": "2019-",
+  "aliases": [
+    "C 400 GT",
+    "C400GT",
+    "C400 GT",
+    "C 400GT"
+  ],
+  "engine": {
+    "cc": 350,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 25.0,
+    "powerRpm": 7500,
+    "torqueNm": 35.0,
+    "torqueRpm": 5750,
+    "weightKg": 212,
+    "weightKind": "kerb",
+    "seatMm": 775,
+    "tankL": 12.8,
+    "wheelbaseMm": 1565,
+    "consumptionL100": 3.5,
+    "topSpeedKmh": 139
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "350 cc, 4-stroke single, liquid-cooled, fuel injection, CVT"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "150/60-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Twin disc Ø270 mm, radial 4-piston calipers, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø270 mm, 1-piston caliper, ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "12.8 L tank (4 L reserve)"
+    }
+  ],
+  "note": {
+    "en": "Figures from BMW's launch press kit; the 2021 and 2025 updates kept the engine (25 kW, 35 Nm).",
+    "fr": "Chiffres du dossier de presse de lancement BMW ; les évolutions 2021 et 2025 gardent le moteur (25 kW, 35 Nm).",
+    "ar": "الأرقام من الملف الصحفي لإطلاق BMW؛ احتفظت تحديثات 2021 و2025 بالمحرك (25 كيلوواط، 35 نيوتن متر)."
+  },
+  "sources": [
+    {
+      "title": "BMW Group Press: the new BMW C 400 GT, technical specifications (2018)",
+      "url": "https://www.press.bmwgroup.com/global/article/attachment/T0286172EN/417182"
+    },
+    {
+      "title": "BMW Group Press: new C 400 X and C 400 GT (2025): 25 kW at 7,500 rpm, 35 Nm at 5,750 rpm",
+      "url": "https://www.press.bmwgroup.com/south-africa/article/detail/T0445466EN/bmw-motorrad-presents-the-new-bmw-c-400-x-and-bmw-c-400-gt?language=en"
+    }
+  ]
+}

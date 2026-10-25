@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "id": "sym/orbit-ii-50",
+  "brand": "SYM",
+  "model": "Orbit II 50 4T",
+  "years": "2009-2021",
+  "verified": false,
+  "aliases": [
+    "Orbit II",
+    "Orbit 2",
+    "Orbit II 50",
+    "Orbit 2 50",
+    "Orbit II 4T"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "CARBURETOR",
+    "cooling": "AIR"
+  },
+  "figures": {},
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.5 cc, 4-stroke single, air-cooled, carburettor"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    }
+  ],
+  "note": {
+    "en": "SYM no longer lists the Orbit II, and spec databases disagree on its power, weight and tank by year: only the figures they all agree on are here. Its successor is the Orbit III.",
+    "fr": "SYM ne présente plus l'Orbit II et les bases de données se contredisent sur sa puissance, son poids et son réservoir selon l'année : seuls les chiffres communs à toutes figurent ici. Son successeur est l'Orbit III.",
+    "ar": "لم تعد SYM تعرض Orbit II، وتختلف قواعد البيانات في قوته ووزنه وخزانه حسب السنة: هنا فقط الأرقام المتفق عليها. خليفته هو Orbit III."
+  },
+  "sources": [
+    {
+      "title": "1000PS: Sym Orbit II 50 4T technical data (2011-2020)",
+      "url": "https://www.1000ps.com/en-us/model/6210/sym-orbit-ii-50-4t"
+    },
+    {
+      "title": "50factory: Sym Orbit II 4T 50cc technical sheet",
+      "url": "https://en.50factory.com/content/1403-scooter-technical-sheet-sym-orbit-ii-4-t-50cc"
+    }
+  ]
+}

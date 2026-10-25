@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "id": "sym/orbit-iii-125",
+  "brand": "SYM",
+  "model": "Orbit III 125",
+  "aliases": [
+    "Orbit III",
+    "Orbit 3",
+    "Orbit III 125",
+    "Orbit 3 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.4,
+    "powerRpm": 8500,
+    "torqueNm": 10.3,
+    "torqueRpm": 6500,
+    "weightKg": 115,
+    "weightKind": "kerb",
+    "tankL": 6.2,
+    "wheelbaseMm": 1320,
+    "topSpeedKmh": 99
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "124.6 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø226 mm, CBS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø130 mm, CBS"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, API SJ / JASO MA or better (SYM suggests SM 10W-50; SAE 5W-40 below 0 °C)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.7 L at a change, 0.95 L total"
+    },
+    {
+      "key": "gearOil",
+      "value": "SYM Hypoid Gear Oil SAE 85W-140, 0.17 L at a change (0.18 L after disassembly)"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "CR7HSA, gap 0.6-0.7 mm"
+    },
+    {
+      "key": "battery",
+      "value": "12 V 6 Ah, sealed maintenance-free"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 kgf/cm² (1.96 bar, 28 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.00 kgf/cm² (1.96 bar, 28 psi) solo, 2.25 kgf/cm² (2.21 bar, 32 psi) two-up"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 (front disc)"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded, octane 90 or higher (manual), 6.2 L tank"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 3000,
+      "breakInKm": [
+        300
+      ]
+    },
+    "oil-filter": {
+      "km": 6000,
+      "months": 6,
+      "breakInKm": [
+        300
+      ]
+    },
+    "air-filter-clean": {
+      "km": 1000,
+      "months": 1
+    },
+    "air-filter-replace": {
+      "km": 6000,
+      "months": 6
+    },
+    "fuel-filter": {
+      "km": 10000
+    },
+    "plug-replace": {
+      "km": 12000,
+      "months": 12
+    },
+    "gear-oil": {
+      "km": 5000,
+      "months": 5,
+      "breakInKm": [
+        300
+      ]
+    },
+    "valves": {
+      "km": 6000,
+      "months": 6,
+      "breakInKm": [
+        300
+      ]
+    },
+    "cvt-inspect": {
+      "km": 6000,
+      "months": 6
+    },
+    "belt": {
+      "km": 12000,
+      "months": 12
+    },
+    "rollers": {
+      "km": 12000,
+      "months": 12
+    },
+    "clutch": {
+      "km": 6000,
+      "months": 6
+    },
+    "brake-pads": {
+      "km": 1000,
+      "months": 1
+    },
+    "tyre-pressure": {
+      "km": 1000,
+      "months": 1
+    },
+    "battery": {
+      "km": 1000,
+      "months": 1
+    },
+    "throttle-cable": {
+      "km": 1000,
+      "months": 1
+    },
+    "bolts": {
+      "km": 1000,
+      "months": 1
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual Orbit III 50/125 (XE05W2/XE12W2)",
+        "fr": "Manuel du propriétaire Orbit III 50/125 (XE05W2/XE12W2, en anglais)",
+        "ar": "دليل المالك Orbit III 50/125 (XE05W2/XE12W2، بالإنجليزية)"
+      },
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~164/product~190/XE05W2-EU_XE12W2-EU_manual.pdf",
+      "bytes": 1736483,
+      "lang": "en"
+    }
+  ],
+  "note": {
+    "en": "The manual's oil page says to change the engine oil every 1,000 km after the first 300 km, while its maintenance chart says every 3,000 km: the schedule here follows the chart. For mostly short trips SYM advises changing the oil every 3 months or 1,000 km (oil emulsification).",
+    "fr": "La page huile du manuel indique une vidange tous les 1 000 km après les 300 premiers km, alors que le tableau d'entretien indique tous les 3 000 km : le programme ici suit le tableau. Pour un usage surtout en petits trajets, SYM conseille une vidange tous les 3 mois ou 1 000 km (émulsion de l'huile).",
+    "ar": "تقول صفحة الزيت في الدليل بتغيير زيت المحرك كل 1000 كم بعد أول 300 كم، بينما يقول جدول الصيانة كل 3000 كم: البرنامج هنا يتبع الجدول. عند الاستعمال غالبًا في مسافات قصيرة تنصح SYM بتغيير الزيت كل 3 أشهر أو 1000 كم (استحلاب الزيت)."
+  },
+  "sources": [
+    {
+      "title": "SYM Orbit III owner's manual (XE05W2/XE12W2): oil and gear oil PDF p.14-15, brake fluid p.17, maintenance schedule p.24, specifications p.25-26",
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~164/product~190/XE05W2-EU_XE12W2-EU_manual.pdf"
+    },
+    {
+      "title": "SYM Orbit III technical specifications, 125cc (sym-global.com)",
+      "url": "https://www.sym-global.com/orbitiii"
+    }
+  ]
+}

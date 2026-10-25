@@ -58,6 +58,9 @@ class GarageViewModel(private val context: Context, private val container: AppCo
     }
 
     /** Quick "done today at the current km" for a single task (e.g. tyre pressure). */
+    /** The owner's own interval for a task; both null goes back to the default. */
+    fun setInterval(taskId: String, km: Int?, months: Int?) = viewModelScope.launch { garage.setInterval(taskId, km, months) }
+
     fun markTaskDone(taskId: String) = viewModelScope.launch {
         val km = state.value?.currentKm ?: 0
         log.save(

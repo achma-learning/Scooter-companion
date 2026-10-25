@@ -4,6 +4,8 @@ import androidx.compose.ui.res.stringResource
 import io.github.achmalearning.scootercompanion.R
 import io.github.achmalearning.scootercompanion.ui.components.categoryName
 import io.github.achmalearning.scootercompanion.ui.components.intervalText
+import io.github.achmalearning.scootercompanion.ui.screens.models.specKeysFor
+import io.github.achmalearning.scootercompanion.ui.screens.models.specLabel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -63,6 +65,7 @@ import io.github.achmalearning.scootercompanion.ui.components.InfoRow
 import io.github.achmalearning.scootercompanion.ui.components.NavRow
 import io.github.achmalearning.scootercompanion.ui.components.NumberField
 import io.github.achmalearning.scootercompanion.ui.components.Panel
+import io.github.achmalearning.scootercompanion.data.content.Task
 import io.github.achmalearning.scootercompanion.ui.components.ScreenPadding
 import io.github.achmalearning.scootercompanion.ui.components.SectionTitle
 import io.github.achmalearning.scootercompanion.ui.components.StatusBar
@@ -170,6 +173,10 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
     val task = st.task
     val color = statusColor(st.status)
     var confirm by remember { mutableStateOf(false) }
+    var editInterval by remember { mutableStateOf(false) }
+    val default = s.defaultTasks.firstOrNull { it.id == taskId } ?: task
+    val own = s.intervals[taskId]
+    val modelSpecs = s.model?.let { m -> specKeysFor(taskId).mapNotNull { k -> m.spec(k)?.let { k to it } } }.orEmpty()
 
     Scaffold(topBar = { BackTopBar(task.localName(), onBack) }) { padding ->
         LazyColumn(Modifier.padding(padding), contentPadding = ScreenPadding) {
@@ -192,7 +199,14 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
                             if (st.doneBefore) listOfNotNull(st.lastKm?.let(::formatKm), st.lastDate?.let(Dates::display)).joinToString(" · ")
                             else stringResource(R.string.task_not_logged)
                         )
-                        InfoRow(stringResource(R.string.task_interval), task.label.ifBlank { intervalText(task) })
+                        InfoRow(
+                            stringResource(if (own != null) R.string.interval_yours else R.string.task_interval),
+                            task.label.ifBlank { intervalText(task) }
+                        )
+                        if (own != null) InfoRow(stringResource(R.string.interval_default), default.label.ifBlank { intervalText(default) })
+                        s.model?.schedule?.get(taskId)?.takeIf { !s.isAgility }?.let { iv ->
+                            InfoRow(stringResource(R.string.interval_manufacturer), intervalText(iv.km, iv.months))
+                        }
                         if (task.factory.isNotBlank()) InfoRow(stringResource(R.string.task_factory_interval), task.factory)
                         if (task.cost.isNotBlank()) InfoRow(stringResource(R.string.task_typical_cost), task.cost)
                     }
@@ -207,6 +221,17 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
                     OutlinedButton(onClick = { logService(task.id) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.task_log_details)) }
                 }
             }
+            item {
+                TextButton(onClick = { editInterval = true }) { Text(stringResource(R.string.interval_change)) }
+            }
+            if (modelSpecs.isNotEmpty()) item {
+                Panel(modifier = Modifier.padding(vertical = 6.dp)) {
+                    Column(Modifier.padding(horizontal = 14.dp, vertical = 8.dp)) {
+                        Text(stringResource(R.string.task_for_your, s.model!!.name), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                        modelSpecs.forEach { (k, v) -> InfoRow(specLabel(k), v) }
+                    }
+                }
+            }
             if (task.notes.isNotBlank()) item { Callout(stringResource(R.string.task_why_how), task.notes) }
             task.guide?.let { g ->
                 vm.content.guide(g)?.let { guide ->
@@ -214,6 +239,15 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
                 }
             }
         }
+    }
+
+    if (editInterval) {
+        IntervalDialog(
+            taskName = task.localName(), current = task, defaultText = default.label.ifBlank { intervalText(default) }, hasOwn = own != null,
+            onSave = { km, months -> vm.setInterval(taskId, km, months); editInterval = false },
+            onReset = { vm.setInterval(taskId, null, null); editInterval = false },
+            onDismiss = { editInterval = false }
+        )
     }
 
     if (confirm) {
@@ -225,6 +259,38 @@ fun TaskDetailScreen(taskId: String, onBack: () -> Unit, openGuide: (String) -> 
             dismissButton = { TextButton(onClick = { confirm = false }) { Text(stringResource(R.string.action_cancel)) } }
         )
     }
+}
+
+/** The owner's own interval: km and/or months, or back to the default. */
+@Composable
+private fun IntervalDialog(
+    taskName: String,
+    current: Task,
+    defaultText: String,
+    hasOwn: Boolean,
+    onSave: (Int?, Int?) -> Unit,
+    onReset: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    var km by remember { mutableStateOf(current.intervalKm?.toString().orEmpty()) }
+    var months by remember { mutableStateOf(current.intervalMonths?.toString().orEmpty()) }
+    val kmValue = km.toIntOrNull()?.takeIf { it in 100..100_000 }
+    val monthsValue = months.toIntOrNull()?.takeIf { it in 1..120 }
+    val valid = (km.isBlank() || kmValue != null) && (months.isBlank() || monthsValue != null) && (kmValue != null || monthsValue != null)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.interval_title, taskName)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                NumberField(km, { km = it.take(6) }, stringResource(R.string.interval_km), suffix = "km")
+                NumberField(months, { months = it.take(3) }, stringResource(R.string.interval_months))
+                Text(stringResource(R.string.interval_help, defaultText), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (hasOwn) TextButton(onClick = onReset) { Text(stringResource(R.string.interval_reset)) }
+            }
+        },
+        confirmButton = { Button(onClick = { onSave(kmValue, monthsValue) }, enabled = valid) { Text(stringResource(R.string.action_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } }
+    )
 }
 
 /**

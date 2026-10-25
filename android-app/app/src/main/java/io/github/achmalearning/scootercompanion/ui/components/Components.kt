@@ -376,11 +376,14 @@ fun dueText(res: Resources, kmLeft: Int?, daysLeft: Int?): String {
 
 /** "every 3 000 km or every 6 months": a task's interval, for tasks without a written label. */
 @Composable
-fun intervalText(task: Task): String = listOfNotNull(
-    task.intervalKm?.let { stringResource(R.string.interval_every_km, formatKm(it)) },
-    task.intervalMonths?.let { stringResource(R.string.interval_every_months, it) },
-    task.intervalDays?.let { stringResource(R.string.interval_every_days, it) }
-).joinToString(stringResource(R.string.interval_or))
+fun intervalText(task: Task): String = intervalText(task.intervalKm, task.intervalMonths, task.intervalDays)
+
+@Composable
+fun intervalText(km: Int?, months: Int?, days: Int? = null): String = listOfNotNull(
+    km?.let { stringResource(R.string.interval_every_km, formatKm(it)) },
+    months?.let { stringResource(R.string.interval_every_months, it) },
+    days?.let { stringResource(R.string.interval_every_days, it) }
+).joinToString(stringResource(R.string.interval_or)).ifEmpty { stringResource(R.string.interval_none) }
 
 @Composable
 fun categoryName(id: String, fallback: String): String = when (id) {

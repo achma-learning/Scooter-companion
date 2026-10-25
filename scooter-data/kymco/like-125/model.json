@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "id": "kymco/like-125",
+  "brand": "Kymco",
+  "model": "Like 125i",
+  "aliases": [
+    "Like",
+    "Like 125",
+    "Like 125i",
+    "Like II 125",
+    "Like 2 125",
+    "Like II 125i",
+    "Like 2 125i",
+    "Like 125 ABS"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.0,
+    "powerRpm": 8500,
+    "weightKg": 128,
+    "weightKind": "kerb",
+    "seatMm": 805,
+    "tankL": 6.5,
+    "wheelbaseMm": 1315,
+    "consumptionL100": 2.6,
+    "topSpeedKmh": 95
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, 4 valves, fan-cooled, fuel injection, Euro 5+"
+    },
+    {
+      "key": "power",
+      "value": "8.0 kW (10.9 PS) @ 8,500 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø220 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø200 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: Like II 125i ABS technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/like-2-125i-abs"
+    },
+    {
+      "title": "Kymco France: Like 125 (wheelbase) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/like-125/"
+    }
+  ]
+}

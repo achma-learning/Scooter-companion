@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "id": "honda/sh350i",
+  "brand": "Honda",
+  "model": "SH350i",
+  "aliases": [
+    "SH 350",
+    "SH350",
+    "SH 350i"
+  ],
+  "engine": {
+    "cc": 330,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 21.5,
+    "powerRpm": 7500,
+    "torqueNm": 31.5,
+    "torqueRpm": 5250,
+    "weightKg": 172,
+    "weightKind": "kerb",
+    "seatMm": 805,
+    "tankL": 9.1,
+    "wheelbaseMm": 1450,
+    "consumptionL100": 3.4,
+    "topSpeedKmh": 134
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "330 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.4 L at a change, 1.5 L with a new oil filter (1.85 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.21 L at a change (0.24 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 1.20 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-16M/C 52S (bias-ply, tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70R16M/C 61S (radial, tubeless)"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.50 bar (36 psi), solo or two-up"
+    },
+    {
+      "key": "brakeFront",
+      "value": "256 mm disc, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "256 mm disc, 1-piston caliper, ABS"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ10, 12 V 8.6 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 95 RON or higher (E10 accepted), 9 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,500 ± 100 rpm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda SH350i (SH350A) Owner's Manual 2025: maintenance schedule p.76-77, specifications p.139-140",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/SH350A/2025/SH350A_32K1WA20_web.pdf"
+    },
+    {
+      "title": "Honda UK: SH350i specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/sh350i/specifications.html"
+    }
+  ],
+  "code": "SH350A",
+  "schedule": {
+    "engine-oil": {
+      "km": 12000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 24000,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "air-filter-replace": {
+      "km": 24000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 24000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "cvt-foam": {
+      "km": 12000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual SH350i (SH350A, 2025) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire SH350i (SH350A, 2025) (Honda Motor Europe)",
+        "ar": "دليل المالك SH350i (SH350A, 2025) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/SH350A/2025/SH350A_32K1WA20_web.pdf",
+      "bytes": 5511471,
+      "lang": "en"
+    }
+  ]
+}

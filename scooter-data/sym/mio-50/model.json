@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "sym/mio-50",
+  "brand": "SYM",
+  "model": "Mio 50",
+  "aliases": [
+    "Mio",
+    "Mio 50"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.2,
+    "powerRpm": 8000,
+    "weightKg": 88,
+    "weightKind": "kerb",
+    "seatMm": 765,
+    "tankL": 5.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.4 cc, 4-stroke single, air-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "90/90-10"
+    },
+    {
+      "key": "tyreRear",
+      "value": "90/90-10"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø160 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 5.2 L tank"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM France: Mio 50 E5+",
+      "url": "https://www.symfrance.com/fr/models/mio-50-euro-5.html"
+    }
+  ]
+}

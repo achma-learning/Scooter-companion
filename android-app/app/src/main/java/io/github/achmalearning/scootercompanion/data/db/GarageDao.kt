@@ -58,6 +58,15 @@ interface GarageDao {
     @Delete
     suspend fun deleteExpense(expense: ExpenseEntity)
 
+    @Query("SELECT * FROM task_intervals")
+    fun observeIntervals(): Flow<List<TaskIntervalEntity>>
+
+    @Upsert
+    suspend fun upsertInterval(interval: TaskIntervalEntity)
+
+    @Query("DELETE FROM task_intervals WHERE taskId = :taskId")
+    suspend fun deleteInterval(taskId: String)
+
     // --- Backup import (replace-all) ---
 
     @Query("DELETE FROM bike_profile")
@@ -78,6 +87,9 @@ interface GarageDao {
     @Query("DELETE FROM expenses")
     suspend fun clearExpenses()
 
+    @Query("DELETE FROM task_intervals")
+    suspend fun clearIntervals()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllOdometer(items: List<OdometerEntity>)
 
@@ -92,4 +104,7 @@ interface GarageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllExpenses(items: List<ExpenseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllIntervals(items: List<TaskIntervalEntity>)
 }

@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "id": "kymco/filly-50",
+  "brand": "Kymco",
+  "model": "Filly 50i",
+  "aliases": [
+    "Filly",
+    "Filly 50",
+    "Filly 50i"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 2.4,
+    "powerRpm": 7000,
+    "weightKg": 101,
+    "weightKind": "kerb",
+    "seatMm": 740,
+    "tankL": 4.6,
+    "consumptionL100": 2.0
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "50 cc, 4-stroke single, 2 valves, fan-cooled, fuel injection, Euro 5"
+    },
+    {
+      "key": "power",
+      "value": "2.4 kW (3.3 PS) @ 7,000 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/70-12"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: Filly 50i technical data",
+      "url": "https://www.kymco.de/roller/50ccm/filly-50i"
+    }
+  ]
+}

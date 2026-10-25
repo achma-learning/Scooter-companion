@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import io.github.achmalearning.scootercompanion.data.model.PdfSource
+import io.github.achmalearning.scootercompanion.ui.components.DocDownloadCard
 import io.github.achmalearning.scootercompanion.ui.common.appViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -94,6 +95,10 @@ fun ReaderScreen(source: PdfSource, startPage: Int, onBack: () -> Unit) {
         Box(Modifier.fillMaxSize().padding(padding)) {
             when {
                 state.loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+                state.needsDownload -> DocDownloadCard(
+                    source.displayName, state.downloadBytes, state.downloadProgress, state.error, vm::download,
+                    Modifier.align(Alignment.Center).padding(16.dp)
+                )
                 state.error != null -> Text(
                     "Couldn't load this document: ${state.error}",
                     modifier = Modifier.align(Alignment.Center).padding(24.dp)

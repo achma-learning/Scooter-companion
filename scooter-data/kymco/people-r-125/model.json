@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "kymco/people-r-125",
+  "brand": "Kymco",
+  "model": "People R 125",
+  "aliases": [
+    "People R",
+    "People R 125",
+    "People R 125i",
+    "People R 125 Hybrid",
+    "PeopleR 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.3,
+    "powerRpm": 8000,
+    "torqueNm": 11.2,
+    "torqueRpm": 6000,
+    "weightKg": 134,
+    "weightKind": "kerb",
+    "seatMm": 800,
+    "tankL": 7.2,
+    "wheelbaseMm": 1395,
+    "consumptionL100": 2.3
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, fuel injection"
+    },
+    {
+      "key": "power",
+      "value": "12.6 cv @ 8,000 rpm (9.3 kW, converted)"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco France: People R 125 technical data",
+      "url": "https://www.kymco.fr/fr/scooters/people-r-125-hybrid/"
+    }
+  ]
+}

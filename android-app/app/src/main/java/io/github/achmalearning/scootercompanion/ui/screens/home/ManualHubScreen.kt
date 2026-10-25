@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.achmalearning.scootercompanion.AppContainer
 import io.github.achmalearning.scootercompanion.data.content.DocInfo
+import io.github.achmalearning.scootercompanion.data.model.AGILITY_DOCS
 import io.github.achmalearning.scootercompanion.data.model.PdfSource
 import io.github.achmalearning.scootercompanion.ui.common.appViewModel
 import io.github.achmalearning.scootercompanion.ui.components.NavRow
@@ -95,7 +96,7 @@ fun ManualHubScreen(
 private fun DocCard(doc: DocInfo, lastPage: Int?, onOpen: (Int) -> Unit) {
     val context = LocalContext.current
     val cover = remember(doc.cover) {
-        runCatching { context.assets.open(doc.cover).use { BitmapFactory.decodeStream(it)?.asImageBitmap() } }.getOrNull()
+        runCatching { context.assets.open("$AGILITY_DOCS/${doc.cover}").use { BitmapFactory.decodeStream(it)?.asImageBitmap() } }.getOrNull()
     }
     Panel(onClick = { onOpen(lastPage ?: 1) }, modifier = Modifier.padding(vertical = 6.dp)) {
         Row(Modifier.padding(12.dp)) {

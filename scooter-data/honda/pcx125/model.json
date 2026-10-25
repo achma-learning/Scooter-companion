@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "id": "honda/pcx125",
+  "brand": "Honda",
+  "model": "PCX125",
+  "aliases": [
+    "PCX",
+    "PCX 125",
+    "PCX125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.2,
+    "powerRpm": 8750,
+    "torqueNm": 11.7,
+    "torqueRpm": 6500,
+    "weightKg": 134,
+    "weightKind": "kerb",
+    "seatMm": 763,
+    "tankL": 8.1,
+    "wheelbaseMm": 1315,
+    "consumptionL100": 2.1,
+    "topSpeedKmh": 98
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke SOHC 4-valve single, liquid-cooled, PGM-FI (eSP+)"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, JASO T 903 MB, API SJ or higher (not \"Energy Conserving\")"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "0.8 L at a change, 0.85 L when the strainer screen is cleaned (0.9 L after disassembly)"
+    },
+    {
+      "key": "gearOil",
+      "value": "Final drive oil 0.12 L at a change (0.14 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "Pro Honda HP Coolant, 0.50 L system"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "NGK LMAR8L-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-14M/C 50P (tubeless)"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13M/C 63P (tubeless)"
+    },
+    {
+      "key": "pressureFront",
+      "value": "2.00 bar (29 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.25 bar (33 psi) solo, 2.50 bar (36 psi) two-up"
+    },
+    {
+      "key": "brakeFront",
+      "value": "220 mm disc, 2-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "220 mm disc, 1-piston caliper"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3 or DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "YTZ8V, 12 V 7 Ah"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 91 RON or higher (E10 accepted), 8.1 L tank"
+    },
+    {
+      "key": "idle",
+      "value": "1,700 ± 100 rpm"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda PCX125 (WW125/WW125A) Owner's Manual 2025: maintenance schedule p.88-89, specifications p.160-161",
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/WW125_A%20%28PCX%29/2025/WW125A_OM_32K1YC20_web.pdf"
+    },
+    {
+      "title": "Honda UK: PCX125 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/pcx-125/specifications.html"
+    }
+  ],
+  "code": "WW125A",
+  "schedule": {
+    "engine-oil": {
+      "km": 6000,
+      "months": 12,
+      "breakInKm": [
+        1000
+      ]
+    },
+    "oil-filter": {
+      "km": 12000
+    },
+    "air-filter-replace": {
+      "km": 18000
+    },
+    "plug-replace": {
+      "km": 12000
+    },
+    "valves": {
+      "km": 6000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "belt": {
+      "km": 24000
+    },
+    "gear-oil": {
+      "months": 24
+    },
+    "brake-fluid": {
+      "months": 24
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual PCX125 (WW125/WW125A, 2025) (Honda Motor Europe)",
+        "fr": "Manuel du propriétaire PCX125 (WW125/WW125A, 2025) (Honda Motor Europe)",
+        "ar": "دليل المالك PCX125 (WW125/WW125A, 2025) (هوندا موتور أوروبا)"
+      },
+      "url": "https://2rom-prd-data.hondamotopub.com/om/HMEE/WW125_A%20%28PCX%29/2025/WW125A_OM_32K1YC20_web.pdf",
+      "bytes": 6135981,
+      "lang": "en"
+    }
+  ]
+}

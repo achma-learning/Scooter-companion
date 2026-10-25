@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "id": "kymco/people-s-125",
+  "brand": "Kymco",
+  "model": "People S 125",
+  "aliases": [
+    "People S",
+    "People S 125",
+    "People 125",
+    "PeopleS 125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 7.8,
+    "powerRpm": 8000,
+    "weightKg": 130,
+    "weightKind": "unstated",
+    "seatMm": 800,
+    "tankL": 6.2,
+    "torqueNm": 10.0,
+    "torqueRpm": 6500,
+    "wheelbaseMm": 1390,
+    "consumptionL100": 2.7
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, electronic fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, 2-piston caliper, Bosch ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, 2-piston caliper, Bosch ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: People S 125 specifications",
+      "url": "https://www.kymco.es/scooters/people-s-125"
+    },
+    {
+      "title": "Kymco France: People S 125 (wheelbase, consumption) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/people-s-125/"
+    }
+  ]
+}

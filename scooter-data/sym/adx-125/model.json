@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "id": "sym/adx-125",
+  "brand": "SYM",
+  "model": "ADX 125",
+  "aliases": [
+    "ADX 125",
+    "ADX125"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 9.0,
+    "powerRpm": 7500,
+    "torqueNm": 11.5,
+    "torqueRpm": 7000,
+    "weightKg": 153,
+    "weightKind": "kerb",
+    "seatMm": 810,
+    "tankL": 13.0,
+    "wheelbaseMm": 1390
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, liquid-cooled, EFI injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø230 mm, ABS"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded 98 (SP98 E5), 13 L tank (15 L on SYM France)"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 10W-30, API SL/CF or better (SAE 5W-40 below 0 °C)"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "1.0 L at a change, 1.05 L total"
+    },
+    {
+      "key": "gearOil",
+      "value": "SYM Hypoid Gear Oil SAE 85W-140, 0.10 L at a change (0.11 L after disassembly)"
+    },
+    {
+      "key": "coolant",
+      "value": "SYM coolant, 50% concentration; radiator 0.43 L + reserve tank 0.075-0.15 L"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "CPR8EA-9, gap 0.8-0.9 mm"
+    },
+    {
+      "key": "pressureFront",
+      "value": "1.8 kgf/cm² (1.77 bar, 26 psi), solo or two-up"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.0 kgf/cm² (1.96 bar, 28 psi) solo, 2.3 kgf/cm² (2.26 bar, 33 psi) two-up"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 3"
+    },
+    {
+      "key": "battery",
+      "value": "12 V 8 Ah"
+    }
+  ],
+  "schedule": {
+    "engine-oil": {
+      "km": 5000,
+      "breakInKm": [
+        300
+      ]
+    },
+    "oil-filter": {
+      "km": 6000,
+      "months": 6,
+      "breakInKm": [
+        300
+      ]
+    },
+    "air-filter-clean": {
+      "km": 1000,
+      "months": 1
+    },
+    "air-filter-replace": {
+      "km": 6000,
+      "months": 6
+    },
+    "fuel-filter": {
+      "km": 10000
+    },
+    "plug-replace": {
+      "km": 12000,
+      "months": 12
+    },
+    "gear-oil": {
+      "km": 5000,
+      "months": 5,
+      "breakInKm": [
+        300
+      ]
+    },
+    "valves": {
+      "km": 6000,
+      "months": 6,
+      "breakInKm": [
+        300
+      ]
+    },
+    "coolant-level": {
+      "km": 10000
+    },
+    "radiator-clean": {
+      "km": 10000
+    },
+    "coolant-replace": {
+      "months": 36
+    },
+    "cvt-inspect": {
+      "km": 6000,
+      "months": 6
+    },
+    "belt": {
+      "km": 12000,
+      "months": 12
+    },
+    "rollers": {
+      "km": 12000,
+      "months": 12
+    },
+    "brake-pads": {
+      "km": 1000,
+      "months": 1
+    },
+    "tyre-pressure": {
+      "km": 1000,
+      "months": 1
+    },
+    "battery": {
+      "km": 1000,
+      "months": 1
+    },
+    "throttle-cable": {
+      "km": 1000,
+      "months": 1
+    },
+    "bolts": {
+      "km": 1000,
+      "months": 1
+    }
+  },
+  "docs": [
+    {
+      "id": "owner-manual",
+      "title": {
+        "en": "Owner's manual ADX 125 (TEA12T1CN-EU)",
+        "fr": "Manuel du propriétaire ADX 125 (TEA12T1CN-EU, en anglais)",
+        "ar": "دليل المالك ADX 125 (TEA12T1CN-EU، بالإنجليزية)"
+      },
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~135/product~198/ADX125_Manual.pdf",
+      "bytes": 1146447,
+      "lang": "en"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SYM ADX 125 owner's manual (TEA12T1CN-EU): oil and gear oil PDF p.18-19, brake fluid p.21, coolant p.29, maintenance schedule p.30, specifications p.31",
+      "url": "https://www.sym-global.com/storage/architecture/product~126/product~134/product~135/product~198/ADX125_Manual.pdf"
+    },
+    {
+      "title": "SYM ADX 125 technical specifications (sym-global.com)",
+      "url": "https://www.sym-global.com/adx-125"
+    },
+    {
+      "title": "SYM France: ADX 125 ABS TCS E5+",
+      "url": "https://www.symfrance.com/fr/models/adx-125-abs-e5_.html"
+    }
+  ]
+}

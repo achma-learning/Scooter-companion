@@ -79,3 +79,16 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
         )
     }
 }
+
+/**
+ * v3 → v4: the owner's own maintenance intervals (task_intervals). Nothing else changes.
+ * SQL copied from the exported schema in app/schemas/.../4.json.
+ */
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `task_intervals` (`taskId` TEXT NOT NULL, `intervalKm` INTEGER, " +
+                "`intervalMonths` INTEGER, PRIMARY KEY(`taskId`))"
+        )
+    }
+}

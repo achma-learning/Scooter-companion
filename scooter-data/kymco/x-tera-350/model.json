@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "id": "kymco/x-tera-350",
+  "brand": "Kymco",
+  "model": "X-Tera 350i",
+  "aliases": [
+    "X-Tera",
+    "X-Tera 350",
+    "X-Tera 350i",
+    "XTera 350",
+    "X Tera 350",
+    "X-Tera 350i TCS"
+  ],
+  "engine": {
+    "cc": 350,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 20.5,
+    "powerRpm": 7000,
+    "weightKg": 195,
+    "weightKind": "kerb",
+    "seatMm": 810,
+    "tankL": 14.0,
+    "consumptionL100": 3.7
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "321 cc, 4-stroke single, 4 valves, liquid-cooled, fuel injection, Euro 5+, TCS"
+    },
+    {
+      "key": "power",
+      "value": "20.5 kW (27.9 PS) @ 7,000 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-15"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Wave disc Ø260 mm, 3-piston caliper, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Wave disc Ø240 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: X-Tera 350i TCS technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/x-tera-350i-tcs"
+    }
+  ]
+}

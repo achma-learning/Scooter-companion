@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "kymco/x-town-st-250",
+  "brand": "Kymco",
+  "model": "X-Town ST 250i",
+  "aliases": [
+    "X-Town ST",
+    "X-Town ST 250",
+    "X-Town ST 250i",
+    "XTown ST 250",
+    "X Town ST 250",
+    "X-Town 250"
+  ],
+  "engine": {
+    "cc": 250,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 17.0,
+    "powerRpm": 7500,
+    "weightKg": 184,
+    "weightKind": "kerb",
+    "tankL": 10.5,
+    "consumptionL100": 3.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "246 cc, 4-stroke single, 4 valves, liquid-cooled, fuel injection, Euro 5+"
+    },
+    {
+      "key": "power",
+      "value": "17.0 kW (23.1 PS) @ 7,500 rpm"
+    },
+    {
+      "key": "transmission",
+      "value": "CVT, automatic centrifugal clutch"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-13"
+    },
+    {
+      "key": "tyreRear",
+      "value": "140/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Wave disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Wave disc Ø240 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Deutschland: X-Town ST 250i ABS technical data",
+      "url": "https://www.kymco.de/roller/250-575ccm/x-town-st-250i-abs"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "id": "kymco/agility-50-4t",
+  "brand": "Kymco",
+  "model": "Agility 50 4T",
+  "code": "KN10EM",
+  "aliases": [
+    "Agility 50",
+    "Agility50",
+    "Agility 4T",
+    "Agility 50 4T"
+  ],
+  "engine": {
+    "cc": 50,
+    "powertrain": "PETROL",
+    "fuelSystem": "CARBURETOR",
+    "cooling": "AIR"
+  },
+  "plan": "agility50",
+  "figures": {
+    "powerKw": 2.6,
+    "powerRpm": 7500,
+    "torqueNm": 3.4,
+    "torqueRpm": 7000,
+    "weightKg": 92.5,
+    "weightKind": "dry",
+    "tankL": 5.0,
+    "wheelbaseMm": 1325
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "49.5 cc, 4-stroke SOHC, air-cooled, Keihin CVK carburettor"
+    },
+    {
+      "key": "power",
+      "value": "2.6 kW @ 7,500 rpm"
+    },
+    {
+      "key": "engineOil",
+      "value": "SAE 15W-40 API SF (factory); 10W-40 JASO MB in Marrakech heat"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "700 ml at a change, 800 ml after a rebuild"
+    },
+    {
+      "key": "gearOil",
+      "value": "80W-90 GL-4, 120-150 ml"
+    },
+    {
+      "key": "sparkPlug",
+      "value": "Champion P-RZ9HC (factory) or NGK CR7HSA, gap 0.6-0.7 mm"
+    },
+    {
+      "key": "valves",
+      "value": "Intake and exhaust 0.08 mm, cold"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-12"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-12"
+    },
+    {
+      "key": "pressureFront",
+      "value": "1.75 bar (25 psi)"
+    },
+    {
+      "key": "pressureRear",
+      "value": "2.0 bar solo (29 psi), 2.25 bar two-up (32 psi)"
+    },
+    {
+      "key": "brakeFluid",
+      "value": "DOT 4"
+    },
+    {
+      "key": "battery",
+      "value": "12 V 4 Ah (YTX4L-BS)"
+    },
+    {
+      "key": "fuel",
+      "value": "Unleaded RON 92 or higher, 5.0 L tank"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Hydraulic disc Ø180 mm"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Drum Ø110 mm"
+    }
+  ],
+  "docs": [
+    {
+      "id": "MANUAL",
+      "title": {
+        "en": "Driver's Manual",
+        "fr": "Manuel du conducteur",
+        "ar": "دليل السائق"
+      },
+      "file": "docs/owner_manual.pdf",
+      "bytes": 10661058,
+      "sha256": "ca954889823494311d7a3d3c45d2dc226930c9b7ab6d790045f14da66efe57ff",
+      "lang": "en"
+    },
+    {
+      "id": "PASSPORT",
+      "title": {
+        "en": "Maintenance passport",
+        "fr": "Passeport d'entretien",
+        "ar": "دفتر الصيانة"
+      },
+      "file": "docs/passport.pdf",
+      "bytes": 2717701,
+      "sha256": "cd558d4c0c38a569973dd3d86c0619c5d4fdd65f973a6bf77f1ef25c568ba465",
+      "lang": "fr, ar"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco Agility 50 4T Driver's Manual (KN10EM), p.39-40",
+      "url": "docs/owner_manual.pdf"
+    },
+    {
+      "title": "Kymco Agility 50 4T Marrakech maintenance wiki",
+      "url": "https://achma-learning.github.io/kymco-agility-50-4T/"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "honda/forza-750",
+  "brand": "Honda",
+  "model": "Forza 750",
+  "aliases": [
+    "Forza 750",
+    "Forza750"
+  ],
+  "engine": {
+    "cc": 745,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "LIQUID"
+  },
+  "figures": {
+    "powerKw": 43.1,
+    "powerRpm": 6750,
+    "torqueNm": 69.0,
+    "torqueRpm": 4750,
+    "weightKg": 236,
+    "weightKind": "kerb",
+    "seatMm": 790,
+    "tankL": 13.2,
+    "wheelbaseMm": 1580,
+    "consumptionL100": 3.6
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "745 cc, 4-stroke SOHC 8-valve parallel twin, liquid-cooled, PGM-FI"
+    },
+    {
+      "key": "transmission",
+      "value": "6-speed DCT (dual clutch), chain final drive"
+    },
+    {
+      "key": "engineOilQty",
+      "value": "4.0 L total capacity"
+    },
+    {
+      "key": "tyreFront",
+      "value": "120/70-R17M/C 58H"
+    },
+    {
+      "key": "tyreRear",
+      "value": "160/60-R15M/C 67H"
+    },
+    {
+      "key": "brakeFront",
+      "value": "310 mm dual discs, radial 4-piston calipers, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "240 mm disc, 1-piston caliper, ABS"
+    },
+    {
+      "key": "battery",
+      "value": "12 V 11 Ah"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Honda UK: Forza 750 specifications",
+      "url": "https://www.honda.co.uk/motorcycles/range/scooter/forza-750/specifications.html"
+    }
+  ]
+}

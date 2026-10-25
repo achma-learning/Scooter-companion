@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 /**
- * On first run for each PDF, seeds Room from the pre-generated assets/<pdf>_index.json (real OCR
+ * On first run for each PDF, seeds Room from the pre-generated <pdf>_index.json (bundled from scooter-data) (real OCR
  * output produced when this project was built — see README). Search runs on that text only;
  * nothing here touches the network.
  */

@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "kymco/skytown-125",
+  "brand": "Kymco",
+  "model": "Skytown 125",
+  "aliases": [
+    "Skytown",
+    "Skytown 125",
+    "Sky Town 125",
+    "Skytown 125 ABS",
+    "Sky Town 125i",
+    "Skytown 125i"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.2,
+    "powerRpm": 8500,
+    "weightKg": 126,
+    "weightKind": "kerb",
+    "seatMm": 770,
+    "tankL": 7.0,
+    "torqueNm": 10.6,
+    "torqueRpm": 6500,
+    "wheelbaseMm": 1320
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, electronic fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "110/70-14"
+    },
+    {
+      "key": "tyreRear",
+      "value": "130/70-13"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø220 mm, 2-piston caliper, Bosch ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø200 mm, Bosch ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Skytown 125 specifications",
+      "url": "https://www.kymco.es/scooters/skytown-125-abs"
+    },
+    {
+      "title": "Kymco Deutschland: Sky Town 125i ABS (kerb weight) technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/sky-town-125i-abs"
+    },
+    {
+      "title": "Kymco France: Sky Town 125 (wheelbase, kerb weight) technical data",
+      "url": "https://www.kymco.fr/fr/scooters/sky-town-125/"
+    }
+  ]
+}

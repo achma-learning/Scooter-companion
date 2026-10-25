@@ -11,6 +11,7 @@ import io.github.achmalearning.scootercompanion.data.backup.BackupExpense
 import io.github.achmalearning.scootercompanion.data.backup.BackupFile
 import io.github.achmalearning.scootercompanion.data.backup.BackupFuel
 import io.github.achmalearning.scootercompanion.data.backup.BackupInsurance
+import io.github.achmalearning.scootercompanion.data.backup.BackupInterval
 import io.github.achmalearning.scootercompanion.data.backup.BackupOdometer
 import io.github.achmalearning.scootercompanion.data.backup.BackupPreRide
 import io.github.achmalearning.scootercompanion.data.backup.BackupService
@@ -24,7 +25,10 @@ import io.github.achmalearning.scootercompanion.data.db.FuelEntity
 import io.github.achmalearning.scootercompanion.data.db.MaintenanceEntryEntity
 import io.github.achmalearning.scootercompanion.data.db.ManualDatabase
 import io.github.achmalearning.scootercompanion.data.db.OdometerEntity
+import io.github.achmalearning.scootercompanion.data.db.TaskIntervalEntity
 import io.github.achmalearning.scootercompanion.data.db.taskIds
+import io.github.achmalearning.scootercompanion.data.models.ModelCatalog
+import io.github.achmalearning.scootercompanion.data.models.ScooterModel
 import io.github.achmalearning.scootercompanion.data.region.RegionPack
 import io.github.achmalearning.scootercompanion.ui.components.Money
 import io.github.achmalearning.scootercompanion.domain.Coverage
@@ -35,6 +39,7 @@ import io.github.achmalearning.scootercompanion.domain.FuelStats
 import io.github.achmalearning.scootercompanion.domain.FuelSummary
 import io.github.achmalearning.scootercompanion.domain.Insurance
 import io.github.achmalearning.scootercompanion.domain.InsurancePolicy
+import io.github.achmalearning.scootercompanion.domain.Interval
 import io.github.achmalearning.scootercompanion.domain.LedgerStats
 import io.github.achmalearning.scootercompanion.domain.MaintenancePlan
 import io.github.achmalearning.scootercompanion.domain.MilestoneStatus
@@ -82,7 +87,13 @@ data class GarageSnapshot(
     val spends: List<Spend>,
     val ledger: LedgerStats,
     val coverage: Coverage,
-    val region: RegionPack = RegionPack.GENERIC
+    val region: RegionPack = RegionPack.GENERIC,
+    /** The scooter's model in scooter-data, when the catalogue knows it. */
+    val model: ScooterModel? = null,
+    /** The owner's own intervals, by task id. */
+    val intervals: Map<String, TaskIntervalEntity> = emptyMap(),
+    /** The tasks as the manufacturer or the app would schedule them, before the owner's intervals. */
+    val defaultTasks: List<Task> = tasks
 ) {
     val warrantyEnd: Long? get() = profile.purchaseDate?.let { Dates.addMonths(it, profile.warrantyMonths) }
     val spec: VehicleSpec get() = VehicleSpec.parse(profile.powertrain, profile.engineCc, profile.fuelSystem, profile.cooling)
@@ -96,6 +107,7 @@ class GarageRepository(
     private val context: Context,
     private val db: ManualDatabase,
     private val regionProvider: (String) -> RegionPack = { RegionPack.GENERIC },
+    private val models: ModelCatalog? = null,
     private val contentProvider: () -> Content
 ) {
     private val dao = db.garageDao()
@@ -109,9 +121,9 @@ class GarageRepository(
     val snapshot: Flow<GarageSnapshot> = combine(
         combine(dao.observeProfile(), logDao.observeAll(), dao.observeOdometer(), ::Triple),
         combine(dao.observeFuel(), dao.observeDocuments(), lastPreRide, ::Triple),
-        combine(dao.observeInsurance(), dao.observeExpenses(), ::Pair)
-    ) { (profile, entries, odometer), (fuel, documents, preRide), (insurance, expenses) ->
-        build(profile, entries, odometer, fuel, documents, preRide, insurance, expenses)
+        combine(dao.observeInsurance(), dao.observeExpenses(), dao.observeIntervals(), ::Triple)
+    ) { (profile, entries, odometer), (fuel, documents, preRide), (insurance, expenses, intervals) ->
+        build(profile, entries, odometer, fuel, documents, preRide, insurance, expenses, intervals)
     }
 
     private fun build(
@@ -122,7 +134,8 @@ class GarageRepository(
         documents: List<DocumentEntity>,
         preRide: Long?,
         insurance: List<InsurancePolicyEntity> = emptyList(),
-        expenses: List<ExpenseEntity> = emptyList()
+        expenses: List<ExpenseEntity> = emptyList(),
+        intervals: List<TaskIntervalEntity> = emptyList()
     ): GarageSnapshot {
         val content = contentProvider()
         val profile = profileOrNull ?: BikeProfileEntity()
@@ -135,8 +148,12 @@ class GarageRepository(
             profile.purchaseKm, entries.map { it.km }, odometer.map { it.km }, fuel.map { it.km }
         )
         val spec = VehicleSpec.parse(profile.powertrain, profile.engineCc, profile.fuelSystem, profile.cooling)
-        val agility = MaintenancePlan.isAgility50(profile.brand, profile.model, profile.engineCc)
-        val tasks = MaintenancePlan.tasksFor(content, spec, agility)
+        val model = models?.match(profile.brand, profile.model, profile.engineCc)
+        val agility = model?.id == ModelCatalog.AGILITY_50 || MaintenancePlan.isAgility50(profile.brand, profile.model, profile.engineCc)
+        val manufacturer = model?.schedule.orEmpty().mapValues { (_, v) -> Interval(v.km, v.months, v.breakInKm) }
+        val own = intervals.associateBy { it.taskId }
+        val defaultTasks = MaintenancePlan.tasksFor(content, spec, agility, manufacturer)
+        val tasks = MaintenancePlan.tasksFor(content, spec, agility, manufacturer, own.mapValues { (_, v) -> Interval(v.intervalKm, v.intervalMonths) })
         val statuses = ServicePlanner.statuses(
             tasks, records, currentKm, today, profile.purchaseKm, profile.purchaseDate
         )
@@ -165,7 +182,10 @@ class GarageRepository(
                 spends, today, ownedSince, profile.monthlyBudget, kmDriven = currentKm - profile.purchaseKm
             ),
             coverage = Insurance.coverage(insurance.map { it.toPolicy() }, today),
-            region = region
+            region = region,
+            model = model,
+            intervals = own,
+            defaultTasks = defaultTasks
         )
     }
 
@@ -186,6 +206,10 @@ class GarageRepository(
 
     suspend fun saveExpense(expense: ExpenseEntity) = dao.upsertExpense(expense)
     suspend fun deleteExpense(expense: ExpenseEntity) = dao.deleteExpense(expense)
+
+    /** The owner's own interval for [taskId]; both null goes back to the default. */
+    suspend fun setInterval(taskId: String, km: Int?, months: Int?) =
+        if (km == null && months == null) dao.deleteInterval(taskId) else dao.upsertInterval(TaskIntervalEntity(taskId, km, months))
 
     suspend fun markPreRideDone(day: Long = Dates.today()) {
         context.garageStore.edit { it[PRE_RIDE_KEY] = day }
@@ -220,7 +244,8 @@ class GarageRepository(
             documents = s.documents.map { BackupDocument(it.type, it.title, it.number, it.expiry?.let(Dates::toIso), it.notes) },
             preRide = BackupPreRide(s.lastPreRide?.let(Dates::toIso)),
             insurance = s.insurance.map { BackupInsurance(Dates.toIso(it.startDate), it.months, it.totalPaid, it.insurer, it.policyNumber, it.notes) },
-            expenses = s.expenses.map { BackupExpense(Dates.toIso(it.date), it.category, it.title, it.amount, it.km, it.quantity, it.notes) }
+            expenses = s.expenses.map { BackupExpense(Dates.toIso(it.date), it.category, it.title, it.amount, it.km, it.quantity, it.notes) },
+            intervals = s.intervals.values.map { BackupInterval(it.taskId, it.intervalKm, it.intervalMonths) }
         )
         return json.encodeToString(BackupFile.serializer(), file)
     }
@@ -238,7 +263,7 @@ class GarageRepository(
         }
         val photo = photos.restore(b.photoJpeg)
         db.withTransaction {
-            dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses()
+            dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses(); dao.clearIntervals()
             dao.upsertProfile(
                 BikeProfileEntity(
                     id = 1, nickname = b.nickname, plate = b.plate, vin = b.vin, engineNo = b.engineNo, color = b.color,
@@ -259,6 +284,7 @@ class GarageRepository(
             dao.insertAllExpenses(file.expenses.mapNotNull { x ->
                 Dates.fromIso(x.date)?.let { ExpenseEntity(date = it, category = x.category, title = x.title, amount = x.amount, km = x.km, quantity = x.quantity, notes = x.notes) }
             })
+            dao.insertAllIntervals(file.intervals.filter { it.km != null || it.months != null }.map { TaskIntervalEntity(it.task, it.km, it.months) })
         }
         maintenance.replaceAll(file.services.mapNotNull { s ->
             Dates.fromIso(s.date)?.let { day ->
@@ -278,7 +304,7 @@ class GarageRepository(
     }
 
     suspend fun wipeGarage() {
-        db.withTransaction { dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses() }
+        db.withTransaction { dao.clearProfile(); dao.clearOdometer(); dao.clearFuel(); dao.clearDocuments(); dao.clearInsurance(); dao.clearExpenses(); dao.clearIntervals() }
         photos.delete()
         context.garageStore.edit { it.remove(PRE_RIDE_KEY) }
     }

@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "id": "kymco/agility-nx-125",
+  "brand": "Kymco",
+  "model": "Agility NX 125",
+  "aliases": [
+    "Agility NX",
+    "Agility NX 125",
+    "AgilityNX 125",
+    "Agility NX 125i",
+    "Agility NX 125i ABS"
+  ],
+  "engine": {
+    "cc": 125,
+    "powertrain": "PETROL",
+    "fuelSystem": "INJECTION",
+    "cooling": "AIR"
+  },
+  "figures": {
+    "powerKw": 8.1,
+    "powerRpm": 8000,
+    "weightKg": 132,
+    "weightKind": "kerb",
+    "seatMm": 813,
+    "tankL": 7.0,
+    "torqueNm": 10.5,
+    "torqueRpm": 6500,
+    "consumptionL100": 2.2
+  },
+  "specs": [
+    {
+      "key": "engine",
+      "value": "125 cc, 4-stroke single, air-cooled, electronic fuel injection"
+    },
+    {
+      "key": "tyreFront",
+      "value": "100/80-16"
+    },
+    {
+      "key": "tyreRear",
+      "value": "120/80-14"
+    },
+    {
+      "key": "brakeFront",
+      "value": "Disc Ø260 mm, ABS"
+    },
+    {
+      "key": "brakeRear",
+      "value": "Disc Ø240 mm, ABS"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Kymco España: Agility NX 125 specifications",
+      "url": "https://www.kymco.es/scooters/agility-nx-125"
+    },
+    {
+      "title": "Kymco Deutschland: Agility NX 125i ABS (kerb weight, consumption) technical data",
+      "url": "https://www.kymco.de/roller/125-250ccm/agility-nx-125i-abs"
+    }
+  ]
+}
