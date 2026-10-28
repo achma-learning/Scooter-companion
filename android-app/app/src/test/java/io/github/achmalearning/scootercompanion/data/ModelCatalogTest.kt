@@ -62,7 +62,8 @@ class ModelCatalogTest {
         assertEquals("yamaha/xmax-300", match("Yamaha", "XMAX", 292))
         assertEquals("yamaha/xmax-125", match("Yamaha", "XMAX", 125))
         assertNull(match("Kymco", "Agility 125", 125))
-        assertNull(match("Honda", "Vision 110", 110))
+        assertNull(match("Honda", "Lead 125", 125))
+        assertEquals("honda/vision-110", match("Honda", "Vision 110", 110))
     }
 
     @Test fun derivedFiguresAreRight() {
